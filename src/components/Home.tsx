@@ -2,12 +2,13 @@ import React, { useCallback, useState } from 'react';
 import Image from 'next/image';
 import { useButtonStore } from '~/store/button';
 import { useImageStore } from '~/store/logo';
+import RazorpayButton from './RazorpayButton';
 
 const Home = () => {
     const gridSize = 80; // Number of squares per row and column
     const [clickedSquares, setClickedSquares] = useState(new Set());
-    const { setImage ,image} = useImageStore(); 
- 
+    const { setImage, image } = useImageStore();
+
 
     const { clicked, setClicked } = useButtonStore();
 
@@ -64,6 +65,7 @@ const Home = () => {
 
     return (
         <div className='relative w-full h-full flex justify-center items-center'>
+          
             {/* Image */}
             <Image className='w-[60%] h-full' width={1000} height={1000} alt='India-Map' src={'/map.svg'} />
             {/* Grid overlay */}
@@ -73,7 +75,7 @@ const Home = () => {
                         {/* Create grid squares */}
                         {[...Array(gridSize * gridSize)].map((_, index) => (
                             <div
-                            className='w-5 h-5'
+                                className='w-5 h-5'
                                 key={index}
                                 style={{
                                     border: '0.1px dashed rgba(0, 0, 0, 0.2)',
@@ -82,9 +84,9 @@ const Home = () => {
                                 }}
                                 onClick={() => handleSquareClick(index)}
                                 aria-label={`Square ${index + 1}`}
-                                
+
                             >
-                                 {clickedSquares.has(index) && image && (
+                                {clickedSquares.has(index) && image && (
                                     <img src={URL.createObjectURL(image)} alt="Selected Image" className='w-5 h-5' />
                                 )}
                             </div>
@@ -97,4 +99,3 @@ const Home = () => {
 };
 
 export default Home;
-

@@ -14,11 +14,45 @@ datasource db {
     relationMode = "prisma"
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model User {
+    id          String        @id @default(cuid())
+    username    String        @unique
+    email       String        @unique
+    password    String
+    pixels      Pixel[]
+    Transaction Transaction[]
+}
 
-    @@index([name])
+model Pixel {
+    id            String        @id @default(cuid())
+    xCoordinate   Int
+    yCoordinate   Int
+    href          String
+    price         Float
+    owner         User          @relation(fields: [ownerId], references: [id])
+    ownerId       String
+    Transaction   Transaction?  @relation(fields: [transactionId], references: [id])
+    transactionId String?
+    UnderProgess  UnderProgess? @relation(fields: [underProgressId], references: [id])
+    underProgressId String
+    @@index([transactionId])
+    @@index([ownerId])
+    @@index([underProgressId])
+}
+
+model Transaction {
+    id         String   @id @default(cuid())
+    buyer      User     @relation(fields: [buyerId], references: [id])
+    buyerId    String
+    pixels     Pixel[]
+    timestamp  DateTime
+    amountPaid Float
+
+    @@index([buyerId])
+}
+
+model UnderProgess {
+    id String @default(cuid()) @id
+    pixels          Pixel[]
+    underProgressId String?   @unique
 }

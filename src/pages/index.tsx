@@ -1,7 +1,7 @@
 // pages/PixelArtPage.tsx
 import React, { useState } from 'react';
 import Layout from '~/components/layout/layout';
-import Home from './Home';
+import Home from '../components/Home';
 
 export interface PixelArea {
   coords: string;
