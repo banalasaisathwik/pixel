@@ -8,6 +8,7 @@ interface Pixel {
 
 const IndiaMap: React.FC = () => {
   const [selectedPixels, setSelectedPixels] = useState<Pixel[]>([]);
+  const [gridOff, setgridOff] = useState(true);
 
   const handlePixelClick = (row: number, col: number) => {
     const pixelIndex = selectedPixels.findIndex(pixel => pixel.row === row && pixel.col === col);
@@ -37,23 +38,36 @@ const IndiaMap: React.FC = () => {
     const numCols = 100; // Adjust as needed
     const pixelWidth = 8; // Adjust based on map width
     const pixelHeight = 8; // Adjust based on map height
+    const imageUrl = '/path/to/image.png'; // Replace with the path to your image
 
     for (let row = 0; row < numRows; row++) {
       for (let col = 0; col < numCols; col++) {
+        const pixelX = col * pixelWidth;
+        const pixelY = row * pixelHeight;
         const isSelected = selectedPixels.some(pixel => pixel.row === row && pixel.col === col);
 
+        
         pixels.push(
-          <rect
-            key={`${row}-${col}`}
-            x={col * pixelWidth}
-            y={row * pixelHeight}
-            width={pixelWidth}
-            height={pixelHeight}
-            fill={isSelected ? 'rgba(0, 255, 0, 0.5)' : 'transparent'}
-            stroke="#000"
-            strokeWidth="1"
-            onClick={() => handlePixelClick(row, col)}
-          />
+          <g key={`${row}-${col}`} onClick={() => handlePixelClick(row, col)}>
+            <rect
+              x={pixelX}
+              y={pixelY}
+              width={pixelWidth}
+              height={pixelHeight}
+              fill={isSelected ? 'rgba(0, 255, 0, 0.5)' : 'transparent'}
+              stroke="#000"
+              strokeWidth={!gridOff ? "0.5" : "0"}
+            />
+            {isSelected && (
+              <image
+                x={pixelX}
+                y={pixelY}
+                width={pixelWidth}
+                height={pixelHeight}
+                xlinkHref={imageUrl}
+              />
+            )}
+          </g>
         );
       }
     }
@@ -62,6 +76,9 @@ const IndiaMap: React.FC = () => {
   };
 
   return (
+    <div>
+      <div>      <button onClick={() => setgridOff(prev => !prev)}> button </button>
+</div>
     <div style={{ position: 'relative', width: '800px', height: '600px' }}>
       <Image src={'/map.svg'} alt="India Map" width={800} height={600} />
       <svg
@@ -74,6 +91,7 @@ const IndiaMap: React.FC = () => {
         {generatePixels()}
       </svg>
       <button onClick={handlePurchase}>Purchase Selected Pixels</button>
+    </div>
     </div>
   );
 };
