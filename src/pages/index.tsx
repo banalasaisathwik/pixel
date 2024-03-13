@@ -1,22 +1,13 @@
-// pages/PixelArtPage.tsx
-import React, { useState } from 'react';
-import Layout from '~/components/layout/layout';
-import Home from '../components/Home';
-import ImageMapEditor from '~/components/ImageMapEditor';
+import React from 'react';
+import ImageMap from '../components/ImageMap';
 
-export interface PixelArea {
-  coords: string;
-  onClick: () => void;
-}
-
-const PixelArtPage: React.FC = () => {
-
+const Home: React.FC = () => {
   return (
-    <Layout>
-
-      <Home />
-    </Layout>
+    <div>
+      <h1>Home</h1>
+      <ImageMap />
+    </div>
   );
 };
 
-export default PixelArtPage;
+export default Home;

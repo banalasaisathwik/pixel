@@ -9,7 +9,6 @@ generator client {
 datasource db {
     provider = "mysql"
     url      = env("DATABASE_URL")
-
     // Do not use foreign keys (PlanetScale does not support them)
     relationMode = "prisma"
 }
@@ -25,8 +24,8 @@ model User {
 
 model Pixel {
     id            String        @id @default(cuid())
-    xCoordinate   Int
-    yCoordinate   Int
+   row   Int
+   col  Int
     href          String
     price         Float
     owner         User          @relation(fields: [ownerId], references: [id])
@@ -47,6 +46,7 @@ model Transaction {
     pixels     Pixel[]
     timestamp  DateTime
     amountPaid Float
+    succeeded Boolean
 
     @@index([buyerId])
 }

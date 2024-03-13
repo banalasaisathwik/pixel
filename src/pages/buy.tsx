@@ -1,13 +1,19 @@
 import React from 'react';
 import RazorpayButton from '~/components/RazorpayButton';
 
+import BuyMap from '../components/BuyMap';
 
-function App() {
+const Buy: React.FC = () => {
     return (
-        <div className="App">
-                <RazorpayButton/>
+        <div>
+            <div className="App">
+                <RazorpayButton />
+            </div>
+            <h1>Buy</h1>
+            <BuyMap />
         </div>
     );
-}
+};
 
-export default App;
+export default Buy;
+
