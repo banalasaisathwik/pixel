@@ -1,58 +1,54 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["driverAdapters"]
+    provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
-    // Do not use foreign keys (PlanetScale does not support them)
-    relationMode = "prisma"
+    provider     = "mongodb"
+    url          = env("DATABASE_URL")
 }
 
 model User {
-    id          String        @id @default(cuid())
-    username    String        @unique
-    email       String        @unique
-    password    String
-    pixels      Pixel[]
-    Transaction Transaction[]
+    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    email          String   @unique
+    password       String?
+    pixels         Pixel?   @relation(fields: [pixelId], references: [id])
+    TransactionId  Int?
+    noOfPixels     Int?
+    paymentSuccess Boolean?
+    onIsland       Boolean?
+    uploaded       Boolean?
+    website        Website? @relation(fields: [websiteId], references: [id])
+
+    pixelId   String? @db.ObjectId
+    websiteId String? @db.ObjectId
+}
+
+model Website {
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    imageUrl    String
+    websiteUrl  String
+    title       String
+    subtitle    String
+    description String
+    uploaded    Boolean?
+    Pixel       Pixel    @relation(fields: [pixelId], references: [id])
+    createdAt   DateTime @default(now())
+    User        User[]
+    pixelId     String   @db.ObjectId @unique
 }
 
 model Pixel {
-    id            String        @id @default(cuid())
-   row   Int
-   col  Int
-    href          String
-    price         Float
-    owner         User          @relation(fields: [ownerId], references: [id])
-    ownerId       String
-    Transaction   Transaction?  @relation(fields: [transactionId], references: [id])
-    transactionId String?
-    UnderProgess  UnderProgess? @relation(fields: [underProgressId], references: [id])
-    underProgressId String
-    @@index([transactionId])
-    @@index([ownerId])
-    @@index([underProgressId])
+    id          String       @id @default(auto()) @map("_id") @db.ObjectId
+    coordinates Coordinate[]
+
+    website Website?
+    User    User[]
 }
 
-model Transaction {
-    id         String   @id @default(cuid())
-    buyer      User     @relation(fields: [buyerId], references: [id])
-    buyerId    String
-    pixels     Pixel[]
-    timestamp  DateTime
-    amountPaid Float
-    succeeded Boolean
-
-    @@index([buyerId])
-}
-
-model UnderProgess {
-    id String @default(cuid()) @id
-    pixels          Pixel[]
-    underProgressId String?   @unique
+model Coordinate {
+    id      String @id @default(auto()) @map("_id") @db.ObjectId
+    x       Int
+    y       Int
+    pixel   Pixel  @relation(fields: [pixelId], references: [id])
+    pixelId String @db.ObjectId
 }

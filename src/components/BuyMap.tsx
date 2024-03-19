@@ -13,7 +13,7 @@ const BuyPage: React.FC = () => {
         if (!ctx) return;
 
         const image = new Image();
-        image.src = '/map.svg';
+        image.src = '/map1.png';
         image.onload = () => {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
             setMapLoaded(true);
@@ -38,7 +38,7 @@ const BuyPage: React.FC = () => {
 
         // Draw map
         const image = new Image();
-        image.src = '/map.svg';
+        image.src = '/map1.png';
         image.onload = () => {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
@@ -66,6 +66,7 @@ const BuyPage: React.FC = () => {
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
 
+        // Calculate row and column indices based on the mouse click position
         const row = Math.floor(y / 10); // Each cell is 10 pixels in height
         const col = Math.floor(x / 10); // Each cell is 10 pixels in width
 
@@ -79,10 +80,45 @@ const BuyPage: React.FC = () => {
             setSelectedPixels(prevPixels => [...prevPixels, { row, col }]);
         }
     };
+    const handleDownloadPNG = () => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const pngUrl = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngUrl;
+        downloadLink.download = 'map1.png';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    };
+    const handleDownloadSVG = () => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const svgString = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="2000" height="2000">
+                <image href="${canvas.toDataURL()}" />
+            </svg>
+        `;
+
+        const svgBlob = new Blob([svgString], { type: 'image/svg+xml' });
+        const svgUrl = URL.createObjectURL(svgBlob);
+        const downloadLink = document.createElement('a');
+        downloadLink.href = svgUrl;
+        downloadLink.download = 'map1.png';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    };
+
 
     return (
         <div>
-            <h1>Buy Pixels</h1>
+            <button onClick={()=>{
+                console.log(selectedPixels)
+            }}>selected pixels</button>
+
             <canvas
                 ref={canvasRef}
                 width={2000}
@@ -90,6 +126,9 @@ const BuyPage: React.FC = () => {
                 onClick={handleCanvasClick}
                 style={{ border: '1px solid black', cursor: 'pointer' }}
             />
+            <button onClick={handleDownloadPNG}>Download PNG</button>
+            <button onClick={handleDownloadSVG}>Download SVG</button>
+
         </div>
     );
 };
