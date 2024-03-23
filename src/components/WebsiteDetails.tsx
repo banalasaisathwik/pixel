@@ -1,11 +1,27 @@
+import { useRouter } from 'next/router';
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { api } from '~/utils/api';
 
 const WebsiteForm = () => {
+    const router = useRouter();
+
     const [websiteName, setWebsiteName] = useState('');
-    const [subtitle, setSubtitle] = useState('');
+    const [tagline, settagline] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState<File | null>(null); // Adjusted type to File | null
     const [websiteURL, setWebsiteURL] = useState('');
+    const [btnDisabled, setBtnDisabled] = useState(false);
+
+    const details = api.details.insert.useMutation({
+        onSuccess: () => {
+            setBtnDisabled(false);
+            router.push('/buyer/home');
+        },
+        onError: (error) => {
+            // Handle error
+            console.error('Error while purchasing:', error);
+        }
+    })
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => { // Adjusted type to ChangeEvent<HTMLInputElement>
         const file = e.target.files && e.target.files[0];
@@ -17,8 +33,9 @@ const WebsiteForm = () => {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => { // Adjusted type to FormEvent<HTMLFormElement>
         e.preventDefault();
         // Handle form submission here, you can send data to backend or perform any action as needed
+        details.mutate({ websiteName: websiteName, description: description, tagline: tagline,websiteURL: websiteURL });
         console.log("Website Name:", websiteName);
-        console.log("Subtitle:", subtitle);
+        console.log("tagline:", tagline);
         console.log("Description:", description);
         console.log("Image:", image);
         console.log("Website URL:", websiteURL);
@@ -33,8 +50,8 @@ const WebsiteForm = () => {
                     <input type="text" id="websiteName" value={websiteName} onChange={(e) => setWebsiteName(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
                 </div>
                 <div className="mb-4">
-                    <label htmlFor="subtitle" className="block text-gray-700 font-semibold mb-2">Subtitle</label>
-                    <input type="text" id="subtitle" value={subtitle} onChange={(e) => setSubtitle(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
+                    <label htmlFor="subtitle" className="block text-gray-700 font-semibold mb-2">tagline</label>
+                    <input type="text" id="tagline" value={tagline} onChange={(e) => settagline(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
                 </div>
                 <div className="mb-4">
                     <label htmlFor="description" className="block text-gray-700 font-semibold mb-2">Description</label>
@@ -48,7 +65,9 @@ const WebsiteForm = () => {
                     <label htmlFor="websiteURL" className="block text-gray-700 font-semibold mb-2">Website URL</label>
                     <input type="url" id="websiteURL" value={websiteURL} onChange={(e) => setWebsiteURL(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
                 </div>
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Submit</button>
+                <button disabled={btnDisabled} type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Submit</button>
+                
+
             </form>
         </div>
     );

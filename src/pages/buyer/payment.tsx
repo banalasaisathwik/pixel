@@ -1,17 +1,29 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { api } from '~/utils/api';
 
 const App = () => {
-    const [mounted, setMounted] = useState(false);
+    const router = useRouter();
 
-    useEffect(() => setMounted(true), []);
+    const { data: paymentStatus, isLoading } = api.trx.payment.useQuery();
 
     useEffect(() => {
+        if (paymentStatus) {
+            router.replace('selection');
+        }
+    }, [paymentStatus, router]);
+
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+
         const script = document.createElement("script");
         const form = document.getElementById("donateForm");
 
         script.src = "https://checkout.razorpay.com/v1/payment-button.js";
         script.async = true;
-        script.dataset.payment_button_id = "pl_NimT82xAM6oODa";
+        script.dataset.payment_button_id = "pl_NohSKLIPsGsVAD";
 
         if (form) {
             form.appendChild(script);
@@ -23,14 +35,22 @@ const App = () => {
                 form.removeChild(script);
             }
         };
-    }, [mounted]);
+    }, []);
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <div>loading ...</div>
+            </div>
+        );
+    }
 
     return (
         <div className="flex justify-center items-center h-screen">
             <form id="donateForm" className="bg-gray-100 p-6 rounded-lg shadow-md">
-                <h1 className="text-xl font-bold mb-4">payment</h1>
-                <p className="text-gray-600 mb-4"> part of the this pride . Click the button below to buy.</p>
-                {mounted && <div className="text-center" id="pl_NimT82xAM6oODa"></div>}
+                <h1 className="text-xl font-bold mb-4">Payment</h1>
+                <p className="text-gray-600 mb-4">Be part of this pride. Click the button below to buy.</p>
+                {mounted && <div className="text-center" id="pl_NohSKLIPsGsVAD"></div>}
             </form>
         </div>
     );

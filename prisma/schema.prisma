@@ -8,17 +8,19 @@ datasource db {
 }
 
 model User {
-    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    id          String   @id @default(auto()) @map("_id") @db.ObjectId
+    clerkId String @unique
     email          String   @unique
     password       String?
     pixels         Pixel?   @relation(fields: [pixelId], references: [id])
-    TransactionId  Int?
+    TransactionId  String?
     noOfPixels     Int?
     paymentSuccess Boolean?
+    price Int?
     onIsland       Boolean?
     uploaded       Boolean?
     website        Website? @relation(fields: [websiteId], references: [id])
-
+    purchase Boolean?
     pixelId   String? @db.ObjectId
     websiteId String? @db.ObjectId
 }
@@ -27,10 +29,12 @@ model Website {
     id          String   @id @default(auto()) @map("_id") @db.ObjectId
     imageUrl    String
     websiteUrl  String
-    title       String
-    subtitle    String
+    websiteName       String
+    tagline   String
     description String
     uploaded    Boolean?
+    visitors Int?
+
     Pixel       Pixel    @relation(fields: [pixelId], references: [id])
     createdAt   DateTime @default(now())
     User        User[]
@@ -51,4 +55,11 @@ model Coordinate {
     y       Int
     pixel   Pixel  @relation(fields: [pixelId], references: [id])
     pixelId String @db.ObjectId
+}
+
+model Ticket{
+     
+         id      String @id @default(auto()) @map("_id") @db.ObjectId
+        clerkId String 
+        description String
 }

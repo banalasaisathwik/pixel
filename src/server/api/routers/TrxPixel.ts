@@ -1,3 +1,5 @@
+import { auth } from "@clerk/nextjs";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 
@@ -15,17 +17,33 @@ export const buyRouter = createTRPCRouter({
                         message: "User not authorized"
                     };
                 }
+                 
+                const purchase = await ctx.db.user.findUnique({
+                    where:{clerkId:userId},
+                    select:{purchase: true}
+
+                })
+
+                if(purchase) {
+                    throw new TRPCError({
+                        code: 'INTERNAL_SERVER_ERROR',
+                        message: 'already purchased.',
+                        // optional: pass the original error to retain stack trace
+                        cause: TypeError,
+                    });
+
+                }
 
                 let pixel = await ctx.db.pixel.findFirst({
                     where: {
-                        User:{some:{id: userId}}
+                        User:{some:{clerkId: userId}}
                     }
                 });
 
                 if (!pixel) {
                     pixel = await ctx.db.pixel.create({
                         data: {
-                            User:{connect:{id: userId}}
+                            User:{connect:{clerkId: userId}}
                         }
                     });
                 }
@@ -41,7 +59,10 @@ export const buyRouter = createTRPCRouter({
                 await ctx.db.coordinate.createMany({
                     data: coordinates
                 });
-
+                await ctx.db.user.update({
+                    where:{clerkId: userId},
+                    data:{purchase:true}
+                })
                 return {
                     success: true,
                     message: "Coordinates added successfully"
@@ -73,6 +94,54 @@ export const buyRouter = createTRPCRouter({
                 throw new Error('Failed to update user island status');
             }
         }),
-    
+    payment: protectedProcedure
+        .query(async ({ ctx }) => {
+            try {
+                const userId = ctx.auth.userId;
+                if (!userId) {
+                    throw new Error("User not authenticated");
+                }
 
-});
+                const user = await ctx.db.user.findFirst({
+                    where: { clerkId: userId },
+                    select: { paymentSuccess: true }
+                });
+
+                if (!user) {
+                    throw new Error("User not found or unauthorized");
+                }
+
+                return user.paymentSuccess;
+            } catch (error) {
+                console.error("Error while processing payment:", error);
+                throw new Error("An error occurred while processing the request");
+            }
+        }),
+    purchased : protectedProcedure
+    .query(async ({ctx}) => {
+        try {
+            const userId = ctx.auth.userId;
+            if (!userId) {
+                throw new Error("User not authenticated");
+            }
+
+            const user = await ctx.db.user.findFirst({
+                where: { clerkId: userId },
+                select: { purchase: true }
+            });
+
+            if (!user) {
+                throw new Error("User not found or unauthorized");
+            }
+
+            return user.purchase;
+        } catch (error) {
+            console.error("Error while processing payment:", error);
+            throw new Error("An error occurred while processing the request");
+        }
+
+    })
+        })
+      
+
+

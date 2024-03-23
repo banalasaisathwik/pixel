@@ -55,7 +55,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // Get the ID and type
-
     const eventType = evt.type;
 
     if (eventType === "user.created") {
@@ -64,7 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (id && emails?.email_address) {
             await db.user.create({
                 data: {
-                    id: id,
+                    clerkId: id,
                     email: emails.email_address,
                 },
             });

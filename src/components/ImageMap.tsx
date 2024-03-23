@@ -13,7 +13,7 @@ const ImageMap: React.FC = () => {
         if (!ctx) return;
 
         const image = new Image();
-        image.src = '/map1.png';
+        image.src = '/map.svg';
         image.onload = () => {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
             setMapLoaded(true);
@@ -41,7 +41,7 @@ const ImageMap: React.FC = () => {
         const svgUrl = URL.createObjectURL(svgBlob);
         const downloadLink = document.createElement('a');
         downloadLink.href = svgUrl;
-        downloadLink.download = 'map1.png';
+        downloadLink.download = 'map.svg';
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
@@ -54,7 +54,7 @@ const ImageMap: React.FC = () => {
         const pngUrl = canvas.toDataURL('image/png');
         const downloadLink = document.createElement('a');
         downloadLink.href = pngUrl;
-        downloadLink.download = 'map1.png';
+        downloadLink.download = 'map.svg';
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
@@ -62,7 +62,6 @@ const ImageMap: React.FC = () => {
 
     return (
         <div>
-            <h2>Click on a pixel to navigate</h2>
             <canvas
                 ref={canvasRef}
                 width={2000}
