@@ -40,19 +40,20 @@ const BuyPage: React.FC = () => {
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
+    const { data: quantity } = api.pxlR.quantity.useQuery();
     const soldOutPixelsQuery = api.pxlR.soldoutPixel.useQuery();
     const purchaseMutation = api.trx.buyPixel.useMutation({
         onSuccess: () => {
             setBtnDisabled(false);
-            setSelectedPixels([]);
-            router.push('/buyer/home');
+            toast.success("successful")
+            setTimeout(() => {
+                router.push('/buyer/home');
+            }, 2000); 
         },
         onError: (error) => {
             console.error('Error while purchasing:', error);
             setBtnDisabled(false);
-            // const errorMessage = error?.data?. || 'Error while purchasing. Please try again later.';
-            // toast.error(errorMessage);
-
+            toast.error("failed");
         }
     });
 
@@ -107,20 +108,27 @@ const BuyPage: React.FC = () => {
         const row = Math.floor(y / 10);
         const col = Math.floor(x / 10);
 
-        const alreadySelected = selectedPixels.some(pixel => pixel.row === row && pixel.col === col);
-        const adjacentToSelected = selectedPixels.some(pixel => isAdjacent(pixel, { row, col }));
+        const pixelIndex = selectedPixels.findIndex(pixel => pixel.row === row && pixel.col === col);
 
-        if (selectedPixels.length === 0 || (selectedPixels.length > 0 && adjacentToSelected)) {
-            setSelectedPixels(prevPixels => [...prevPixels, { row, col }]);
+        if (pixelIndex !== -1) {
+            // If the clicked pixel is already selected, remove it from the selectedPixels array
+            setSelectedPixels(prevPixels => prevPixels.filter((_, index) => index !== pixelIndex));
         } else {
-            toast.error('You can only select adjacent pixels!');
+            const alreadySelected = selectedPixels.some(pixel => isAdjacent(pixel, { row, col }));
+
+            if (selectedPixels.length === 0 || alreadySelected) {
+                setSelectedPixels(prevPixels => [...prevPixels, { row, col }]);
+            } else {
+                toast.error('You can only select adjacent pixels!');
+            }
         }
     };
-
     const handleBuyNowClick = () => {
-        if (selectedPixels.length === 0) {
-            toast.error('Please select at least one pixel to buy.');
-            return;
+        if (typeof quantity === 'number') {
+            if (selectedPixels.length !== quantity) {
+                toast.error(`Please select exactly ${quantity} pixels to buy.`);
+                return;
+            }
         }
         setIsConfirmOpen(true);
     };
@@ -128,7 +136,6 @@ const BuyPage: React.FC = () => {
     const handleClearPixels = () => {
         setSelectedPixels([]);
         window.location.reload();
-
     };
 
     const confirmPurchase = () => {
@@ -153,32 +160,6 @@ const BuyPage: React.FC = () => {
         downloadLink.click();
         document.body.removeChild(downloadLink);
     };
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        const image = new Image();
-        image.src = '/map.svg';
-        image.onload = () => {
-            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = 'red';
-            soldOutPixels.forEach(pixel => {
-                ctx.fillRect(pixel.x * 10, pixel.y * 10, 10, 10);
-            });
-
-            ctx.fillStyle = 'blue';
-            selectedPixels.forEach(pixel => {
-                ctx.fillRect(pixel.col * 10, pixel.row * 10, 10, 10);
-            });
-
-            setMapLoaded(true); // Moved mapLoaded state update here
-        };
-    }, [selectedPixels, soldOutPixels]);
 
     return (
         <div>

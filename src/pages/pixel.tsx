@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { api } from '~/utils/api';
-
+import Image from 'next/image';
 const Hello = () => {
     const [visitorsCount, setVisitorsCount] = useState(0);
 
@@ -43,7 +43,13 @@ const Hello = () => {
     return (
         <div className="max-w-4xl mx-auto p-4">
             <div className="text-center mb-8">
-                <h1 className="text-2xl font-bold text-gray-800">Location Details</h1>
+                {websiteDetails && (
+                    <div>
+                        <Image src={websiteDetails.imageUrl} alt="Website Image" width={300} height={200} />
+                    </div>
+                )}
+
+                      <h1 className="text-2xl font-bold text-gray-800">Location Details</h1>
                 <p className="text-md text-gray-600">Row: {row}, Col: {col}</p>
                 <p className="text-md text-gray-600">visits: {visitorsCount}</p>
 

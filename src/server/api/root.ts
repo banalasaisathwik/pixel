@@ -4,6 +4,7 @@ import { buyRouter } from "./routers/TrxPixel";
 import { pixelRetRouter } from "./routers/PixelRetrival";
 import { websiteDetailsRouter } from "./routers/details";
 import { supportRouter } from "./routers/support";
+import { s3Router } from "./routers/s3";
 
 /**
  * This is the primary router for your server.
@@ -15,7 +16,8 @@ export const appRouter = createTRPCRouter({
   trx: buyRouter,
   pxlR: pixelRetRouter,
   details: websiteDetailsRouter,
-  support: supportRouter
+  support: supportRouter,
+  s3 : s3Router
 });
 
 // export type definition of API

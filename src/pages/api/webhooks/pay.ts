@@ -62,7 +62,7 @@ async function handleyourCapturedLogic(payload: any) {
             data: {
                 paymentSuccess: true,
                 price: payload.payment.entity.amount/100,
-                TransactionId: payload.payment.entity.order_id,
+                TransactionId: payload.payment.entity.id,
             }
         });
     } catch (error) {

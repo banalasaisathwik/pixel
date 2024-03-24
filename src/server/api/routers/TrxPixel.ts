@@ -1,13 +1,11 @@
-import { auth } from "@clerk/nextjs";
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 
 
 
 export const buyRouter = createTRPCRouter({
-    buyPixel: protectedProcedure
-        .input(z.object({ coords: z.array(z.object({ x: z.number(), y: z.number() })) })) 
+buyPixel: protectedProcedure
+    .input(z.object({ coords: z.array(z.object({ x: z.number(), y: z.number() })) }))
         .mutation(async ({ input: { coords }, ctx }) => {
             try {
                 const userId = ctx.auth.userId;
@@ -17,38 +15,30 @@ export const buyRouter = createTRPCRouter({
                         message: "User not authorized"
                     };
                 }
-                 
-                const purchase = await ctx.db.user.findUnique({
-                    where:{clerkId:userId},
-                    select:{purchase: true}
 
-                })
+                const user = await ctx.db.user.findUnique({
+                    where: { clerkId: userId },
+                    select: { purchase: true }
+                });
 
-                if(purchase) {
-                    throw new TRPCError({
-                        code: 'INTERNAL_SERVER_ERROR',
-                        message: 'already purchased.',
-                        // optional: pass the original error to retain stack trace
-                        cause: TypeError,
-                    });
-
+                if (user?.purchase) {
+                    return {
+                        success: false,
+                        message: "User has already made a purchase"
+                    };
                 }
 
                 let pixel = await ctx.db.pixel.findFirst({
-                    where: {
-                        User:{some:{clerkId: userId}}
-                    }
+                    where: { User: { some: { clerkId: userId } } }
                 });
 
                 if (!pixel) {
                     pixel = await ctx.db.pixel.create({
-                        data: {
-                            User:{connect:{clerkId: userId}}
-                        }
+                        data: { User: { connect: { clerkId: userId } } }
                     });
                 }
 
-                const pixelId = pixel?.id || "";
+                const pixelId = pixel.id;
 
                 const coordinates = coords.map(({ x, y }) => ({
                     x,
@@ -59,10 +49,12 @@ export const buyRouter = createTRPCRouter({
                 await ctx.db.coordinate.createMany({
                     data: coordinates
                 });
+
                 await ctx.db.user.update({
-                    where:{clerkId: userId},
-                    data:{purchase:true}
-                })
+                    where: { clerkId: userId },
+                    data: { purchase: true }
+                });
+
                 return {
                     success: true,
                     message: "Coordinates added successfully"

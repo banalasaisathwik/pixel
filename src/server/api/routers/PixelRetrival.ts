@@ -59,7 +59,10 @@ export const pixelRetRouter = createTRPCRouter({
                     where: { clerkId: userId },
                     select: { price: true }
                 });
-                return result?.price;
+                if (result?.price){
+                    return (result.price)/15000;
+                }
+                
             } catch (error) {
                 console.error("Error while retrieving quantity:", error);
                 return {

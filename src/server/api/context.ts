@@ -6,11 +6,14 @@ import { db } from "~/server/db";
 interface AuthContext {
     auth: SignedInAuthObject | SignedOutAuthObject;
 }
+import { s3Client } from "../aws/s3";
+
 
 export const createContextInner = async ({ auth }: AuthContext) => {
     return {
         auth,
-        db
+        db,
+        s3Client
     }
 }
 

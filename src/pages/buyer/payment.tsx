@@ -37,7 +37,7 @@ const App = () => {
         };
     }, []);
 
-    if (isLoading) {
+    if (isLoading || !mounted) {
         return (
             <div className="flex justify-center items-center h-screen">
                 <div>loading ...</div>
@@ -50,7 +50,7 @@ const App = () => {
             <form id="donateForm" className="bg-gray-100 p-6 rounded-lg shadow-md">
                 <h1 className="text-xl font-bold mb-4">Payment</h1>
                 <p className="text-gray-600 mb-4">Be part of this pride. Click the button below to buy.</p>
-                {mounted && <div className="text-center" id="pl_NohSKLIPsGsVAD"></div>}
+                {mounted && <button className="text-center" id="pl_NohSKLIPsGsVAD"/>}
             </form>
         </div>
     );

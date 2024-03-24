@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 
+import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3"
 
 
 export const websiteDetailsRouter = createTRPCRouter({
@@ -10,9 +11,10 @@ export const websiteDetailsRouter = createTRPCRouter({
             websiteName: z.string(),
             tagline: z.string(),
             description: z.string(),
-            websiteURL: z.string()
+            websiteURL: z.string(),
+            imageUrl: z.string()
         }))
-        .mutation(async ({ input: { websiteName, tagline, description, websiteURL }, ctx }) => {
+        .mutation(async ({ input: { websiteName, tagline, description, websiteURL, imageUrl }, ctx }) => {
             try {
                 const userId = ctx.auth.userId;
 
@@ -38,26 +40,25 @@ export const websiteDetailsRouter = createTRPCRouter({
                 let createdWebsite;
 
                 if (existingWebsite) {
-                    // If an existing website is found, update it
+                    // Update existing website
+                //    if(imageUrl){
+                //     deleteS3Image(imageUrl,ctx.s3Client)
+                //    }
                     createdWebsite = await ctx.db.website.update({
                         where: { id: existingWebsite.id },
                         data: {
-                            imageUrl: "",
+                            imageUrl: imageUrl,
                             websiteUrl: websiteURL,
                             websiteName: websiteName,
                             tagline: tagline,
                             description: description,
                             uploaded: false,
-                            visitors:1,
-                            Pixel: {
-                                connect: {
-                                    id: pixelId
-                                }
-                            }
+                            visitors: existingWebsite.visitors,
+                            Pixel: { connect: { id: pixelId } }
                         }
                     });
                 } else {
-                    // If no existing website is found, create a new one
+                    // Create new website
                     createdWebsite = await ctx.db.website.create({
                         data: {
                             imageUrl: "",
@@ -67,16 +68,8 @@ export const websiteDetailsRouter = createTRPCRouter({
                             description: description,
                             uploaded: false,
                             visitors: 1,
-                            Pixel: {
-                                connect: {
-                                    id: pixelId
-                                }
-                            },
-                            User: {
-                                connect: {
-                                    clerkId: userId
-                                }
-                            }
+                            Pixel: { connect: { id: pixelId } },
+                            User: { connect: { clerkId: userId } }
                         }
                     });
                 }
@@ -172,3 +165,22 @@ export const websiteDetailsRouter = createTRPCRouter({
     })
 
 });
+
+async function deleteS3Image(imageUrl: string ,s3Client:any) {
+    return new Promise((resolve, reject) => {
+        try {
+            const key = imageUrl.split("/").slice(-1)[0]
+
+         
+            var params = { Bucket: process.env.AWS_BUCKET_NAME!, Key: key };
+            s3Client.deleteObject(params, function (err: any, data: unknown) {
+                if (err) reject(err);
+                // an error occurred
+                else resolve(data); // successful response
+            });
+        } catch (e) {
+            reject(e);
+        }
+    });
+
+}
