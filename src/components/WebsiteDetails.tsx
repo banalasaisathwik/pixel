@@ -8,7 +8,7 @@ const WebsiteForm = () => {
     const [websiteName, setWebsiteName] = useState('');
     const [tagline, settagline] = useState('');
     const [description, setDescription] = useState('');
-    const [image, setImage] = useState<File | null>(null); // Adjusted type to File | null
+    const [image, setImage] = useState<File | null>(null); 
     const [websiteURL, setWebsiteURL] = useState('');
     const [btnDisabled, setBtnDisabled] = useState(false);
 
@@ -42,10 +42,10 @@ const WebsiteForm = () => {
     };
 
     return (
-        <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
-            <h2 className="text-2xl font-bold mb-4">Website Details</h2>
+        <div className="max-w-xl w-full mx-auto bg-white p-8 rounded-lg shadow-md">
+            <h2 className="text-2xl text-center font-bold mb-4">Website Details</h2>
             <form onSubmit={handleSubmit}>
-                <div className="mb-4">
+                <div className="mb-4 mt-10">
                     <label htmlFor="websiteName" className="block text-gray-700 font-semibold mb-2">Website Name</label>
                     <input type="text" id="websiteName" value={websiteName} onChange={(e) => setWebsiteName(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
                 </div>
@@ -65,7 +65,7 @@ const WebsiteForm = () => {
                     <label htmlFor="websiteURL" className="block text-gray-700 font-semibold mb-2">Website URL</label>
                     <input type="url" id="websiteURL" value={websiteURL} onChange={(e) => setWebsiteURL(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
                 </div>
-                <button disabled={btnDisabled} type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Submit</button>
+                <button disabled={btnDisabled} type="submit" className="bg-black text-xl mt-4 text-white p-4 rounded-md w-full ">Submit</button>
                 
 
             </form>

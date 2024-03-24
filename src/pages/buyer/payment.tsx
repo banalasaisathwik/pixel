@@ -46,7 +46,7 @@ const App = () => {
     }
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center">
             <form id="donateForm" className="bg-gray-100 p-6 rounded-lg shadow-md">
                 <h1 className="text-xl font-bold mb-4">Payment</h1>
                 <p className="text-gray-600 mb-4">Be part of this pride. Click the button below to buy.</p>

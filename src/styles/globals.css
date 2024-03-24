@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Ultra&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Train+One&family=Ultra&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Kumar+One&family=Train+One&family=Ultra&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Kumar+One&family=Monomaniac+One&family=Train+One&family=Ultra&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Add this CSS to your stylesheets */
+
 .grid-container {
     position: relative;
     width: 1000px;

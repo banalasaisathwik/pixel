@@ -1,9 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import { motion } from "framer-motion"
+
 
 const ImageMap: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [mapLoaded, setMapLoaded] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(() => {
+        // Initialize isExpanded state from sessionStorage or default to false
+        if (typeof window !== 'undefined') {
+            const storedValue = window.sessionStorage.getItem('isExpanded');
+            return storedValue ? JSON.parse(storedValue) : false;
+        } else {
+            return false;
+        }
+
+    });
+    const router = useRouter();
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -20,68 +33,59 @@ const ImageMap: React.FC = () => {
         };
     }, []);
 
-    const router = useRouter();
+    useEffect(() => {
+        // Save isExpanded state to sessionStorage
+        sessionStorage.setItem('isExpanded', JSON.stringify(isExpanded));
+    }, [isExpanded]);
+
+  
 
     const handlePixelClick = (row: number, col: number) => {
         // Redirect to the appropriate URL based on the pixel clicked
         router.push(`/pixel?row=${row}&col=${col}`);
     };
 
-    const handleDownloadSVG = () => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        const svgString = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="2000" height="2000">
-                <image href="${canvas.toDataURL()}" />
-            </svg>
-        `;
-
-        const svgBlob = new Blob([svgString], { type: 'image/svg+xml' });
-        const svgUrl = URL.createObjectURL(svgBlob);
-        const downloadLink = document.createElement('a');
-        downloadLink.href = svgUrl;
-        downloadLink.download = 'map.svg';
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
+    const toggleExpand = () => {
+        if (!isExpanded) {
+            setIsExpanded(true); // Set isExpanded to true only if it's currently false
+        }
     };
-
-    const handleDownloadPNG = () => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        const pngUrl = canvas.toDataURL('image/png');
-        const downloadLink = document.createElement('a');
-        downloadLink.href = pngUrl;
-        downloadLink.download = 'map.svg';
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-    };
-
+    
+    const variants = {
+        normal: {
+          y: 0,
+          scale: 1,
+        },
+        expanded: {
+          y: -50, // Adjust as needed for the floating effect
+          scale: 1.1, // Adjust as needed for the big effect
+        },
+      };
     return (
-        <div>
+        <motion.div
+            initial={false}
+            animate={isExpanded ? 'expanded' : 'normal'}
+            variants={variants}
+            className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen'
+            onClick={toggleExpand}
+        >
             <canvas
+                className={`cursor-pointer ${isExpanded ? 'mt-[200px]' : 'absolute top-1/2  translate-y-[-40%] left-1/2 translate-x-[-50%] w-[20%] '}  transition-all duration-300 `}
                 ref={canvasRef}
                 width={2000}
                 height={2000}
                 onClick={(e) => {
-                    if (!mapLoaded) return;
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const row = Math.floor(y / 10); // Each cell is 10 pixels in height
-                    const col = Math.floor(x / 10); // Each cell is 10 pixels in width
-                    handlePixelClick(row, col);
+                    if (isExpanded && mapLoaded) {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const row = Math.floor(y / 10); // Each cell is 10 pixels in height
+                        const col = Math.floor(x / 10); // Each cell is 10 pixels in width
+                        handlePixelClick(row, col);
+                    }
                 }}
-                style={{ border: '1px solid black', cursor: 'pointer' }}
             />
-            <div>
-                <button onClick={handleDownloadSVG}>Download SVG</button>
-                <button onClick={handleDownloadPNG}>Download PNG</button>
-            </div>
-        </div>
+        </motion.div>
     );
 };
 

@@ -32,9 +32,9 @@ export default function Page() {
 
 
     return (
-        <div>
+        <div className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center">
             <div className="text-center mb-4">
-                <p className="text-lg font-bold text-gray-800">Welcome to the compilation of success of the past 10 years of startups in India / Startup India initiative.</p>
+                <p className="text-4xl  text-white font-semibold ">Welcome to the compilation of success <br/> of the past 10 years of startups in India / Startup India initiative.</p>
             </div>
             <div className="flex justify-around mb-4">
                 <button
