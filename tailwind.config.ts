@@ -7,6 +7,10 @@ export default {
     extend: {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        Ultra:["Ultra"],
+        alton:["Train One"],
+        kumar:['Kumar One'],
+        sai:["Monomaniac One"]
       },
     },
   },
