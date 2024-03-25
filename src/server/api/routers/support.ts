@@ -15,14 +15,18 @@ export const supportRouter = createTRPCRouter({
 
             const user = await ctx.db.user.findFirst({
                 where: { clerkId: userId },
-                select: { uploaded: true }
+                select: { website:
+                    {where:{uploaded:true},
+                    select:{uploaded:true}
+                
+                } }
             });
 
             if (!user) {
                 throw new Error("User not found or unauthorized");
             }
 
-            return user.uploaded;
+            return user.website?.uploaded;
         } catch (error) {
             console.error("Error while processing payment:", error);
            throw new Error("An error occurred while processing the request");

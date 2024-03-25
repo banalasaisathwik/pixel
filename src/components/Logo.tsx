@@ -9,7 +9,6 @@ interface LogoProps {
 }
 
 const Logo = (props: LogoProps) => {
-	const { fillWhite } = props
 
 	return (
 		<motion.div

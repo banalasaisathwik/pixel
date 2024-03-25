@@ -12,90 +12,50 @@ const useNavbarVisibility = () => {
 	const values = useContext(context);
 
 	useMotionValueEvent(scrollY, 'change', (latest) => {
-		setShowNavbar(scrollHeight > latest ? true : false);
+		setShowNavbar(scrollHeight > latest);
 		setScrollHeight(latest);
 	});
 
 	useLayoutEffect(() => {
-		function scrollHandler() {
-			const aboutSection = document.querySelector(
-				'#about',
-			) as HTMLElement | null;
-			const flavoursomeSection = document.querySelector(
-				'#flavoursome',
-			) as HTMLElement | null;
-			const featuresSection = document.querySelector(
-				'#features',
-			) as HTMLElement | null;
-			const foodsSection = document.querySelector(
-				'#foods',
-			) as HTMLElement | null;
-			const intriguedSection = document.querySelector(
-				'#intrigued',
-			) as HTMLElement | null;
+		const scrollHandler = () => {
+			// Initialize all offsetTop variables with a default value of 0
+			let aboutOffsetTop = 0;
+			let foodsOffsetTop = 0;
+			let intriguedOffsetTop = 0;
 
-			const aboutOffsetTop: number = aboutSection ? aboutSection.offsetTop : 0;
-			const flavoursomeOffsetTop: number = flavoursomeSection
-				? flavoursomeSection.offsetTop
-				: 0;
-			const featuresOffsetTop: number = featuresSection
-				? featuresSection.offsetTop
-				: 0;
-			const foodsOffsetTop: number = foodsSection ? foodsSection.offsetTop : 0;
-			const intriguedOffsetTop: number = intriguedSection
-				? intriguedSection.offsetTop
-				: 0;
+			// Safely attempt to update offsetTop values if elements are found
+			const updateOffsetTop = (selector: string) => {
+				const element = document.querySelector(selector);
+				if (element instanceof HTMLElement) {
+					return element.offsetTop;
+				}
+				return 0;
+			};
 
-			if (pathName == '/') {
-				if (scrollHeight < aboutOffsetTop) setTextWhite(true);
-				else if (
-					scrollHeight >= aboutOffsetTop &&
-					scrollHeight <
-					featuresOffsetTop - 2 * (flavoursomeSection?.clientHeight || 0)
-				)
-					setTextWhite(false);
-				else if (
-					scrollHeight >=
-					featuresOffsetTop - (flavoursomeSection?.clientHeight || 0) &&
-					scrollHeight < featuresOffsetTop
-				)
-					setTextWhite(true);
-				else if (
-					scrollHeight >= featuresOffsetTop &&
-					scrollHeight < foodsOffsetTop
-				)
-					setTextWhite(false);
-				else if (
-					scrollHeight >= foodsOffsetTop &&
-					scrollHeight < intriguedOffsetTop - window.innerHeight / 4
-				)
-					setTextWhite(true);
-				else setTextWhite(false);
-			} else if (
-				pathName === '/contact' ||
-				pathName === '/privacy-policy' ||
-				pathName === '/products'
-			) {
-				setTextWhite(true);
+
+			aboutOffsetTop = updateOffsetTop('#about');
+			foodsOffsetTop = updateOffsetTop('#foods');
+			intriguedOffsetTop = updateOffsetTop('#intrigued');
+
+			// Logic to update textWhite based on scrollHeight and section offsets
+			if (pathName === '/') {
+				setTextWhite(scrollHeight < aboutOffsetTop ||
+					(scrollHeight >= foodsOffsetTop && scrollHeight < intriguedOffsetTop - window.innerHeight / 4));
+			} else {
+				setTextWhite(['/contact', '/privacy-policy', '/products'].includes(pathName));
 			}
-		}
+		};
 
 		window.addEventListener('scroll', scrollHandler);
 
-		return () => {
-			window.removeEventListener('scroll', scrollHandler);
-		};
+		return () => window.removeEventListener('scroll', scrollHandler);
 	}, [scrollHeight, pathName]);
 
 	useEffect(() => {
 		if (pathName !== '/products') values?.setIsTextWhite(true);
 	}, [pathName, values]);
 
-	return {
-		showNavbar,
-		textWhite,
-		values,
-	};
+	return { showNavbar, textWhite, values };
 };
 
 export default useNavbarVisibility;

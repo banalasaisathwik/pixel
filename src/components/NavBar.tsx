@@ -3,7 +3,7 @@
 import { useNavbarMenuToggle, useNavbarVisibility } from '../hooks'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-
+import Image from 'next/image'
 import { view } from '../utils/animations'
 import NavMenuButton from './NavMenuButton'
 import NavMobileMenu from './NavMobileMenu'
@@ -13,6 +13,8 @@ const Navbar = () => {
     const { navOpen, changeNavMenu, toggleNavMenu } = useNavbarMenuToggle()
     const {  textWhite, values } = useNavbarVisibility()
     const isFillWhite = textWhite && values!.isTextWhite && !navOpen;
+ 
+
 
     return (
         <nav
@@ -28,13 +30,16 @@ const Navbar = () => {
                     initial='initial'
                     whileInView='animate'
                     className='w-full mx-auto pr-[50px] text-left hidden md:flex flex-row flex-nowrap items-baseline'>
+                   
+                    <li className='mx-auto text-white font-semibold font-sai align-top text-2xl md:text-3xl leading-[1.2em] md:inline-block uppercase'>
+                        
+                        <Image src="/logo.png" alt="India Map Logo" width={60} height={50} />
+                    </li>
+
                     <li className='mr-auto text-white font-semibold font-sai align-top text-2xl md:text-3xl leading-[1.2em] md:inline-block uppercase'>
                         <Link href='/about'>About</Link>
                     </li>
 
-                    <li className='mx-auto text-white  font-semibold font-sai align-top text-2xl md:text-3xl leading-[1.2em] md:inline-block uppercase'>
-                        <Link href='/#invite'> Invite </Link>
-                    </li>
                 </motion.ul>
 
                 <Logo fillWhite={isFillWhite} />
@@ -45,14 +50,11 @@ const Navbar = () => {
                     initial='initial'
                     whileInView='animate'
                     className='w-full text-left md:text-right mx-auto pl-[50px] hidden md:flex md:flex-row md:flex-nowrap md:justify-end md:items-baseline'>
-                    <li className='text-2xl md:text-3xl text-white mx-auto font-semibold font-sai align-top md:inline-block uppercase'>
-                        <Link href='/#download'> Download </Link>
-                    </li>
-
+                 
                     <li className="text-2xl text-white md:text-3xl mx-auto font-semibold font-sai align-top md:inline-block uppercase">
                         <Link
                          href="/buyer/info"
-                        >Buy</Link>
+                        >Buy block </Link>
                     </li>
                 </motion.ul>
 

@@ -22,6 +22,7 @@ const ConfirmDialog: React.FC<{
             <div className="bg-white p-4 rounded-lg">
                 <h2 className="font-bold text-lg">Confirm Purchase</h2>
                 <p>You are about to purchase {pixelCount} pixels. Do you wish to proceed?</p>
+                <p>(Please note that selecting areas outside the map will result in rejection of your request.)</p>
                 <div className="flex justify-end space-x-2 mt-4">
                     <button onClick={onClose} className="px-4 py-2 rounded bg-gray-200">Cancel</button>
                     <button onClick={onConfirm} className="px-4 py-2 rounded bg-blue-500 text-white">Confirm</button>
@@ -114,6 +115,14 @@ const BuyPage: React.FC = () => {
             // If the clicked pixel is already selected, remove it from the selectedPixels array
             setSelectedPixels(prevPixels => prevPixels.filter((_, index) => index !== pixelIndex));
         } else {
+            // Check if the clicked pixel is not sold out
+            const isPixelSoldOut = soldOutPixels.some(pixel => pixel.x === col && pixel.y === row);
+
+            if (isPixelSoldOut) {
+                toast.error('This pixel is already sold out!');
+                return;
+            }
+
             const alreadySelected = selectedPixels.some(pixel => isAdjacent(pixel, { row, col }));
 
             if (selectedPixels.length === 0 || alreadySelected) {
@@ -152,20 +161,59 @@ const BuyPage: React.FC = () => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        const pngUrl = canvas.toDataURL('image/png');
-        const downloadLink = document.createElement('a');
-        downloadLink.href = pngUrl;
-        downloadLink.download = 'map.svg';
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-    };
+        // Convert canvas to a Blob
+        canvas.toBlob((blob) => {
+            if (!blob) return;
 
+            // Create a download link
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download = 'map.png';
+
+            // Click the link to trigger the download
+            downloadLink.click();
+
+            // Clean up
+            URL.revokeObjectURL(downloadLink.href);
+        }, 'image/png');
+    };
     return (
-        <div>
-            <button onClick={() => console.log(selectedPixels)}>Selected Pixels</button>
-            <button disabled={btnDisabled || selectedPixels.length === 0} onClick={handleBuyNowClick}>Buy Now</button>
-            <button onClick={handleClearPixels}>Clear Selected Pixels</button>
+        <div className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen overflow-y-auto'>
+            <div className="flex justify-between items-center">
+                <div className="flex">
+                    <button
+                        className="px-4 py-2 rounded bg-blue-500 text-white mr-2"
+                        disabled={btnDisabled || selectedPixels.length === 0}
+                        onClick={handleBuyNowClick}
+                    >
+                        Buy Now
+                    </button>
+                    <button
+                        className="px-4 py-2 rounded bg-blue-500 text-white"
+                        onClick={handleClearPixels}
+                    >
+                        Clear Selected Pixels
+                    </button>
+                </div>
+                <p className="text-xl text-white italic">
+                    Make sure your area shape matches your image shape,<br/>
+                        for a good outcome.
+                </p>
+
+
+                <div className="flex justify-end">
+                    <div className="flex items-center mr-8">
+                        <div className="w-3 h-3 bg-red-700 mr-2 "></div>
+                        <p >Sold-out pixels</p>
+                    </div>
+                    <div className="flex items-center">
+                        <div className="w-3 h-3 bg-blue-800 mr-2 "></div>
+                        <p >Selected pixels</p>
+                    </div>
+                </div>
+
+            </div>
+
             <canvas
                 ref={canvasRef}
                 width={2000}
@@ -174,7 +222,12 @@ const BuyPage: React.FC = () => {
                 style={{ border: '1px solid black', cursor: mapLoaded ? 'pointer' : 'default' }}
             />
 
-            <button onClick={handleDownloadPNG}>Download PNG</button>
+            <button
+                className="px-4 py-2 rounded bg-blue-500 text-white"
+                onClick={handleDownloadPNG}
+            >
+                Download PNG
+            </button>
 
             <ConfirmDialog
                 isOpen={isConfirmOpen}
@@ -184,7 +237,8 @@ const BuyPage: React.FC = () => {
             />
 
             <ToastContainer />
-        </div>
+            </div>
+        
     );
 };
 

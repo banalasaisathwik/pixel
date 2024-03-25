@@ -4,15 +4,8 @@ import { motion } from "framer-motion";
 
 const ImageMap: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [mapLoaded, setMapLoaded] = useState<boolean>(false); // Explicitly specify boolean type for mapLoaded
-    const [isExpanded, setIsExpanded] = useState<boolean>(() => {
-        if (typeof window !== 'undefined') {
-            const storedValue = window.sessionStorage.getItem('isExpanded');
-            return storedValue ? JSON.parse(storedValue) as boolean : false;
-        } else {
-            return false;
-        }
-    });
+    const [mapLoaded, setMapLoaded] = useState<boolean>(false);
+    const [isExpanded, setIsExpanded] = useState<boolean | null>(null);
 
     const router = useRouter();
 
@@ -32,15 +25,30 @@ const ImageMap: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        sessionStorage.setItem('isExpanded', JSON.stringify(isExpanded));
-    }, [isExpanded]);
+        const sessionIsExpanded = sessionStorage.getItem('isExpanded');
+        setIsExpanded(sessionIsExpanded === 'true' ? true : false);
+    }, []);
 
-    const handlePixelClick = (row: number, col: number): void => { // Explicitly specify void return type
+    const handlePixelClick = (row: number, col: number): void => {
         void router.push(`/pixel?row=${row}&col=${col}`);
     };
 
-    const toggleExpand = (): void => { // Explicitly specify void return type
-        setIsExpanded(prevState => !prevState); // Toggle isExpanded state
+    const toggleExpand = (): void => {
+        sessionStorage.setItem('isExpanded', 'true')
+        setIsExpanded(prevState => !prevState);
+    };
+
+    const downloadMap = () => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const pngUrl = canvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = pngUrl;
+        downloadLink.download = 'map1.png';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
     };
 
     const variants = {
@@ -57,13 +65,14 @@ const ImageMap: React.FC = () => {
     return (
         <motion.div
             initial={false}
-            animate={isExpanded ? 'expanded' : 'normal'}
+            animate={isExpanded !== null ? (isExpanded ? 'expanded' : 'normal') : undefined}
             variants={variants}
-            className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen'
+            className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen overflow-y-auto'
             onClick={toggleExpand}
         >
+
             <canvas
-                className={`cursor-pointer ${isExpanded ? 'mt-[200px]' : 'absolute top-1/2  translate-y-[-40%] left-1/2 translate-x-[-50%] w-[20%] '}  transition-all duration-300 `}
+                className={`cursor-pointer ${isExpanded ? 'mt-[200px]' : 'absolute top-1/2 translate-y-[-40%] left-1/2 translate-x-[-50%] w-[20%] '}  transition-all duration-300 `}
                 ref={canvasRef}
                 width={2000}
                 height={2000}
@@ -72,12 +81,19 @@ const ImageMap: React.FC = () => {
                         const rect = e.currentTarget.getBoundingClientRect();
                         const x = e.clientX - rect.left;
                         const y = e.clientY - rect.top;
-                        const row = Math.floor(y / 10); // Each cell is 10 pixels in height
-                        const col = Math.floor(x / 10); // Each cell is 10 pixels in width
+                        const row = Math.floor(y / 10);
+                        const col = Math.floor(x / 10);
                         handlePixelClick(row, col);
                     }
                 }}
             />
+            {!isExpanded && (
+                <p className="text-gray-700 absolute top-[52%] left-[48%] transform -translate-x-1/2 -translate-y-1/2">Click Here</p>
+            )}
+
+            <button className="absolute bottom-10 right-10 bg-white text-gray-900 px-4 py-2 rounded shadow" onClick={downloadMap}>
+                Download Map
+            </button>
         </motion.div>
     );
 };

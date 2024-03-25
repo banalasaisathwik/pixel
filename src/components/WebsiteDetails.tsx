@@ -3,13 +3,14 @@ import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
-
 import { api } from "../utils/api";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-const StandardDropzone = () => {
+interface StandardDropzoneProps {
+    success: boolean;
+}
+const StandardDropzone:React.FC<StandardDropzoneProps>  = ({success}) => {
     const [presignedUrl, setPresignedUrl] = useState("");
     const [, setFile] = useState<File | null>(null)
 
@@ -21,7 +22,7 @@ const StandardDropzone = () => {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null)
     const router = useRouter();
 
-
+    console.log("success", success)
     const { mutateAsync: fetchPresignedUrls } = api.s3.getStandardUploadPresignedUrl.useMutation();
     const details = api.details.insert.useMutation({
         onSuccess: () => {
@@ -90,9 +91,6 @@ const StandardDropzone = () => {
                     await axios.put(presignedUrl, file, {
                         headers: { "Content-Type": file.type },
                     });
-
-                    // Trigger the mutation to submit form details along with the uploaded file URL
-                    
                     
                     const imageurl = presignedUrl.split("?")[0] ?? "";
                     details.mutate({ websiteName, description, tagline, websiteURL, imageUrl: imageurl });
@@ -113,41 +111,44 @@ const StandardDropzone = () => {
 
             {/* Input for website name */}
             <div className="mb-4">
-                <label htmlFor="websiteName" className="block text-gray-700 font-semibold mb-2">Website Name</label>
+                <label htmlFor="websiteName" className="block font-semibold mb-2">Website Name</label>
                 <input type="text" id="websiteName" value={websiteName} onChange={(e) => setWebsiteName(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
             </div>
             {/* Input for description */}
             <div className="mb-4">
-                <label htmlFor="description" className="block text-gray-700 font-semibold mb-2">Description</label>
+                <label htmlFor="description" className="block  font-semibold mb-2">Description</label>
                 <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full border rounded-md px-3 py-2" rows={4} required></textarea>
             </div>
             {/* Input for tagline */}
             <div className="mb-4">
-                <label htmlFor="tagline" className="block text-gray-700 font-semibold mb-2">Tagline</label>
+                <label htmlFor="tagline" className="block  font-semibold mb-2">Tagline</label>
                 <input type="text" id="tagline" value={tagline} onChange={(e) => setTagline(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
             </div>
 
-            <div>
-            <label htmlFor="image" className="block text-gray-700 font-semibold mb-2">Image</label>
-                <div {...getRootProps()} className="dropzone-container border-2 border-dashed rounded-lg p-4 mb-4">
-                    <input {...getInputProps({ accept: "image/*" })} />
-                    {isDragActive ? (
-                        <p className="text-center">Drop the file here...</p>
-                    ) : (
-                        <p className="text-center">Drag n drop file here, or click to select files</p>
-                    )}
-                    {/* Preview section */}
-                    {previewUrl && (
-                        <div className="mt-4">
-                            <Image src={previewUrl} height={100} width={100} alt="Selected file" className="max-w-full h-auto" />
-                        </div>
-                    )}
+            {!success && (
+                <div>
+                    <label htmlFor="image" className="block font-semibold mb-2">Image</label>
+                    <div {...getRootProps()} className="dropzone-container border-2 border-dashed rounded-lg p-4 mb-4">
+                        <input {...getInputProps({ accept: "image/*" })} />
+                        {isDragActive ? (
+                            <p className="text-center">Drop the file here...</p>
+                        ) : (
+                            <p className="text-center">Drag n drop file here, or click to select files</p>
+                        )}
+                        {/* Preview section */}
+                        {previewUrl && (
+                            <div className="mt-4">
+                                <Image src={previewUrl} height={100} width={100} alt="Selected file" className="max-w-full h-auto" />
+                            </div>
+                        )}
+                    </div>
                 </div>
+            )}
 
-            </div>
+
             {/* Input for website URL */}
             <div className="mb-4">
-                <label htmlFor="websiteURL" className="block text-gray-700 font-semibold mb-2">Website URL</label>
+                <label htmlFor="websiteURL" className="block  font-semibold mb-2">Website URL</label>
                 <input type="url" id="websiteURL" value={websiteURL} onChange={(e) => setWebsiteURL(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
             </div>
             {/* Button to trigger file upload */}
