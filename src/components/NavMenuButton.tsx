@@ -1,6 +1,4 @@
-import { useContext } from 'react'
-import { usePathname } from 'next/navigation'
-import { context } from './context'
+
 
 
 interface NavMenuButtonProps {
@@ -10,11 +8,7 @@ interface NavMenuButtonProps {
 
 const NavMenuButton = (props: NavMenuButtonProps) => {
 	const { isNavOpen, toggleNavMenu } = props
-	const pathName = usePathname()
-	const values = useContext(context)
-	const menuButtonBackground = isNavOpen
-		? '#042f1a'
-		: '#ff73b5'
+	
 
 	return (
 		<button

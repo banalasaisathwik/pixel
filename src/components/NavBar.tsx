@@ -3,18 +3,16 @@
 import { useNavbarMenuToggle, useNavbarVisibility } from '../hooks'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { BsFacebook, BsInstagram, BsLinkedin } from 'react-icons/bs'
 
 import { view } from '../utils/animations'
-import Button from './Button'
 import NavMenuButton from './NavMenuButton'
 import NavMobileMenu from './NavMobileMenu'
 import Logo from './Logo'
 
 const Navbar = () => {
     const { navOpen, changeNavMenu, toggleNavMenu } = useNavbarMenuToggle()
-    const { showNavbar, textWhite, values } = useNavbarVisibility()
-    const isFillWhite = textWhite && (values?.isTextWhite as boolean) && !navOpen
+    const {  textWhite, values } = useNavbarVisibility()
+    const isFillWhite = textWhite && values!.isTextWhite && !navOpen;
 
     return (
         <nav

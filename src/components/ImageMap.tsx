@@ -1,21 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
-import { motion } from "framer-motion"
-
+import { motion } from "framer-motion";
 
 const ImageMap: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [mapLoaded, setMapLoaded] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(() => {
-        // Initialize isExpanded state from sessionStorage or default to false
+    const [mapLoaded, setMapLoaded] = useState<boolean>(false); // Explicitly specify boolean type for mapLoaded
+    const [isExpanded, setIsExpanded] = useState<boolean>(() => {
         if (typeof window !== 'undefined') {
             const storedValue = window.sessionStorage.getItem('isExpanded');
-            return storedValue ? JSON.parse(storedValue) : false;
+            return storedValue ? JSON.parse(storedValue) as boolean : false;
         } else {
             return false;
         }
-
     });
+
     const router = useRouter();
 
     useEffect(() => {
@@ -34,33 +32,28 @@ const ImageMap: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        // Save isExpanded state to sessionStorage
         sessionStorage.setItem('isExpanded', JSON.stringify(isExpanded));
     }, [isExpanded]);
 
-  
-
-    const handlePixelClick = (row: number, col: number) => {
-        // Redirect to the appropriate URL based on the pixel clicked
-        router.push(`/pixel?row=${row}&col=${col}`);
+    const handlePixelClick = (row: number, col: number): void => { // Explicitly specify void return type
+        void router.push(`/pixel?row=${row}&col=${col}`);
     };
 
-    const toggleExpand = () => {
-        if (!isExpanded) {
-            setIsExpanded(true); // Set isExpanded to true only if it's currently false
-        }
+    const toggleExpand = (): void => { // Explicitly specify void return type
+        setIsExpanded(prevState => !prevState); // Toggle isExpanded state
     };
-    
+
     const variants = {
         normal: {
-          y: 0,
-          scale: 1,
+            y: 0,
+            scale: 1,
         },
         expanded: {
-          y: -50, // Adjust as needed for the floating effect
-          scale: 1.1, // Adjust as needed for the big effect
+            y: -50,
+            scale: 1.1,
         },
-      };
+    };
+
     return (
         <motion.div
             initial={false}

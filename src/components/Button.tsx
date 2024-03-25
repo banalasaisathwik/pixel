@@ -1,7 +1,6 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
-import { AnimationControls, motion, useAnimation } from 'framer-motion'
+import { type AnimationControls, motion, useAnimation } from 'framer-motion'
 import Link from 'next/link'
 import { marquee } from '../utils/animations'
 
@@ -35,8 +34,7 @@ const ButtonTitle = (props: ButtonTitleProps) => {
 }
 
 const Button = (props: ButtonProps) => {
-	const { title, link, isSmall, background } = props
-	const pathName = usePathname()
+	const { title, link, isSmall } = props
 	const controls = useAnimation()
 
 

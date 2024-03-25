@@ -1,14 +1,9 @@
-"use client"
-import React, { useState } from 'react';
+import React from 'react';
 import ImageMap from '../components/ImageMap';
-import { useRouter } from 'next/router';
-import { api } from '~/utils/api';
-import { motion } from "framer-motion"
-import Image from 'next/image';
+
 
 const Home: React.FC = () => {
   
-  const router = useRouter();
 
 
   return (

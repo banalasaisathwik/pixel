@@ -1,4 +1,3 @@
-import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import { FaCheck } from "react-icons/fa"; // Ensure you've imported the FaCheck icon
@@ -14,19 +13,19 @@ export default function Page() {
 
     const handleStep1Click = () => {
         if (!isPaymentComplete) {
-            router.push('payment');
+           void router.push('payment');
         }
     };
 
     const handleStep2Click = () => {
         if (isPaymentComplete && !hasMadePurchase) {
-            router.push('selection');
+           void router.push('selection');
         }
     };
 
     const handleStep3Click = () => {
         if (isPaymentComplete) {
-            router.push('details');
+          void  router.push('details');
         }
     };
 

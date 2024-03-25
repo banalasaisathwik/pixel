@@ -9,7 +9,7 @@ const Support: React.FC<{ paymentStatus: boolean | null | undefined }> = ({ paym
     const router = useRouter(); 
     const {data:status} = api.support.uploadStatus.useQuery();
     const handleRaiseTicketClick = () => {
-        router.push('ticket');
+        void router.push('ticket');
     };
     return (
         <div>

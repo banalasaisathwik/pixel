@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { validateWebhookSignature } from 'razorpay/dist/utils/razorpay-utils';
 import { db } from '~/server/db';
 
@@ -13,20 +13,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(405).end();
     }
     console.log(req.headers);
-    
-    console.log("body",req.body);
+
+    console.log("body", req.body);
     // Get the webhook secret from the dashboard
-    const RAZORPAY_WEBHOOK_SECRET = "sai";
+    const RAZORPAY_WEBHOOK_SECRET: string = "sai";
 
     // Extract signature from X-Razorpay-Signature header
-    const signature = req.headers["x-razorpay-signature"] as string;
+    const signature: string = req.headers["x-razorpay-signature"] as string;
 
     // Extract request body
-    const requestBody = req.body;
+    const requestBody: any = req.body;
 
     try {
         // Validate webhook signature
-        const isValid = validateWebhookSignature(
+        const isValid: boolean = validateWebhookSignature(
             JSON.stringify(requestBody),
             signature,
             RAZORPAY_WEBHOOK_SECRET
@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     break;
             }
         }
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error processing webhook:', error);
         return res.status(500).json({ error: 'Error processing webhook' });
     }
@@ -61,11 +61,11 @@ async function handleyourCapturedLogic(payload: any) {
             where: { email: payload.payment.entity.email },
             data: {
                 paymentSuccess: true,
-                price: payload.payment.entity.amount/100,
+                price: payload.payment.entity.amount / 100,
                 TransactionId: payload.payment.entity.id,
             }
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error handling captured logic:', error);
         throw error;
     }

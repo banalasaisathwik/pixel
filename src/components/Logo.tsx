@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { view } from '../utils/animations'
-import Image from 'next/image'
 
 interface LogoProps {
 	fillWhite: boolean

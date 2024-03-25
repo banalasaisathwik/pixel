@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 
 
 
@@ -39,7 +39,7 @@ export const supportRouter = createTRPCRouter({
                 throw new Error("User not authenticated");
             }
 
-            const ticket = await ctx.db.ticket.create({
+            await ctx.db.ticket.create({
                 data: { clerkId: userId, description: description }
             })
 

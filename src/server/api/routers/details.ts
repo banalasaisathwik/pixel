@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 
-import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3"
 
 
 export const websiteDetailsRouter = createTRPCRouter({
@@ -24,7 +23,7 @@ export const websiteDetailsRouter = createTRPCRouter({
                     select: { pixelId: true }
                 });
 
-                if (!user || !user.pixelId) {
+                if ( !user?.pixelId) {
                     throw new Error('User not found or pixelId not available');
                 }
 
@@ -166,21 +165,5 @@ export const websiteDetailsRouter = createTRPCRouter({
 
 });
 
-async function deleteS3Image(imageUrl: string ,s3Client:any) {
-    return new Promise((resolve, reject) => {
-        try {
-            const key = imageUrl.split("/").slice(-1)[0]
 
-         
-            var params = { Bucket: process.env.AWS_BUCKET_NAME!, Key: key };
-            s3Client.deleteObject(params, function (err: any, data: unknown) {
-                if (err) reject(err);
-                // an error occurred
-                else resolve(data); // successful response
-            });
-        } catch (e) {
-            reject(e);
-        }
-    });
 
-}

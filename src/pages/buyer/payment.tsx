@@ -9,7 +9,7 @@ const App = () => {
 
     useEffect(() => {
         if (paymentStatus) {
-            router.replace('selection');
+            void router.replace('selection');
         }
     }, [paymentStatus, router]);
 

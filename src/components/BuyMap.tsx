@@ -47,7 +47,7 @@ const BuyPage: React.FC = () => {
             setBtnDisabled(false);
             toast.success("successful")
             setTimeout(() => {
-                router.push('/buyer/home');
+               void router.push('/buyer/home');
             }, 2000); 
         },
         onError: (error) => {

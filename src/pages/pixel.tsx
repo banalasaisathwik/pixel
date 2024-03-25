@@ -1,18 +1,18 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { api } from '~/utils/api';
 import Image from 'next/image';
 const Hello = () => {
-    const [visitorsCount, setVisitorsCount] = useState(0);
+    const [, setVisitorsCount] = useState(0);
 
     const router = useRouter();
     // Retrieve the row and col parameters from the query object
     const { row, col } = router.query;
     const rowNumber = typeof row === 'string' ? parseInt(row, 10) : undefined;
 
-    const { data: websiteDetails, isLoading, isError } = api.details.retrive.useQuery({ row: rowNumber || 0, col: parseInt(col as string, 10) });
+    const { data: websiteDetails, isLoading, isError } = api.details.retrive.useQuery({ row: rowNumber ?? 0, col: parseInt(col as string, 10) });
+
 
     const visitorsMutation = api.details.visitors.useMutation({
         onSuccess: (data) => {
@@ -23,10 +23,10 @@ const Hello = () => {
     });
 
     useEffect(() => {
-        if (websiteDetails && websiteDetails.id) {
+        if (websiteDetails?.id) {
             visitorsMutation.mutate({ websiteId: websiteDetails.id });
         }
-    }, [websiteDetails]);
+    }, [visitorsMutation,websiteDetails]);
 
 
     if (isLoading) {
@@ -75,7 +75,7 @@ const Hello = () => {
                 <div className='my-10 '>
                     <h1 className='text-white font-sai text-3xl'>What is KelolaPro ?</h1>
                     <p className='py-4 text-white text-xl'>
-                        Solutive Property Management App is a comprehensive solution tailored for property owners, managers, and real estate professionals. With a suite of powerful features, it streamlines various aspects of property management, enhancing efficiency and organization. Here's an expansion on its key functionalities:
+{                      ` Solutive Property Management App is a comprehensive solution tailored for property owners, managers, and real estate professionals. With a suite of powerful features, it streamlines various aspects of property management, enhancing efficiency and organization. Here's an expansion on its key functionalities:
 
                         Receipts Maker: Simplify the process of generating and managing receipts for rental payments, maintenance fees, or any other financial transactions related to property management. The app provides customizable templates, allowing users to effortlessly create professional-looking receipts on-the-go. Integration with payment gateways ensures seamless record-keeping and transparency in financial transactions.
 
@@ -83,8 +83,8 @@ const Hello = () => {
 
                         Bookkeeping: Centralize all financial data and transactions within the app's intuitive bookkeeping module. Users can track income, expenses, and other financial metrics in real-time, facilitating informed decision-making and budgeting. Advanced features such as categorization, tagging, and bank reconciliation streamline financial management tasks and eliminate manual data entry errors.
 
-                        Listing Ads: Enhance property visibility and attract potential tenants or buyers by listing properties directly within the app. Users can create detailed property listings with photos, descriptions, and amenities, reaching a wider audience across various online platforms. Integration with social media and real estate portals maximizes exposure and accelerates the leasing or sales process
-                    </p>
+                        Listing Ads: Enhance property visibility and attract potential tenants or buyers by listing properties directly within the app. Users can create detailed property listings with photos, descriptions, and amenities, reaching a wider audience across various online platforms. Integration with social media and real estate portals maximizes exposure and accelerates the leasing or sales process `
+}                    </p>
                 </div>
             </div>
         </div>

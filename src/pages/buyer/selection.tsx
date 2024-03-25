@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import BuyMap from '../../components/BuyMap';
 import { api } from '~/utils/api';
 import { useRouter } from 'next/router';
@@ -9,7 +9,7 @@ const Buy: React.FC = () => {
     const { data: purchasesStatus } = api.trx.purchased.useQuery();
     useEffect(() => {
         if (purchasesStatus) {
-            router.replace('details');
+            void router.replace('details');
         }
     }, [purchasesStatus, router]);
 

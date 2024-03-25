@@ -7,10 +7,11 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { api } from "../utils/api";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 const StandardDropzone = () => {
     const [presignedUrl, setPresignedUrl] = useState("");
-    const [file, setFile] = useState<File | null>(null)
+    const [, setFile] = useState<File | null>(null)
 
     const [websiteName, setWebsiteName] = useState('');
     const [description, setDescription] = useState('');
@@ -30,7 +31,7 @@ const StandardDropzone = () => {
             // Enable the button and redirect after a delay
             setTimeout(() => {
                 setBtnDisabled(false);
-                router.push('/buyer/home');
+                void router.push('/buyer/home');
             }, 3000); // Delay for 3 seconds before redirecting
         },
         onError: (error) => {
@@ -55,27 +56,29 @@ const StandardDropzone = () => {
         maxFiles: 1,
         maxSize: 5 * 2 ** 30, // roughly 5GB
         multiple: false,
-        onDropAccepted: async (files, _event) => {
+        onDropAccepted: (files, _event) => {
             const file = files[0] ?? null;
-            setFile(file)
+            setFile(file);
             if (previewUrl) {
-                URL.revokeObjectURL(previewUrl)
+                URL.revokeObjectURL(previewUrl);
             }
             if (file) {
-                const url = URL.createObjectURL(file)
-                setPreviewUrl(url)
+                const url = URL.createObjectURL(file);
+                setPreviewUrl(url);
             } else {
-                setPreviewUrl(null)
+                setPreviewUrl(null);
             }
 
-            try {
-                const url = await fetchPresignedUrls({ key: generateRandomString() });
-                setPresignedUrl(url);
-            } catch (err) {
-                console.error(err);
-                toast.error("Failed to fetch presigned URL");
-            }
+            fetchPresignedUrls({ key: generateRandomString() })
+                .then(url => {
+                    setPresignedUrl(url);
+                })
+                .catch(err => {
+                    console.error(err);
+                    toast.error("Failed to fetch presigned URL");
+                });
         },
+
     });
 
     const handleSubmit = useCallback(async () => {
@@ -131,12 +134,12 @@ const StandardDropzone = () => {
                     {isDragActive ? (
                         <p className="text-center">Drop the file here...</p>
                     ) : (
-                        <p className="text-center">Drag 'n' drop file here, or click to select files</p>
+                        <p className="text-center">Drag n drop file here, or click to select files</p>
                     )}
                     {/* Preview section */}
                     {previewUrl && (
                         <div className="mt-4">
-                            <img src={previewUrl} alt="Selected file" className="max-w-full h-auto" />
+                            <Image src={previewUrl} height={100} width={100} alt="Selected file" className="max-w-full h-auto" />
                         </div>
                     )}
                 </div>
