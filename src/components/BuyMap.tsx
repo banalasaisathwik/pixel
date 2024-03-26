@@ -20,10 +20,10 @@ const ConfirmDialog: React.FC<{
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-4 rounded-lg">
-                <h2 className="font-bold text-lg">Confirm Purchase</h2>
-                <p>You are about to purchase {pixelCount} pixels. Do you wish to proceed?</p>
-                <p>(Please note that selecting areas outside the map will result in rejection of your request.)</p>
+            <div className="bg-white p-10 rounded-lg">
+                <h2 className="font-bold text-2xl">Confirm Purchase</h2>
+                <p className='text-lg'>You are about to purchase {pixelCount} pixels. Do you wish to proceed?</p>
+                <p className='text-lg'>(Please note that selecting areas outside the map will result in rejection of your request.)</p>
                 <div className="flex justify-end space-x-2 mt-4">
                     <button onClick={onClose} className="px-4 py-2 rounded bg-gray-200">Cancel</button>
                     <button onClick={onConfirm} className="px-4 py-2 rounded bg-blue-500 text-white">Confirm</button>
@@ -190,23 +190,23 @@ const BuyPage: React.FC = () => {
     }
     return (
         <div className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen overflow-y-auto'>
-            <div className="flex justify-between items-center">
+            <div className="px-10 py-4 flex justify-between items-center">
                 <div className="flex">
                     <button
-                        className="px-4 py-2 rounded bg-blue-500 text-white mr-2"
+                        className="p-4 text-lg rounded text-black bg-white mr-2"
                         disabled={btnDisabled || selectedPixels.length === 0}
                         onClick={handleBuyNowClick}
                     >
                         Buy Now
                     </button>
                     <button
-                        className="px-4 py-2 rounded bg-blue-500 text-white"
+                        className="p-4 text-lg rounded text-black bg-white "
                         onClick={handleClearPixels}
                     >
                         Clear Selected Pixels
                     </button>
                 </div>
-                <p className="text-xl text-white italic">
+                <p className="text-xl text-center text-white">
                     Make sure your area shape matches your image shape,<br />
                     for a good outcome.
                 </p>
@@ -215,11 +215,11 @@ const BuyPage: React.FC = () => {
                 <div className="flex justify-end">
                     <div className="flex items-center mr-8">
                         <div className="w-3 h-3 bg-red-700 mr-2 "></div>
-                        <p >Sold-out pixels</p>
+                        <p className='text-white' >Sold-out pixels</p>
                     </div>
                     <div className="flex items-center">
                         <div className="w-3 h-3 bg-blue-800 mr-2 "></div>
-                        <p >Selected pixels</p>
+                        <p  className='text-white'>Selected pixels</p>
                     </div>
                 </div>
 

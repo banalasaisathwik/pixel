@@ -1,10 +1,10 @@
-import Link from 'next/link';
+
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { api } from '~/utils/api';
 import Image from 'next/image';
 import Loading from '~/components/Loading';
-
+import Link from 'next/link';
 const Hello = () => {
     const [visitorsCount, setVisitorsCount] = useState(0);
     const router = useRouter();
@@ -39,11 +39,12 @@ const Hello = () => {
     if (isError) {
         return (
             <div className="mx-auto p-4 cursor-pointer bg-[url('/bg.avif')] bg-cover bg-center w-full min-h-screen">
-            <div className="flex justify-center items-center h-screen text-blue-900">
-                <div className="bg-blue-100 p-8 rounded-lg shadow-lg text-center">
-                    <h2 className="text-2xl font-bold mb-4">Oops!</h2>
-                    <p className="text-lg mb-4">The block has not yet been sold.</p>
-                    <p className="text-lg mb-4">Please try again later.</p>
+            <div className="flex justify-center items-center h-screen ">
+                <div className="p-8 mt-20 text-center">
+                    <h2 className="text-6xl text-white   font-bold mb-4">Oops!</h2>
+                    <p className="text-xl  text-gray-100 my-6">The block has not yet been sold.</p>
+                  
+                    <Link href={"/buyer/info"} className='text-white cursor-pointer text-xl bg-black p-4'>Want to buy this block ?</Link>
                 </div>
             </div>
             </div>

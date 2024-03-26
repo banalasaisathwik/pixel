@@ -72,7 +72,7 @@ const ImageMap: React.FC = () => {
         >
 
             <canvas
-                className={`cursor-pointer ${isExpanded ? 'mt-[200px]' : 'absolute top-1/2 translate-y-[-40%] left-1/2 translate-x-[-50%] w-[20%] '}  transition-all duration-300 `}
+                className={`cursor-pointer ${isExpanded ? 'mt-[200px]' : 'absolute top-1/2 translate-y-[-40%] left-1/2 translate-x-[-50%] w-[60%] lg:w-[20%] '}  transition-all duration-300 `}
                 ref={canvasRef}
                 width={2000}
                 height={2000}
@@ -88,7 +88,12 @@ const ImageMap: React.FC = () => {
                 }}
             />
             {!isExpanded && (
-                <p className="text-gray-700 absolute top-[52%] left-[48%] transform -translate-x-1/2 -translate-y-1/2">Click Here</p>
+                <p className="text-gray-700 absolute top-1/2 left-[50%] transform translate-x-[-100%] animate-pulse -translate-y-[-0%]">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-14 h-14">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
+                    </svg>
+
+                </p>
             )}
 
             <button className="absolute bottom-10 right-10 bg-white text-gray-900 px-4 py-2 rounded shadow" onClick={downloadMap}>

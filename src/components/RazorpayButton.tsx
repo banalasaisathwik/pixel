@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useEffect } from "react";
 
 const RazorpayButton = () => {
@@ -22,9 +23,12 @@ const RazorpayButton = () => {
     }, []);
 
     return (
-        <form id="razorpayForm" className="bg-gray-100 p-6 rounded-lg shadow-md">
-            <h1 className="text-xl font-bold mb-4">Payment</h1>
-            <p className="text-gray-600 mb-4">Be part of this pride. Click the button below to buy.</p>
+        <form id="razorpayForm" className="flex justify-center text-center flex-col items-center gap-10 max-w-xl">
+           <div className="flex flex-col ">
+                <h1 className="text-4xl font-sai font-bold mb-4 text-white">Payment</h1>
+                <p className="text-white mb-4 text-4xl  font-sai">Be part of this pride. Click the button below to buy.</p>
+
+            </div>
         </form>
     );
 };

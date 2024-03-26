@@ -41,14 +41,14 @@ const App = () => {
 
     if (isLoading || !mounted) {
         return (
-            <div className="flex justify-center items-center h-screen">
+            <div className="flex justify-center items-center w-full min-h-screen  flex-col bg-[url('/bg.avif')] bg-cover bg-center">
                 <Loading />
             </div>
         );
     }
 
     return (
-        <div className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center">
+        <div className="w-full  min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center">
             <RazorpayButton />
         </div>
     );

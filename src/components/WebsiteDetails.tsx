@@ -106,29 +106,29 @@ const StandardDropzone:React.FC<StandardDropzoneProps>  = ({success}) => {
     }, [acceptedFiles, presignedUrl, websiteName, description, tagline, websiteURL, details]);
 
     return (
-        <section className="max-w-md mx-auto p-4 border rounded-lg shadow-lg">
+        <section className="w-full max-w-2xl  mt-44 mx-auto p-10 border rounded-lg shadow-lg">
             <ToastContainer />
 
             {/* Input for website name */}
             <div className="mb-4">
-                <label htmlFor="websiteName" className="block font-semibold mb-2">Website Name</label>
+                <label htmlFor="websiteName" className="block text-white text-lg text-left my-4 font-semibold mb-2">Website Name</label>
                 <input type="text" id="websiteName" value={websiteName} onChange={(e) => setWebsiteName(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
             </div>
             {/* Input for description */}
             <div className="mb-4">
-                <label htmlFor="description" className="block  font-semibold mb-2">Description</label>
+                <label htmlFor="description" className="block  text-white text-lg text-left my-4 font-semibold mb-2">Description</label>
                 <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} className="w-full border rounded-md px-3 py-2" rows={4} required></textarea>
             </div>
             {/* Input for tagline */}
             <div className="mb-4">
-                <label htmlFor="tagline" className="block  font-semibold mb-2">Tagline</label>
+                <label htmlFor="tagline" className="block text-white text-lg text-left my-4  font-semibold mb-2">Tagline</label>
                 <input type="text" id="tagline" value={tagline} onChange={(e) => setTagline(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
             </div>
 
             {!success && (
                 <div>
-                    <label htmlFor="image" className="block font-semibold mb-2">Image</label>
-                    <div {...getRootProps()} className="dropzone-container border-2 border-dashed rounded-lg p-4 mb-4">
+                    <label htmlFor="image" className="block text-white text-lg text-left my-4 font-semibold mb-2">Image</label>
+                    <div {...getRootProps()} className="dropzone-container text-white  border-2 border-dashed rounded-lg p-10 mb-4">
                         <input {...getInputProps({ accept: "image/*" })} />
                         {isDragActive ? (
                             <p className="text-center">Drop the file here...</p>
@@ -148,14 +148,14 @@ const StandardDropzone:React.FC<StandardDropzoneProps>  = ({success}) => {
 
             {/* Input for website URL */}
             <div className="mb-4">
-                <label htmlFor="websiteURL" className="block  font-semibold mb-2">Website URL</label>
+                <label htmlFor="websiteURL" className="block text-lg text-left text-white my-4  font-semibold mb-2">Website URL</label>
                 <input type="url" id="websiteURL" value={websiteURL} onChange={(e) => setWebsiteURL(e.target.value)} className="w-full border rounded-md px-3 py-2" required />
             </div>
             {/* Button to trigger file upload */}
             <button
                 onClick={handleSubmit}
                 disabled={!presignedUrl || acceptedFiles.length === 0 || btnDisabled }
-                className="submit-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="submit-button bg-black hover:bg-gray-700 text-white font-bold p-4 text-xl w-full mt-4 rounded"
             >
                 Upload
             </button>

@@ -21,26 +21,20 @@ const NavMobileMenu = (props: NavMobileMenuProps) => {
 
 	return (
 		<ul className='flex gap-6 md:hidden w-full text-white h-full z-30 mx-auto py-[80px] md:py-[100px] xl:py-[120px] flex-col bg-black justify-center absolute top-0 left-0 right-0 bottom-0 overflow-auto text-center '>
-			<motion.li
-				variants={slideDownView}
-				initial='initial'
-				whileInView='view'
-				transition={slideDownViewTransition(0.8)}
+			<li
+				
 				className='w-full text-[8vw]  leading-[0.9em] font-heading-narrow font-[900] uppercase text-[var(--black)]'>
 				<Link onClick={closeMenuOnClickingProductLink} href='/about'>
 					About
 				</Link>
-			</motion.li>
-			<motion.li
-				variants={slideDownView}
-				initial='initial'
-				whileInView='view'
-				transition={slideDownViewTransition(0.9)}
+			</li>
+			<li
+			
 				className='w-full text-[8vw] relative leading-[0.9em] font-heading-narrow font-[900] uppercase text-[var(--black)]'>
 				<Link onClick={closeMenuOnClickingContactLink} href='/buyer/info'>
 					Buy
 				</Link>
-			</motion.li>
+			</li>
 		</ul>
 	)
 }
