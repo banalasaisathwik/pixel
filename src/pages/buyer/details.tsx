@@ -1,11 +1,19 @@
 import React from 'react';
+import Loading from '~/components/Loading';
 import WebsiteForm from '~/components/WebsiteDetails';
 import { api } from '~/utils/api';
 
 
 const Buy: React.FC = () => {
 
-    const { data: status } = api.details.detailsStatus.useQuery();
+    const { data: status,isLoading } = api.details.detailsStatus.useQuery();
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Loading />
+            </div>
+        );
+    }
     return (
         <div className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center">
             <div className="text-center mb-8 mt-12">

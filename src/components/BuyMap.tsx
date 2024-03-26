@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { api } from '~/utils/api';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loading from './Loading';
 
 interface Pixel {
     row: number;
@@ -41,15 +42,18 @@ const BuyPage: React.FC = () => {
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-    const { data: quantity } = api.pxlR.quantity.useQuery();
-    const soldOutPixelsQuery = api.pxlR.soldoutPixel.useQuery();
+    const { data: quantity, isLoading: quantityLoading } = api.pxlR.quantity.useQuery();
+    const { data: soldOutPixelsQuery, isLoading: soldoutLoading } = api.pxlR.soldoutPixel.useQuery();
+    const isDataLoading = quantityLoading || soldoutLoading;
+
     const purchaseMutation = api.trx.buyPixel.useMutation({
+
         onSuccess: () => {
             setBtnDisabled(false);
             toast.success("successful")
             setTimeout(() => {
-               void router.push('/buyer/home');
-            }, 2000); 
+                void router.push('/buyer/home');
+            }, 2000);
         },
         onError: (error) => {
             console.error('Error while purchasing:', error);
@@ -59,10 +63,10 @@ const BuyPage: React.FC = () => {
     });
 
     useEffect(() => {
-        if (soldOutPixelsQuery.data) {
-            setSoldOutPixels(soldOutPixelsQuery.data);
+        if (soldOutPixelsQuery) {
+            setSoldOutPixels(soldOutPixelsQuery);
         }
-    }, [soldOutPixelsQuery.data]);
+    }, [soldOutPixelsQuery]);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -177,6 +181,13 @@ const BuyPage: React.FC = () => {
             URL.revokeObjectURL(downloadLink.href);
         }, 'image/png');
     };
+    if (isDataLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Loading />
+            </div>
+        );
+    }
     return (
         <div className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen overflow-y-auto'>
             <div className="flex justify-between items-center">
@@ -196,8 +207,8 @@ const BuyPage: React.FC = () => {
                     </button>
                 </div>
                 <p className="text-xl text-white italic">
-                    Make sure your area shape matches your image shape,<br/>
-                        for a good outcome.
+                    Make sure your area shape matches your image shape,<br />
+                    for a good outcome.
                 </p>
 
 
@@ -237,8 +248,8 @@ const BuyPage: React.FC = () => {
             />
 
             <ToastContainer />
-            </div>
-        
+        </div>
+
     );
 };
 

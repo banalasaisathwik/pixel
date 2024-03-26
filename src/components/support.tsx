@@ -3,14 +3,22 @@ import { useRouter } from "next/router";
 import React from 'react';
 import { FaCheckCircle } from "react-icons/fa";
 import { api } from "~/utils/api";
+import Loading from "./Loading";
 
 const Support: React.FC<{ paymentStatus: boolean | null | undefined }> = ({ paymentStatus }) => {
 
     const router = useRouter(); 
-    const {data:status} = api.support.uploadStatus.useQuery();
+    const {data:status,isLoading} = api.support.uploadStatus.useQuery();
     const handleRaiseTicketClick = () => {
         void router.push('ticket');
     };
+    if (isLoading ) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Loading />
+            </div>
+        );
+    }
     return (
         <div>
             <div className="text-center mb-4">

@@ -1,5 +1,6 @@
 import { useUser } from "@clerk/nextjs";
 import Card from "~/components/Card";
+import Loading from "~/components/Loading";
 import { api } from "~/utils/api";
 
 
@@ -20,8 +21,14 @@ const AdminDashboard: React.FC = () => {
         return <h1>Not authorized</h1>;
     }
 
-    const { data } = api.admin.notYetUploaded.useQuery();
-
+    const { data,isLoading } = api.admin.notYetUploaded.useQuery();
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Loading />
+            </div>
+        );
+    }
     return (
         <>
             <h1>This is the admin dashboard</h1>

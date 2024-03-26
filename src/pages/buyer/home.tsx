@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { api } from "~/utils/api";
 import { FaCheck } from "react-icons/fa";
 import Support from "~/components/support";
+import Loading from "~/components/Loading";
 
 export default function Page() {
     const router = useRouter();
@@ -30,7 +31,11 @@ export default function Page() {
     };
 
     if (isDataLoading) {
-        return <p>Loading...</p>;
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Loading />
+            </div>
+        );
     }
 
     return (
