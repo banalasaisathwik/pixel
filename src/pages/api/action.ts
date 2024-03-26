@@ -5,8 +5,8 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner"
 const s3Client = new S3Client({
     region: 'ap-south-1',
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY!,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+        accessKeyId: process.env.LOCAL_AWS_ACCESS_KEY!,
+        secretAccessKey: process.env.LOCAL_AWS_SECRET_ACCESS_KEY!,
     },
 })
 
@@ -62,7 +62,7 @@ export const getSignedURL = async ({
     const fileName = generateFileName()
 
     const putObjectCommand = new PutObjectCommand({
-        Bucket: process.env.AWS_BUCKET_NAME!,
+        Bucket: process.env.LOCAL_AWS_BUCKET_NAME!,
         Key: fileName,
         ContentType: fileType,
         ContentLength: fileSize,

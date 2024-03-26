@@ -13,7 +13,7 @@ export const s3Router = createTRPCRouter({
             const { s3Client:s3 } = ctx;
 
             const putObjectCommand = new PutObjectCommand({
-                Bucket: env.AWS_BUCKET_NAME,
+                Bucket: env.LOCAL_AWS_BUCKET_NAME,
                 Key: key,
             });
 
