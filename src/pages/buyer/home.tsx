@@ -40,7 +40,7 @@ export default function Page() {
                 <button
                     onClick={handleStep1Click}
                     disabled={isLoading || isPaymentComplete}
-                    className={`px-4 py-2 bg-blue-500 text-white rounded-md ${isLoading || isPaymentComplete ? 'cursor-not-allowed opacity-50' : 'hover:bg-blue-600 focus:outline-none'}`}
+                    className={`px-4  py-2 bg-blue-500 text-white rounded-md ${isLoading || isPaymentComplete ? 'cursor-not-allowed opacity-50' : 'hover:bg-blue-600 focus:outline-none'}`}
                     title={!isLoading && isPaymentComplete ? "Payment is complete" : "Click to make payment"}
                 >
                     Step 1: Payment {isPaymentComplete && <FaCheck className="inline" />}
