@@ -3,7 +3,6 @@
 import { useNavbarMenuToggle, useNavbarVisibility } from '../hooks'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import Image from 'next/image'
 import { view } from '../utils/animations'
 import NavMenuButton from './NavMenuButton'
 import NavMobileMenu from './NavMobileMenu'

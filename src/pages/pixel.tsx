@@ -74,11 +74,11 @@ const Hello = () => {
                         </div>
                         <p className='text-2xl lg:hidden  text-white  font-light'>{websiteDetails?.tagline}</p>
                         <div className=' flex flex-col lg:flex-row  items-center gap-4'>
-                            <Link href={websiteDetails?.websiteUrl ?? "/error"} 
+                            <div 
                             className=' lg:w-[240px] w-full justify-center text-xl flex  items-center gap-4 font-semibold rounded-md border-2 border-white text-white p-4 '>
                                
                                 <p> visits :{data?.visitors}</p>
-                            </Link>
+                            </div>
                             <Link href={websiteDetails?.websiteUrl ?? "/error"} className='text-xl font-semibold w-full lg:w-[200px] text-center rounded-md bg-white text-gray-900 p-4 font-sai'>Visit Website</Link>
                         </div>
                     </div>

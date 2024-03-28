@@ -12,17 +12,21 @@ import { useRouter } from "next/router";
 const MyApp: AppType = ({ Component, pageProps }) => {
   const router = useRouter();
 
-  const isNavbarVisible = !router.pathname.startsWith('/buyer/selection');
-  const isAdminNavbarVisible = !router.pathname.startsWith('/admin');
+  const isAdminRoute = router.pathname.startsWith('/admin');
+  const isTicketRoute = router.pathname.startsWith('/buyer/ticket');
+  const isTermsRoute = router.pathname.startsWith('/terms');
+  const isPrivacyRoute = router.pathname.startsWith('/privacy');
+  const render = isAdminRoute || isTicketRoute || isTermsRoute || isPrivacyRoute
+
 
 
   return (
     <Context>
       <ClerkProvider {...pageProps} publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
-        {isNavbarVisible && isAdminNavbarVisible && <Navbar />}
+        {!render && <Navbar />}
         <Component {...pageProps} />
       </ClerkProvider>
-     {isAdminNavbarVisible && <Footer/>}
+     {!isAdminRoute && <Footer/>}
     </Context>
 
   );

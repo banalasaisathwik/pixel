@@ -67,25 +67,6 @@ buyPixel: protectedProcedure
                 };
             }
         }),
-    island: protectedProcedure
-        .input(z.object({ id: z.string() }))
-        .mutation(async ({ input: { id }, ctx }) => {
-            try {
-                const data = {
-                    onIsland: true,
-                };
-
-                const updatedUser = await ctx.db.user.update({
-                    where: { id: id },
-                    data:data,
-                });
-
-                return updatedUser;
-            } catch (error) {
-                console.error('Error updating user:', error);
-                throw new Error('Failed to update user island status');
-            }
-        }),
     payment: protectedProcedure
         .query(async ({ ctx }) => {
             try {

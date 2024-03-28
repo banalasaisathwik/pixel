@@ -1,8 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
-import { slideDownView, slideDownViewTransition } from '../utils/animations'
 
 interface NavMobileMenuProps {
 	closeMenu: (status: boolean) => void

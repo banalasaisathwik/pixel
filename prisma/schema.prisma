@@ -17,7 +17,6 @@ model User {
     noOfPixels     Int?
     paymentSuccess Boolean?
     price Int?
-    onIsland       Boolean?
     uploaded       Boolean?
     website        Website? @relation(fields: [websiteId], references: [id])
     purchase Boolean?

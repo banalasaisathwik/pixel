@@ -16,7 +16,19 @@ const ConfirmDialog: React.FC<{
     onConfirm: () => void;
     pixelCount: number;
 }> = ({ isOpen, onClose, onConfirm, pixelCount }) => {
+    const [isChecked, setIsChecked] = useState(false);
+
     if (!isOpen) return null;
+
+    const handleConfirm = () => {
+        if (!isChecked) {
+            // If the checkbox is not checked, don't proceed with the confirmation
+            alert("Please confirm that you've read the policy and terms & conditions.");
+            return;
+        }
+        // Proceed with the confirmation
+        onConfirm();
+    };
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -24,14 +36,28 @@ const ConfirmDialog: React.FC<{
                 <h2 className="font-bold text-2xl">Confirm Purchase</h2>
                 <p className='text-lg'>You are about to purchase {pixelCount} pixels. Do you wish to proceed?</p>
                 <p className='text-lg'>(Please note that selecting areas outside the map will result in rejection of your request.)</p>
+                
+                {/* Checkbox for confirming policy and terms & conditions */}
+                <div className="flex items-center mt-4">
+                    <input
+                        type="checkbox"
+                        id="confirmCheckbox"
+                        checked={isChecked}
+                        onChange={() => setIsChecked(!isChecked)}
+                        className="mr-2"
+                    />
+                    <label htmlFor="confirmCheckbox">I have read and agree to the policy and terms & conditions.</label>
+                </div>
+                
                 <div className="flex justify-end space-x-2 mt-4">
                     <button onClick={onClose} className="px-4 py-2 rounded bg-gray-200">Cancel</button>
-                    <button onClick={onConfirm} className="px-4 py-2 rounded bg-blue-500 text-white">Confirm</button>
+                    <button onClick={handleConfirm} className="px-4 py-2 rounded bg-blue-500 text-white">Confirm</button>
                 </div>
             </div>
         </div>
     );
 };
+
 
 const BuyPage: React.FC = () => {
     const router = useRouter();

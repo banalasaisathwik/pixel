@@ -41,27 +41,33 @@ function TicketForm() {
     };
 
     return (
-        <div>
-            <h2>Ticket</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="description">Description:</label>
-                    <textarea
-                        id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+        <section className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center ">
+            <div className="max-w-lg mx-auto bg-white shadow-md p-8 rounded-lg">
+                <h2 className="text-2xl mb-4">Please create a ticket here.</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <label htmlFor="description" className="block">Description:</label>
+                        <textarea
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            disabled={isSubmitting}
+                            placeholder="Describe your issue or request"
+                            rows={4}
+                            className="w-full p-2 border border-gray-300 rounded"
+                        />
+                        {error && <p className="text-red-500">{error}</p>}
+                    </div>
+                    <button
+                        className="w-full p-4 text-lg bg-black text-white rounded-md cursor-pointer hover:bg-gray-800 focus:outline-none"
+                        type="submit"
                         disabled={isSubmitting}
-                        placeholder="Describe your issue or request"
-                        rows={4}
-                        style={{ width: '100%' }}
-                    />
-                    {error && <p style={{ color: 'red' }}>{error}</p>}
-                </div>
-                <button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Submitting...' : 'Submit Ticket'}
-                </button>
-            </form>
-        </div>
+                    >
+                        {isSubmitting ? 'Submitting...' : 'Submit Ticket'}
+                    </button>
+                </form>
+            </div>
+        </section>
     );
 }
 

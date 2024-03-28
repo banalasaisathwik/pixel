@@ -14,7 +14,7 @@ export default function RootLayout(props: RootLayoutProps) {
 	return (
 		<html lang='en'>
 			<Head>
-				<link rel='icon' href='/favicon.ico' sizes='any' />
+				<link rel='icon' href='/logo.png' sizes='any' />
 				<link rel='stylesheet' href='https://use.typekit.net/sqg3ceb.css' />
 			</Head>
 			<body className='bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen leading-[1.6em] font-light font-text-font text-lg'>
