@@ -10,7 +10,7 @@ const Home: React.FC = () => {
     <div className=' bg-no-repeat bg-[#181818] bg-center min-h-screen w-full flex flex-col justify-center items-center'>
 
       
-        <ImageMap />
+      <ImageMap />
     
     </div>
   );

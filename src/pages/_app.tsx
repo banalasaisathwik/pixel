@@ -16,7 +16,11 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   const isTicketRoute = router.pathname.startsWith('/buyer/ticket');
   const isTermsRoute = router.pathname.startsWith('/terms');
   const isPrivacyRoute = router.pathname.startsWith('/privacy');
-  const render = isAdminRoute || isTicketRoute || isTermsRoute || isPrivacyRoute
+  const isSelectionRoute = router.pathname.startsWith('/buyer/selection');
+  const isSignin = router.pathname.startsWith('/sign-in');
+  const isSignup = router.pathname.startsWith('/sign-up');
+
+  const render = isAdminRoute || isTicketRoute || isTermsRoute || isPrivacyRoute || isSignin || isSignup || isSelectionRoute
 
 
 

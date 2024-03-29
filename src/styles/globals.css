@@ -7,6 +7,9 @@
 @tailwind utilities;
 
 /* Add this CSS to your stylesheets */
+.expanded {
+  transform: translateY(-50px) scale(1);
+}
 
 .grid-container {
     position: relative;

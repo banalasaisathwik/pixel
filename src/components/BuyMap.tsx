@@ -215,7 +215,7 @@ const BuyPage: React.FC = () => {
         );
     }
     return (
-        <div className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen overflow-y-auto'>
+        <div className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen overflow-y-auto expanded'>
             <div className="px-10 py-4 flex justify-between items-center">
                 <div className="flex">
                     <button

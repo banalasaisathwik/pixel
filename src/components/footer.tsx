@@ -4,7 +4,8 @@ import { FiInstagram, FiTwitter } from 'react-icons/fi';
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className="bg-cover w-full bg-bottom bg-[url('/bg.avif')] py-8 px-4 shadow-md z-10 flex flex-col justify-center items-center lg:flex-col lg:justify-content-center align-items-center ">
+   
       <div className="text-base text-gray-500 text-center mb-4">Copyright © 2024 Bharat startup sankalan</div>
       <div className="flex flex-col justify-center w-full text-center lg:flex-row gap-4">
         <Link href="/terms" className="text-gray-500 text-base hover:text-gray-400">Terms & Conditions</Link>
@@ -21,6 +22,7 @@ const Footer = () => {
           <FiTwitter className="text-gray-500 text-base hover:text-gray-400" />
         </a>
       </div>
+     
     </footer>
   );
 };

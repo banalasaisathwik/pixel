@@ -58,7 +58,7 @@ const ImageMap: React.FC = () => {
         },
         expanded: {
             y: -50,
-            scale: 1.1,
+            scale: 1,
         },
     };
 
@@ -72,7 +72,7 @@ const ImageMap: React.FC = () => {
         >
 
             <canvas
-                className={`cursor-pointer ${isExpanded ? 'mt-[200px]' : 'absolute top-1/2 translate-y-[-40%] left-1/2 translate-x-[-50%] w-[60%] lg:w-[20%] '}  transition-all duration-300 `}
+                className={`cursor-pointer ${isExpanded ? 'mt-[200px]' : 'absolute top-1/2 translate-y-[-40%] left-1/2 translate-x-[-50%] w-[60%] lg:w-[20%] '}  transition-all duration-300`}
                 ref={canvasRef}
                 width={2000}
                 height={2000}
