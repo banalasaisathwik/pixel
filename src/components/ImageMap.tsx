@@ -54,7 +54,7 @@ const ImageMap: React.FC = () => {
     const variants = {
         normal: {
             y: 0,
-            scale: 1,
+            scale: 0.98,
         },
         expanded: {
             y: -50,

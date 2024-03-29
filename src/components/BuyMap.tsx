@@ -36,7 +36,7 @@ const ConfirmDialog: React.FC<{
                 <h2 className="font-bold text-2xl">Confirm Purchase</h2>
                 <p className='text-lg'>You are about to purchase {pixelCount} pixels. Do you wish to proceed?</p>
                 <p className='text-lg'>(Please note that selecting areas outside the map will result in rejection of your request.)</p>
-                
+
                 {/* Checkbox for confirming policy and terms & conditions */}
                 <div className="flex items-center mt-4">
                     <input
@@ -48,7 +48,7 @@ const ConfirmDialog: React.FC<{
                     />
                     <label htmlFor="confirmCheckbox">I have read and agree to the policy and terms & conditions.</label>
                 </div>
-                
+
                 <div className="flex justify-end space-x-2 mt-4">
                     <button onClick={onClose} className="px-4 py-2 rounded bg-gray-200">Cancel</button>
                     <button onClick={handleConfirm} className="px-4 py-2 rounded bg-blue-500 text-white">Confirm</button>
@@ -215,7 +215,7 @@ const BuyPage: React.FC = () => {
         );
     }
     return (
-        <div className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen overflow-y-auto expanded'>
+        <div className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen overflow-y-auto expanded mt-10'>
             <div className="px-10 py-4 flex justify-between items-center">
                 <div className="flex">
                     <button
@@ -245,7 +245,7 @@ const BuyPage: React.FC = () => {
                     </div>
                     <div className="flex items-center">
                         <div className="w-3 h-3 bg-blue-800 mr-2 "></div>
-                        <p  className='text-white'>Selected pixels</p>
+                        <p className='text-white'>Selected pixels</p>
                     </div>
                 </div>
 

@@ -14,11 +14,11 @@ const Footer = () => {
       </div>
       <div className="flex justify-center items-center gap-4 mt-4">
         {/* Instagram icon with link */}
-        <a href="YOUR_INSTAGRAM_LINK_HERE" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.instagram.com/bharat_startup_sankalan/" target="_blank" rel="noopener noreferrer">
           <FiInstagram className="text-gray-500 text-base hover:text-gray-400" />
         </a>
         {/* Twitter icon with link */}
-        <a href="YOUR_TWITTER_LINK_HERE" target="_blank" rel="noopener noreferrer">
+        <a href="https://twitter.com/ProjectSankalan" target="_blank" rel="noopener noreferrer">
           <FiTwitter className="text-gray-500 text-base hover:text-gray-400" />
         </a>
       </div>
