@@ -1,4 +1,3 @@
-'use client'
 
 import { useNavbarMenuToggle, useNavbarVisibility } from '../hooks'
 import Link from 'next/link'

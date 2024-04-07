@@ -3,11 +3,9 @@ import Card from "~/components/Card";
 import Loading from "~/components/Loading";
 import { api } from "~/utils/api";
 
-
-
 const AdminDashboard: React.FC = () => {
     const { user } = useUser();
-
+    console.log(user?.emailAddresses)
     // Check if user and user.publicMetadata are defined
     if (!user?.publicMetadata) {
         // Handle case where user or user.publicMetadata is not defined
@@ -20,8 +18,9 @@ const AdminDashboard: React.FC = () => {
     if (role !== "admin") {
         return <h1>Not authorized</h1>;
     }
+    console.log(user?.publicMetadata.role)
+    const { data, isLoading } = api.admin.notYetUploaded.useQuery();
 
-    const { data,isLoading } = api.admin.notYetUploaded.useQuery();
     if (isLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
@@ -29,15 +28,21 @@ const AdminDashboard: React.FC = () => {
             </div>
         );
     }
+
+    // Main content rendering
     return (
         <>
-            <h1>This is the admin dashboard</h1>
-            <p>This page is restricted to users with the &apos;admin&apos; role.</p>
-            {data?.map((item, index) => (
-                <div key={index}>
-                    <Card data={item} />
-                </div>
-            ))}
+            <h1>You are in the admin dashboard</h1>
+            
+            {data && data.length > 0 ? (
+                data.map((item, index) => (
+                    <div key={index}>
+                        <Card data={item} />
+                    </div>
+                ))
+            ) : (
+                <p>No data available</p>
+            )}
         </>
     );
 }

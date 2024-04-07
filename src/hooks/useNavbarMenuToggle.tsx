@@ -1,35 +1,38 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const useNavbarMenuToggle = () => {
-	const [navOpen, setNavOpen] = useState<boolean>(false)
+	const [navOpen, setNavOpen] = useState<boolean>(false);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
+		let timeoutId: number | null = null;
+
 		const resizeListener = () => {
-			if (typeof window !== 'undefined') {
-				const currentWidth =
-					window.innerWidth ||
-					document.documentElement.clientWidth ||
-					document.body.clientWidth
+			// Clear the timeout if it's already set
+			if (timeoutId !== null) clearTimeout(timeoutId);
 
-				if (currentWidth >= 768) setNavOpen(false)
-			}
-		}
+			// Set a new timeout
+			timeoutId = window.setTimeout(() => {
+				if (window.innerWidth >= 768) setNavOpen(false);
+			}, 100); // 100ms debounce time
+		};
 
-		window.addEventListener('resize', resizeListener)
+		window.addEventListener('resize', resizeListener);
 
 		return () => {
-			window.removeEventListener('resize', resizeListener)
-		}
-	}, [])
+			window.removeEventListener('resize', resizeListener);
+			// Also clear the timeout when the component unmounts
+			if (timeoutId !== null) clearTimeout(timeoutId);
+		};
+	}, []);
 
-	const toggleNavMenu = () => setNavOpen((prev) => !prev)
-	const changeNavMenu = (status: boolean) => setNavOpen(status)
+	const toggleNavMenu = () => setNavOpen((prev) => !prev);
+	const changeNavMenu = (status: boolean) => setNavOpen(status);
 
 	return {
 		navOpen,
 		toggleNavMenu,
 		changeNavMenu,
-	}
-}
+	};
+};
 
-export default useNavbarMenuToggle
+export default useNavbarMenuToggle;

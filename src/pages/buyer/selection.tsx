@@ -3,7 +3,6 @@ import BuyMap from '../../components/BuyMap';
 import { api } from '~/utils/api';
 import { useRouter } from 'next/router';
 import Loading from '~/components/Loading';
-import ImageMap from '~/components/ImageMap';
 
 const Buy: React.FC = () => {
     const router = useRouter();
