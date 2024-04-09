@@ -31,7 +31,7 @@ const ConfirmDialog: React.FC<{
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
             <div className="bg-white p-10 rounded-lg">
                 <h2 className="font-bold text-2xl">Confirm Purchase</h2>
                 <p className='text-lg'>You are about to purchase {pixelCount} pixels. Do you wish to proceed?</p>
@@ -250,7 +250,7 @@ const BuyPage: React.FC = () => {
                 </div>
 
             </div>
-
+            <p className="text-xl text-center text-black">If you cannot see the map, please refresh the page!!</p>
             <canvas
                 ref={canvasRef}
                 width={2000}
