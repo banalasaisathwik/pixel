@@ -6,6 +6,7 @@ const ImageMap: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [mapLoaded, setMapLoaded] = useState<boolean>(false);
     const [isExpanded, setIsExpanded] = useState<boolean | null>(null);
+    const [tooltip, setTooltip] = useState<{ visible: boolean; content: string; x: number; y: number; }>({ visible: false, content: '', x: 0, y: 0 });
 
     const router = useRouter();
 
@@ -51,6 +52,33 @@ const ImageMap: React.FC = () => {
         document.body.removeChild(downloadLink);
     };
 
+    const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+        if (isExpanded && mapLoaded) {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const scaleX = e.currentTarget.width / rect.width;   // Determine the scale factor for X
+            const scaleY = e.currentTarget.height / rect.height; // Determine the scale factor for Y
+
+            // Adjust mouse position by the canvas position and scale
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+
+            const row = Math.floor(y / 10);
+            const col = Math.floor(x / 10);
+
+            // Update tooltip position to follow the mouse. Adjust as needed for offset.
+            // Here, we're using the unscaled mouse positions for simplicity.
+            setTooltip({
+                visible: true,
+                content: `Pixel: (${row}, ${col})`,
+                x: e.clientX - rect.left, // Position tooltip relative to canvas, not viewport
+                y: e.clientY - rect.top
+            });
+        }
+    };
+    const handleMouseLeave = () => {
+        setTooltip(prev => ({ ...prev, visible: false }));
+    };
+
     const variants = {
         normal: {
             y: 0,
@@ -86,7 +114,31 @@ const ImageMap: React.FC = () => {
                         handlePixelClick(row, col);
                     }
                 }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+
             />
+            {tooltip.visible && canvasRef.current && (
+                <div
+                    style={(function () {
+                        const rect = canvasRef.current.getBoundingClientRect();
+                        return {
+                            position: 'absolute',
+                            top: `${tooltip.y + rect.top + window.scrollY + 15}px`, // Dynamically calculate based on current rect
+                            left: `${tooltip.x + rect.left + window.scrollX + 15}px`, // Dynamically calculate based on current rect
+                            backgroundColor: 'white',
+                            padding: '5px',
+                            borderRadius: '5px',
+                            boxShadow: '0px 0px 10px rgba(0,0,0,0.5)',
+                            zIndex: 100, // Ensure the tooltip is above other content
+                        };
+                    })()}
+                >
+                    {tooltip.content}
+                </div>
+            )}
+
+
             {!isExpanded && (
                 <p className="text-gray-700 absolute top-1/2 left-[50%] transform translate-x-[-100%] animate-pulse -translate-y-[-0%]">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-14 h-14">

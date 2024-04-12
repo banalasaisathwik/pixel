@@ -60,7 +60,7 @@ export const websiteDetailsRouter = createTRPCRouter({
                     // Create new website
                     createdWebsite = await ctx.db.website.create({
                         data: {
-                            imageUrl: "",
+                            imageUrl: imageUrl,
                             websiteUrl: websiteURL,
                             websiteName: websiteName,
                             tagline: tagline,
