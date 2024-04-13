@@ -120,19 +120,16 @@ const ImageMap: React.FC = () => {
             />
             {tooltip.visible && canvasRef.current && (
                 <div
-                    style={(function () {
-                        const rect = canvasRef.current.getBoundingClientRect();
-                        return {
-                            position: 'absolute',
-                            top: `${tooltip.y + rect.top + window.scrollY + 15}px`, // Dynamically calculate based on current rect
-                            left: `${tooltip.x + rect.left + window.scrollX + 15}px`, // Dynamically calculate based on current rect
-                            backgroundColor: 'white',
-                            padding: '5px',
-                            borderRadius: '5px',
-                            boxShadow: '0px 0px 10px rgba(0,0,0,0.5)',
-                            zIndex: 100, // Ensure the tooltip is above other content
-                        };
-                    })()}
+                    style={{
+                        position: 'absolute',
+                        top: `${tooltip.y + canvasRef.current.offsetTop + 15}px`,
+                        left: `${tooltip.x + canvasRef.current.offsetLeft + 15}px`,
+                        backgroundColor: 'white',
+                        padding: '5px',
+                        borderRadius: '5px',
+                        boxShadow: '0px 0px 10px rgba(0,0,0,0.5)',
+                        zIndex: 100,
+                    }}
                 >
                     {tooltip.content}
                 </div>
