@@ -18,7 +18,7 @@ const ImageMap: React.FC = () => {
         if (!ctx) return;
 
         const image = new Image();
-        image.src = '/map.svg';
+        image.src = '/mapi.svg';
         image.onload = () => {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
             setMapLoaded(true);

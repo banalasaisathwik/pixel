@@ -41,7 +41,7 @@ const Hello = () => {
             <div className="mx-auto p-4 cursor-pointer bg-[url('/bg.avif')] bg-cover bg-center w-full min-h-screen">
             <div className="flex justify-center items-center h-screen ">
                 <div className="p-8 mt-20 text-center">
-                    <h2 className="text-6xl text-white   font-bold mb-4">Oops!</h2>
+                    <h2 className="text-6xl text-white   font-bold mb-4">For Sale!</h2>
                     <p className="text-xl  text-gray-100 my-6">The block has not yet been sold.</p>
                   
                     <Link href={"/buyer/info"} className='text-white cursor-pointer text-xl bg-black p-4'>Want to buy this block ?</Link>
@@ -86,7 +86,7 @@ const Hello = () => {
                 <hr className='w-full mt-10 ' />
                 <div className='my-10 '>
                     <h1 className='text-white font-sai text-3xl'> what is {websiteDetails?.websiteName} ?</h1>
-                    <p className='py-4 text-white text-xl'>
+                    <p className='py-4 text-white text-xl whitespace-pre-line'>
                         {websiteDetails?.description}
                     </p>
                 </div>
