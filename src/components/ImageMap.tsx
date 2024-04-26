@@ -31,7 +31,7 @@ const ImageMap: React.FC = () => {
     }, []);
 
     const handlePixelClick = (row: number, col: number): void => {
-        void router.push(`/pixel?row=${row}&col=${col}`);
+        void router.push(`/pixel?row=${row+1}&col=${col}`);
     };
 
     const toggleExpand = (): void => {
@@ -69,7 +69,7 @@ const ImageMap: React.FC = () => {
             // Here, we're using the unscaled mouse positions for simplicity.
             setTooltip({
                 visible: true,
-                content: `Pixel: (${row}, ${col})`,
+                content: `Pixel: (${row+1}, ${col})`,
                 x: e.clientX - rect.left, // Position tooltip relative to canvas, not viewport
                 y: e.clientY - rect.top
             });

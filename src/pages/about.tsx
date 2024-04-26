@@ -5,8 +5,11 @@ const AboutUsPage = () => {
 
         <section className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center ">
             <div className="text-center mb-8 mt-44 lg:mt-12 lg:px-10">
-              
-                <p className="text-3xl mt-20 lg:px-10 my-4 text-white italic">
+
+                <p className="text-3xl mt-28 lg:px-10 my-4 text-white italic">
+                    Pixel Art same as like <a className="font-bold text-amber-600">MillionDollarHomePage</a>
+                </p>
+                <p className="text-3xl mt-8 lg:px-10 my-4 text-white italic">
                     This is the place to showcase the evolution of startups over the last 10 years and demonstrate the success of government policies.
                     <br />
                     <br />
