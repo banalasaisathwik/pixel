@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Privacy = () => {
     return (
-        <section className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center">
+        <section className="w-full min-h-screen flex flex-col justify-center items-center  bg-cover bg-center">
             <div className="text-white">
                 <p>Privacy Policy</p>
 

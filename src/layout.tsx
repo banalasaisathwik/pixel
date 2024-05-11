@@ -1,7 +1,8 @@
-
 import Head from 'next/head'
 import Context from './components/context'
 import Navbar from './components/NavBar'
+import { useEffect, useState } from 'react'
+import PopUp from './components/popUp'
 
 
 interface RootLayoutProps {
@@ -10,14 +11,15 @@ interface RootLayoutProps {
 
 export default function RootLayout(props: RootLayoutProps) {
 	const { children } = props
-
+	
 	return (
 		<html lang='en'>
 			<Head>
 				<link rel='icon' href='/logo.png' sizes='any' />
 				<link rel='stylesheet' href='https://use.typekit.net/sqg3ceb.css' />
 			</Head>
-			<body className='bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen leading-[1.6em] font-light font-text-font text-lg'>
+			<body className=' w-full min-h-screen leading-[1.6em] font-light font-text-font text-lg'>
+				
 				<Context>
 					<Navbar />
 					{children}

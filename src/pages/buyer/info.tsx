@@ -3,7 +3,7 @@ import React from 'react'
 
 const Info = () => {
     return (
-        <section className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center ">
+        <section className="w-full min-h-screen flex flex-col justify-center items-center  bg-cover bg-center ">
             <div className="mx-auto mt-48 flex flex-col justify-center items-center  px-4 sm:px-6 lg:px-8">
                 <div className="text-center">
                     <p className="text-xs text-white sm:text-sm lg:text-4xl">

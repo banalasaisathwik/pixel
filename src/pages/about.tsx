@@ -3,7 +3,7 @@ import React from 'react';
 const AboutUsPage = () => {
     return (
 
-        <section className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center ">
+        <section className="w-full min-h-screen flex flex-col justify-center items-center  bg-cover bg-center ">
             <div className="text-center mb-8 mt-44 lg:mt-12 lg:px-10">
 
                 <p className="text-3xl mt-28 lg:px-10 my-4 text-white italic">

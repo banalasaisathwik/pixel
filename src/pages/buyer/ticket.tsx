@@ -41,7 +41,7 @@ function TicketForm() {
     };
 
     return (
-        <section className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center ">
+        <section className="w-full min-h-screen flex flex-col justify-center items-center  bg-cover bg-center ">
             <div className="max-w-lg mx-auto bg-white shadow-md p-8 rounded-lg">
                 <h2 className="text-2xl mb-4">Please create a ticket here.</h2>
                 <form onSubmit={handleSubmit}>

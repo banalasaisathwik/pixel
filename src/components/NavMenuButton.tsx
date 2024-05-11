@@ -15,7 +15,7 @@ const NavMenuButton = (props: NavMenuButtonProps) => {
 			type='button'
 			onClick={toggleNavMenu}
 
-			className='rounded px-[10px] bg-black md:hidden absolute top-14 right-4 z-50 cursor-pointer w-14 h-14 transition-colors duration-500 ease-in-out'>
+			className='rounded px-[10px] md:hidden absolute top-2 right-4 z-50 cursor-pointer w-14 h-14 transition-colors duration-500 ease-in-out'>
 			<span className='sr-only'> Menu </span>
 			<div className='w-full flex justify-center h-auto  align-middle'>
 				{

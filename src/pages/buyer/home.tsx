@@ -39,7 +39,7 @@ export default function Page() {
     }
 
     return (
-        <section className="w-full min-h-screen flex flex-col justify-center items-center bg-[url('/bg.avif')] bg-cover bg-center p-8">
+        <section className="w-full min-h-screen flex flex-col justify-center items-center  bg-cover bg-center p-8">
             <div className="text-center my-20 max-w-2xl">
 
                 <p className="lg:text-3xl text-lg mb-2 mt-20 lg:mt-32 text-center text-white font-style: italic">

@@ -95,7 +95,7 @@ const ImageMap: React.FC = () => {
             initial={false}
             animate={isExpanded !== null ? (isExpanded ? 'expanded' : 'normal') : undefined}
             variants={variants}
-            className='cursor-pointer bg-[url("/bg.avif")] bg-cover bg-center w-full min-h-screen overflow-y-auto'
+            className='cursor-pointer  w-full min-h-screen overflow-y-auto'
             onClick={toggleExpand}
         >
 

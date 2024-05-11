@@ -38,7 +38,7 @@ const Hello = () => {
 
     if (isError) {
         return (
-            <div className="mx-auto p-4 cursor-pointer bg-[url('/bg.avif')] bg-cover bg-center w-full min-h-screen">
+            <div className="mx-auto p-4 cursor-pointer  bg-cover bg-center w-full min-h-screen">
             <div className="flex justify-center items-center h-screen ">
                 <div className="p-8 mt-20 text-center">
                     <h2 className="text-6xl text-white   font-bold mb-4">For Sale!</h2>
@@ -60,7 +60,7 @@ const Hello = () => {
     }
 
     return (
-        <div className="mx-auto p-4 cursor-pointer bg-[url('/bg.avif')] bg-cover bg-center w-full min-h-screen">
+        <div className="mx-auto p-4 cursor-pointer  bg-cover bg-center w-full min-h-screen">
             <div className="max-w-7xl mx-auto lg:p-6 mt-44 lg:mt-44 w-full">
                 <div className='w-full justify-between flex flex-col lg:flex-row items-center'>
                     <div className='flex flex-col lg:flex-row gap-6  w-full justify-between'>

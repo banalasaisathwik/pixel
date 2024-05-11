@@ -18,7 +18,7 @@ const NavMobileMenu = (props: NavMobileMenuProps) => {
 	const closeMenuOnClickingContactLink = () => handleClose('/about')
 
 	return (
-		<ul className='flex gap-6 md:hidden w-full text-white h-full z-30 mx-auto py-[80px] md:py-[100px] xl:py-[120px] flex-col bg-black justify-center absolute top-0 left-0 right-0 bottom-0 overflow-auto text-center '>
+		<ul className='flex gap-6 md:hidden w-full text-white h-full z-50 mx-auto py-[80px] md:py-[100px] xl:py-[120px] flex-col bg-black justify-center absolute top-0 left-0 right-0 bottom-0 overflow-auto text-center '>
 			<li
 				
 				className='w-full text-[8vw]  leading-[0.9em] font-heading-narrow font-[900] uppercase text-[var(--black)]'>
