@@ -8,6 +8,7 @@ export default authMiddleware({
     publicRoutes: [
         "/",
         "/about",
+        "/trending",
         "/buyer/info",
         "/pixel(.*)",
         "/home(.*)",

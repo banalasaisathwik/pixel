@@ -23,7 +23,6 @@ const Logo = (props: LogoProps) => {
 				<h1 className='font-Ultra text-white  mt-10 text-[8vw] z-50 leading-[8vw] lg:leading-[3vw] lg:text-[3.5vw]'>
 					Bharat startup sankalan
 				</h1>
-				<p className="italic ml-36 text-orange-400 font-bold">a pixel-art !!</p>
 
 
 			</Link>

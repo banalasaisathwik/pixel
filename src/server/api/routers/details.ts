@@ -161,8 +161,22 @@ export const websiteDetailsRouter = createTRPCRouter({
             })
 
             return up;
-    })
+    }),
 
+    Trending :  publicProcedure
+        .query(async ({ctx}) =>{
+            const data = await ctx.db.website.findMany(
+                {
+                    take:10,
+                    orderBy: {
+                        visitors:"desc"
+                        
+                    },
+                    select:{id:true,websiteName:true,visitors:true,tagline:true,imageUrl:true}
+                }
+            )
+            return data;
+        })
 });
 
 
