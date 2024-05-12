@@ -1,8 +1,6 @@
 import Head from 'next/head'
 import Context from './components/context'
 import Navbar from './components/NavBar'
-import { useEffect, useState } from 'react'
-import PopUp from './components/popUp'
 
 
 interface RootLayoutProps {

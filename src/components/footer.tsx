@@ -18,7 +18,7 @@ const Footer = () => {
           <FiInstagram size={24} className="text-gray-500 text-base hover:text-gray-400" />
         </a>
         {/* Twitter icon with link */}
-        <a href="https://twitter.com/ProjectSankalan" target="_blank" rel="noopener noreferrer">
+          <a href="https://twitter.com/startupsankalan" target="_blank" rel="noopener noreferrer">
           <FiTwitter size={24} className="text-gray-500 text-base hover:text-gray-400" />
         </a>
       </div>

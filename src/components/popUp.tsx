@@ -21,12 +21,12 @@ const PopUp: React.FC<Props> = ({ onClose }) => {
 
                         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                             <h1 className="text-4xl font-bold text-center border-b-2 pb-2 text-gray-900">
-                                Disclaimer
+                                Welcome Note 🙏
                             </h1>
                             <div >
                                 <div className="py-2">
                                     <p className="text-lg mb-4">
-                                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis laudantium voluptate molestias inventore dolor quae officia laborum, odit perspiciatis illum voluptatibus rerum provident nulla. Blanditiis explicabo temporibus libero enim adipisci.
+                                     {  " Welcome to BharatStartupSankalan! Each pixel here is a piece of India's vibrant business tapestry. Click gently to reveal the unique story of every business. Join us and discover the beauty in simplicity."}
                                       </p>
                                    
                                     
@@ -39,7 +39,7 @@ const PopUp: React.FC<Props> = ({ onClose }) => {
                         <button type="button"
                             onClick={handleClose}
                             className="inline-flex justify-center w-full  rounded-md border border-gray-300 bg-black text-white p-4 text-xl  shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 ">
-                            I Understood , Continue
+                             Continue
                         </button>
                     </span>
 

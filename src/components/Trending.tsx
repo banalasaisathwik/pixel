@@ -1,7 +1,9 @@
+// Trending.tsx
 import React from 'react';
 import { api } from '~/utils/api';
 import Loading from './Loading';
 import Image from 'next/image';
+
 
 const Trending = () => {
     const { data: topTrending, isLoading, isError } = api.details.Trending.useQuery();
@@ -15,32 +17,27 @@ const Trending = () => {
     }
 
     return (
+        <div className="w-full min-h-screen flex flex-col justify-center items-center  bg-cover bg-center">
         <div className="container mx-auto mt-8">
-            <h1 className="text-3xl font-bold mb-4">Trending</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {topTrending.map(item => (
-                    <Card key={item.id} trends={item} />
-                ))}
+            <div className="bg-white shadow-md rounded-md overflow-hidden max-w-lg mx-auto mt-16">
+                <div className="bg-gray-100 py-2 px-4">
+                    <h2 className="text-xl font-semibold text-gray-800">Top visited websites 📈</h2>
+                </div>
+                <ul className="divide-y divide-gray-200">
+                    {topTrending.map((user, index) => (
+                        <li key={user.id} className="flex items-center py-4 px-6">
+                            <span className="text-gray-700 text-lg font-medium mr-4">{index + 1}.</span>
+                            <Image height={30} width={30} className="w-12 h-12 rounded-full object-cover mr-4" src={user.imageUrl} alt="User avatar" />
+                            <div className="flex-1">
+                                <h3 className="text-lg font-medium text-gray-800">{user.websiteName}</h3>
+                                <p className="text-gray-600 text-base">{user.visitors} Visitors</p>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
             </div>
         </div>
-    );
-};
-
-interface trendingType{
-    id: string,
-    imageUrl: string;
-    websiteName: string,
-    tagline: string;
-    visitors: number | null;
-}
-const Card: React.FC<{ trends: trendingType }> = ({ trends  }) => {
-    return (
-        <div className="bg-white rounded-lg shadow-md p-4">
-            <Image src={trends.imageUrl} alt={'image'} height={30} width={30}/>
-            <h2 className="text-lg font-semibold">{trends.websiteName}</h2>
-            <p className="mb-2">Tagline: {trends.tagline}</p>
-            <p className="text-gray-600">Visits: {trends.visitors}</p>
-        </div>
+    </div>
     );
 };
 

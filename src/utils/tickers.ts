@@ -1,11 +1,7 @@
 export const tickers = [
-	'zero delivery charges',
-	'Instant Service',
-	'100% Satisfaction guarantee',
-	'zero delivery charges',
-	'Instant Service',
-	'100% Satisfaction guarantee',
-	'zero delivery charges',
-	'Instant Service',
-	'100% Satisfaction guarantee',
+	"Make your mark on India's success map",
+	"Unlock a million views for your business with our pixel ads!",
+	"Click on any pixel to discover detailed company insights."
+
+
 ]
