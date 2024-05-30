@@ -18,7 +18,7 @@ const ImageMap: React.FC = () => {
         if (!ctx) return;
 
         const image = new Image();
-        image.src = '/mapi.svg';
+        image.src = '/mapdemo.png';
         image.onload = () => {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
             setMapLoaded(true);
@@ -69,7 +69,7 @@ const ImageMap: React.FC = () => {
             // Here, we're using the unscaled mouse positions for simplicity.
             setTooltip({
                 visible: true,
-                content: `Pixel: (${row+1}, ${col})`,
+                content: `Block: (${row+1}, ${col})`,
                 x: e.clientX - rect.left, // Position tooltip relative to canvas, not viewport
                 y: e.clientY - rect.top
             });
