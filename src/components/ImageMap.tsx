@@ -104,7 +104,6 @@ const ImageMap: React.FC = () => {
                 ref={canvasRef}
                 width={2000}
                 height={2000}
-                style={{ maxWidth: '100%', height: 'auto' }}
                 onClick={(e) => {
                     if (isExpanded && mapLoaded) {
                         const rect = e.currentTarget.getBoundingClientRect();
