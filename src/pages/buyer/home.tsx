@@ -44,7 +44,7 @@ export default function Page() {
 
                 <p className="lg:text-3xl text-lg mb-2 mt-20 lg:mt-32 text-center text-white font-style: italic">
 
-                    Congratulations on securing your space to proudly showcase your company logo in this sankalan (compilation).
+                    Congratulations on deciding your space to proudly showcase your company logo in this sankalan (compilation).
                 </p>
 
 
@@ -64,7 +64,7 @@ export default function Page() {
                     className={`p-4 text-lg bg-black text-white rounded-md ${!isPaymentComplete || hasMadePurchase ? 'cursor-not-allowed opacity-50' : 'hover:bg-gray-800 focus:outline-none'}`}
                     title={!isPaymentComplete ? "First complete the payment" : hasMadePurchase ? "Already Selection completed" : ""}
                 >
-                    Step 2: Pixel Place Selection {hasMadePurchase && <FaCheck className="inline" />}
+                    Step 2: Block Place Selection {hasMadePurchase && <FaCheck className="inline" />}
                 </button>
                 <button
                     onClick={handleStep3Click}

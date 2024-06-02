@@ -215,7 +215,7 @@ const BuyPage: React.FC = () => {
         );
     }
     return (
-        <div className=' bg-cover bg-center w-full min-h-screen overflow-y-auto expanded mt-10'>
+        <div className=' bg-cover bg-center w-full min-h-screen overflow-y-auto expanded pt-10'>
             <div className="px-10 py-4 flex justify-between items-center">
                 <div className="flex">
                     <button
@@ -233,7 +233,7 @@ const BuyPage: React.FC = () => {
                     </button>
                 </div>
                 <p className="text-xl text-center text-white">
-                    Make sure your area shape matches your image shape,<br />
+                    Make sure your Selected shape matches your image shape,<br />
                     for a good outcome.
                 </p>
 
