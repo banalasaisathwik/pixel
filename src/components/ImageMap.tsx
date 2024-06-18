@@ -69,7 +69,7 @@ const ImageMap: React.FC = () => {
             // Here, we're using the unscaled mouse positions for simplicity.
             setTooltip({
                 visible: true,
-                content: `Pixel: (${row}, ${col})`,
+                content: `Pixel: (${row}, ${col}) - Click here for more details`,
                 x: e.clientX - rect.left, // Position tooltip relative to canvas, not viewport
                 y: e.clientY - rect.top
             });
