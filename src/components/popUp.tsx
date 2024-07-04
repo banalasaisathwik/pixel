@@ -26,7 +26,7 @@ const PopUp: React.FC<Props> = ({ onClose }) => {
                             <div >
                                 <div className="py-2">
                                     <p className="text-lg mb-4">
-                                     {  " Welcome to BharatStartupSankalan! Each pixel here is a piece of India's vibrant business tapestry. Click gently to reveal the unique story of every business. Join us and discover the beauty in simplicity.(This is desktop app)"}
+                                     {  " Welcome to BharatStartupSankalan! Each pixel here is a piece of India's vibrant business tapestry. Click gently to reveal the unique story of every business. Join us and advertise your brand here."}
                                       </p>
                                    
                                     
