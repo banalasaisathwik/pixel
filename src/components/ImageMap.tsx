@@ -18,9 +18,17 @@ const ImageMap: React.FC = () => {
 
         const image = new Image();
         image.src = '/map.svg';
+
         image.onload = () => {
+            console.log('Image loaded:', image.src);
+            console.log('Canvas dimensions:', canvas.width, canvas.height);
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear any previous drawings
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
             setMapLoaded(true);
+        };
+
+        image.onerror = (error) => {
+            console.error('Failed to load image:', error);
         };
     }, []);
 
@@ -87,9 +95,44 @@ const ImageMap: React.FC = () => {
         },
     };
 
-    return (
-        <>
-            {/* Desktop View */}
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+
+    if (isMobile) {
+        // Mobile View
+        return (
+            <div className='cursor-pointer md:hidden flex justify-center items-center w-full min-h-screen overflow-y-auto'>
+                <canvas
+                    className='cursor-pointer w-full h-full object-contain transition-all duration-300'
+                    ref={canvasRef}
+                    width={2000}
+                    height={2000}
+                    onClick={() => {
+                        void router.push(`/pixel?row=0&col=0`);
+                    }}
+                    onMouseMove={handleMouseMove}
+                    onMouseLeave={handleMouseLeave}
+                />
+                {tooltip.visible && canvasRef.current && (
+                    <div>
+                        {tooltip.content}
+                    </div>
+                )}
+                {!isExpanded && (
+                    <p className="text-gray-700 absolute top-1/2 left-[50%] transform translate-x-[-100%] animate-pulse -translate-y-[-0%]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-14 h-14">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.042 21.672L13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
+                        </svg>
+                    </p>
+                )}
+                <button className="absolute bottom-10 right-10 bg-white text-gray-900 px-4 py-2 rounded shadow" onClick={downloadMap}>
+                    Download Map
+                </button>
+            </div>
+        );
+    } else {
+        // Desktop View
+        return (
             <motion.div
                 initial={false}
                 animate={isExpanded !== null ? (isExpanded ? 'expanded' : 'normal') : undefined}
@@ -131,7 +174,6 @@ const ImageMap: React.FC = () => {
                         {tooltip.content}
                     </div>
                 )}
-
                 {!isExpanded && (
                     <p className="text-gray-700 absolute top-1/2 left-[50%] transform translate-x-[-100%] animate-pulse -translate-y-[-0%]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-14 h-14">
@@ -139,45 +181,12 @@ const ImageMap: React.FC = () => {
                         </svg>
                     </p>
                 )}
-
                 <button className="absolute bottom-10 right-10 bg-white text-gray-900 px-4 py-2 rounded shadow" onClick={downloadMap}>
                     Download Map
                 </button>
             </motion.div>
-
-            {/* Mobile View */}
-            <div className='cursor-pointer md:hidden flex justify-center items-center w-full min-h-screen overflow-y-auto'>
-                <canvas
-                    className='cursor-pointer w-full h-full object-contain transition-all duration-300'
-                    ref={canvasRef}
-                    width={2000}
-                    height={2000}
-                    onClick={() => {
-                        void router.push(`/pixel?row=0&col=0`);
-                    }}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={handleMouseLeave}
-                />
-                {tooltip.visible && canvasRef.current && (
-                    <div>
-                        {tooltip.content}
-                    </div>
-                )}
-
-                {!isExpanded && (
-                    <p className="text-gray-700 absolute top-1/2 left-[50%] transform translate-x-[-100%] animate-pulse -translate-y-[-0%]">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-14 h-14">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.042 21.672L13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
-                        </svg>
-                    </p>
-                )}
-
-                <button className="absolute bottom-10 right-10 bg-white text-gray-900 px-4 py-2 rounded shadow" onClick={downloadMap}>
-                    Download Map
-                </button>
-            </div>
-        </>
-    );
+        );
+    }
 };
 
 export default ImageMap;
