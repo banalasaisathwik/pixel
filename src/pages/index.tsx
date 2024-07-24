@@ -14,7 +14,7 @@ const Home: React.FC = () => {
     };
 
     // Use a timeout to ensure the detection runs after the initial render
-    const timer = setTimeout(detectMobile, 100);
+    const timer = setTimeout(detectMobile, 1000);
 
     return () => clearTimeout(timer);
   }, []);
