@@ -9,16 +9,9 @@ const Home: React.FC = () => {
   const [IsMobileDevice, setIsMobileDevice] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const detectMobile = () => {
       const mobile = isMobile();
       setIsMobileDevice(mobile);
-    };
-
-
-    // Use a timeout to ensure the detection runs after the initial render
-    const timer = setTimeout(detectMobile, 1000);
-
-    return () => clearTimeout(timer);
+    
   }, []);
 
   // Render nothing or a loading state until the mobile detection is complete

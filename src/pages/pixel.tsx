@@ -86,8 +86,8 @@ const Hello = () => {
                 <div className="flex justify-center items-center h-screen">
                     <div className="p-8 mt-20 text-center">
                         <h2 className="text-6xl text-white font-bold mb-4">{"For sale! If it's on the map."}</h2>
-                        <p className="text-xl text-gray-100 my-6">The block has not yet been sold.</p>
-                        <Link href={"/buyer/info"} className='text-white cursor-pointer text-xl bg-black p-4'>Want to buy this block?</Link>
+                        <p className="text-xl text-gray-100 my-6">This space has not yet been sold.</p>
+                        <Link href={"/buyer/info"} className='text-white cursor-pointer text-xl bg-black p-4'>Want to buy this space?</Link>
                     </div>
                 </div>
             </div>

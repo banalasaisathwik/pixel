@@ -11,10 +11,10 @@ const Info = () => {
                     </p>
 
                     <p className="text-sm mt-2 font-bold uppercase tracking-widest text-gray-200">How It Works</p>
-                    <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl"> Buy Your Block in 3 steps
+                    <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl"> Buy Your Space in 3 steps
                     </h2>
                     <p className="mx-auto mt-4 max-w-2xl text-lg font-normal text-gray-200 lg:text-xl lg:leading-8">
-                        Promote your company by purchasing a block at a fraction of the cost and reap the rewards when this website goes viral. </p>
+                        Promote your company by purchasing a Space at a fraction of the cost and reap the rewards when this website goes viral. </p>
                 </div>
                 <div className=" mt-16">
                     <div className="">
@@ -51,7 +51,7 @@ const Info = () => {
                                     <div className="absolute -ml-2 h-px w-screen -translate-x-full bg-gray-500/80 sm:-ml-4 lg:static lg:-mr-6 lg:ml-8 lg:w-auto lg:flex-auto lg:translate-x-0" aria-hidden="true"></div>
                                 </div>
                                 <p className="mt-6 text-lg font-semibold leading-8 tracking-wide text-white">Please provide your website details:</p>
-                                <p className="mt-1 text-base leading-7 text-gray-300 dark:text-gray-400"> After completing steps 1 and 3, you can submit the details of your website, which will be displayed when someone clicks on your block.</p>
+                                <p className="mt-1 text-base leading-7 text-gray-300 dark:text-gray-400"> After completing steps 1 and 3, you can submit the details of your website, which will be displayed when someone clicks on your Space.</p>
                             </div>
                             <div>
                                 <div className="flex items-center  text-lg font-semibold leading-6 text-blue-400">
@@ -63,7 +63,7 @@ const Info = () => {
 
                                 </div>
                                 <p className="mt-6 text-lg font-semibold leading-8 tracking-wide text-white">Updation:</p>
-                                <p className="mt-1 text-base leading-7 text-gray-300 dark:text-gray-400">After providing your details, your logo will be updated on your block within 24 hours, other details are updated instantaneously.</p>
+                                <p className="mt-1 text-base leading-7 text-gray-300 dark:text-gray-400">After providing your details, your logo will be updated on your Space within 24 hours, other details are updated instantaneously.</p>
                             </div>
                         </div>
                     </div>

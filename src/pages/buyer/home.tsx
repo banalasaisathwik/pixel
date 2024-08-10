@@ -64,7 +64,7 @@ export default function Page() {
                     className={`p-4 text-lg bg-black text-white rounded-md ${!isPaymentComplete || hasMadePurchase ? 'cursor-not-allowed opacity-50' : 'hover:bg-gray-800 focus:outline-none'}`}
                     title={!isPaymentComplete ? "First complete the payment" : hasMadePurchase ? "Already Selection completed" : ""}
                 >
-                    Step 2: Block Place Selection {hasMadePurchase && <FaCheck className="inline" />}
+                    Step 2: Space Position Selection {hasMadePurchase && <FaCheck className="inline" />}
                 </button>
                 <button
                     onClick={handleStep3Click}

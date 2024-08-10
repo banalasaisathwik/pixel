@@ -32,7 +32,7 @@ const Navbar = () => {
                         <p>1 Pixel @ ₹150</p>
                     </li>
                     <li className="text-2xl text-white md:text-2xl mx-auto font-semibold border-2 p-2 hover:bg-orange-700 hover:text-black align-top uppercase">
-                        <Link href="/buyer/info">Buy block</Link>
+                        <Link href="/buyer/info">Buy space</Link>
                     </li>
                 </motion.ul>
 
