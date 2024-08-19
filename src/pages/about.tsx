@@ -9,17 +9,11 @@ const AboutUsPage = () => {
                     <p className="text-3xl mt-28 lg:px-10 my-4 text-white italic whitespace-pre-line leading-relaxed">
                         {"Welcome to our website BharatStartupSankalan!"}
                         <br />
-                        <br />
-                        {"What are we doing?"}
-                        <br />
-                        <br />
-                        {"We’re selling ad spaces and planning to make over 10 crores. We’re going to use this money for our next startup."}
-                        <br />
-                        <br />
-                        {"We are going to introduce a new way of raising money."}
-                        <br />
-                        <br />
-                        {"Share this with your friends to help make it viral and show that success can come from anything."}
+                        Our goal is to offer a unique advertising platform on a map of India, where businesses can purchase mini ad spaces. This initiative is designed to highlight India's vibrant startup ecosystem and provide an innovative way for companies to gain visibility while also generating revenue.
+
+                        By investing in our platform, you're making a one-time commitment with the potential for significant returns. Your investment could attract more customers and deliver impressive results once the project gains traction.
+
+                        For more information or to purchase ad space, click the "Buy Space" button and follow the instructions. The minimum purchase is 10x10 pixels. We’re excited to showcase your business and contribute to its success.
                     </p>
                     <h1 className="text-4xl font-bold mt-10 text-orange-500">
                         Jai Hind! Bharat Mata Ki Jai!

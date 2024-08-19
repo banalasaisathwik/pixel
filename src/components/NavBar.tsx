@@ -5,7 +5,7 @@ import { view } from '../utils/animations'
 import NavMenuButton from './NavMenuButton'
 import NavMobileMenu from './NavMobileMenu'
 import Logo from './Logo'
-import { FaCircle } from "react-icons/fa";
+import { FaCircle, FaLinkedin } from "react-icons/fa";
 import { FiInstagram, FiTwitter } from 'react-icons/fi'
 
 const Navbar = () => {
@@ -25,7 +25,7 @@ const Navbar = () => {
                 <motion.ul variants={view} initial='initial' whileInView='animate' className='hidden md:flex flex-row flex-wrap items-baseline gap-x-4'>
                     <li className='text-orange-700 flex items-center gap-x-2 text-2xl'>
                         <FaCircle size={10} />
-                        <p>{"India's Digital Bill Board"}</p>
+                        <p>{"Mini Billboards on India Map"}</p>
                     </li>
                     <li className='text-white flex items-center gap-x-2 text-2xl'>
                         <FaCircle size={10} />
@@ -50,14 +50,17 @@ const Navbar = () => {
                         <a href="https://www.instagram.com/bharat_startup_sankalan/" target="_blank" rel="noopener noreferrer">
                             <FiInstagram size={24} className="text-gray-500 text-base hover:text-gray-400" />
                         </a>
-                        <a href="https://twitter.com/startupsankalan" target="_blank" rel="noopener noreferrer">
-                            <FiTwitter size={24} className="text-gray-500 text-base hover:text-gray-400" />
+                        <a href="http://linkedin.com/company/bharat-startup-sankalan" target="_blank" rel="noopener noreferrer">
+                            <FaLinkedin size={24} className="text-gray-500 text-base hover:text-gray-400" />
                         </a>
                     </span>
                 </span>
 
                 <span className='flex justify-between w-full md:max-w-lg items-center gap-4 md:gap-10'>
                     <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/trending'}>Top 10 🔥 </Link>
+                    <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/faq'}>FAQ</Link>
+                    <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/feedback'}>Feedback/suggestions</Link>
+                    <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/share'}>Share It</Link>
                     <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/about'}>About Us</Link>
                     <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href="mailto:bharatstartupsankalan@gmail.com">Contact Us</Link>
                    

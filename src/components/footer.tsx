@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
 import { FiInstagram, FiTwitter } from 'react-icons/fi';
+import Faq from './faq';
 
 const Footer = () => {
   return (
     <footer className=" w-full  py-4 px-4  z-10 flex flex-col justify-center items-center lg:flex-col lg:justify-content-center align-items-center ">
-   
+      <div>
+        <Faq/>
+      </div>
       <div>
       <div className="flex flex-col justify-center w-full text-center lg:flex-row gap-4">
         <Link href="/terms" className="text-gray-500 text-lg hover:text-gray-400">Terms & Conditions</Link>
