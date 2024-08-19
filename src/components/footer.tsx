@@ -6,7 +6,7 @@ import Faq from './faq';
 const Footer = () => {
   return (
     <footer className=" w-full  py-4 px-4  z-10 flex flex-col justify-center items-center lg:flex-col lg:justify-content-center align-items-center ">
-      <div>
+      <div className=' w-full'>
         <Faq/>
       </div>
       <div>

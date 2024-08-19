@@ -74,7 +74,8 @@ const Hello = () => {
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center h-screen">
+            <div className='bg-center min-h-screen w-full flex flex-col justify-center items-center'>
+
                 <Loading />
             </div>
         );

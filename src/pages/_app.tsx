@@ -29,11 +29,11 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   const render = isAdminRoute || isTicketRoute || isTermsRoute || isPrivacyRoute || isSignin || isSignup || isSelectionRoute
   const [isPopUpOpen, setIsPopUpOpen] = useState(true);
 
-  
-	useEffect(() => {
-		const popUpClosed = localStorage.getItem('isPopClose');
-		setIsPopUpOpen(popUpClosed === 'true' ? true : false);
-	}, []);
+
+  useEffect(() => {
+    const popUpClosed = localStorage.getItem('isPopClose');
+    setIsPopUpOpen(popUpClosed === 'true' ? true : false);
+  }, []);
 
 
   const handlePopUpClose = () => {
@@ -42,12 +42,16 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   };
   return (
     <div className='bg-[url("/bg.avif")] bg-cover bg-center'>
-       {! isPopUpOpen && <PopUp onClose={handlePopUpClose} />}
+      {!isPopUpOpen && <PopUp onClose={handlePopUpClose} />}
       <Context>
         <ClerkProvider {...pageProps}>
           <Head>
             <title>bharat startup sankalan</title>
-            <meta name="description" content="Welcome to Bharath Startup Sankalan, your platform for dreams to flourish. Join us in crafting your brand's story on the vibrant canvas of India. Experience the thrill of connecting with your audience as our community grows. Explore our advertising options today and embark on a journey of boundless possibilities!" />
+            <meta name="description" content="We are selling tiny ad spaces on a map of India, with each space as small as 10x10 pixels. When you click on an ad on the map(feature only available on desktop), it will show you details about the company behind it." />
+            <meta property="og:title" content="bharat-startup-sankalan" />
+            <meta property="og:description" content="We are selling tiny ad spaces on a map of India, with each space as small as 10x10 pixels. When you click on an ad on the map(feature only available on desktop), it will show you details about the company behind it." />
+            <meta property="og:image" content="/logo.png" />
+            <meta property="og:url" content="http://bharatstartupsankalan.com" />
             <link rel="icon" href="/logo.png" />
           </Head>
 
@@ -58,7 +62,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         </ClerkProvider>
         {!isAdminRoute && <Footer />}
       </Context>
-       <Ticker/>
+      <Ticker />
     </div>
 
   );

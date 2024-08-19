@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 
 
 
@@ -52,5 +52,27 @@ export const supportRouter = createTRPCRouter({
             throw new Error("An error occurred while processing the request");
         }
 
-    })
+    }),
+
+    feedbackCreate: publicProcedure
+        .input(z.object({ 
+            name: z.string(),
+            email: z.string(),
+            interest: z.string(),
+            message: z.string(),
+        }))
+        .mutation(async ({ input: { name,email,interest,message }, ctx }) => {
+            try {
+                await ctx.db.feedback.create({
+                    data: { name,email,interest,message }
+                })
+
+            } catch (error) {
+                console.error("Error while processing payment:", error);
+                throw new Error("An error occurred while processing the request");
+            }
+
+        }),
+
+
 });

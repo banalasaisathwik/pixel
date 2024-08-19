@@ -6,7 +6,7 @@ import NavMenuButton from './NavMenuButton'
 import NavMobileMenu from './NavMobileMenu'
 import Logo from './Logo'
 import { FaCircle, FaLinkedin } from "react-icons/fa";
-import { FiInstagram, FiTwitter } from 'react-icons/fi'
+import { FiInstagram } from 'react-icons/fi'
 
 const Navbar = () => {
     const { navOpen, changeNavMenu, toggleNavMenu } = useNavbarMenuToggle()
@@ -56,7 +56,7 @@ const Navbar = () => {
                     </span>
                 </span>
 
-                <span className='flex justify-between w-full md:max-w-lg items-center gap-4 md:gap-10'>
+                <span className='flex flex-wrap md:flex-row justify-between w-full md:max-w-3xl items-center gap-y-2 gap-x-4 md:gap-x-0'>
                     <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/trending'}>Top 10 🔥 </Link>
                     <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/faq'}>FAQ</Link>
                     <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/feedback'}>Feedback/suggestions</Link>

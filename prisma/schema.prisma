@@ -63,4 +63,13 @@ model Ticket{
         description String
 }
 
+model Feedback{
+     
+        id     String @id @default(auto()) @map("_id") @db.ObjectId
+        name   String 
+        email  String 
+        interest String
+        message String
+}
+
 

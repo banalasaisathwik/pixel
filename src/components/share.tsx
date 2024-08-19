@@ -6,14 +6,14 @@ const Share = () => {
         <>
             <section>
                 <div
-                    className="mx-auto mt-20 border-4 border-indigo-600 shadow-[5px_5px_0_0_rgba(0,0,0,1)] shadow-indigo-600/100 max-w-5xl p-4 md:p-10 flex flex-col items-center justify-center text-center">
+                    className="mx-auto max-w-5xl p-4 pt-52 md:pt-48 flex flex-col items-center justify-center text-center">
 
-                    <p className="text-indigo-900 text-xl md:text-2xl font-bold border-b-4 border-b-indigo-300">Share this post</p>
+                    <p className="text-white text-xl md:text-2xl font-bold border-b-4 border-white">Share this post</p>
 
                     <ul className="flex flex-row items-center justify-center text-center mt-5">
                         <li className="mx-2">
                             <a href="https://twitter.com/intent/tweet?text={message}&url={link}" target="_blank" aria-label="Share on Twitter">
-                                <svg className="h-8 text-indigo-700 hover:text-indigo-300" fill="currentColor" role="img"
+                                <svg className="h-8 text-white hover:text-indigo-300" fill="currentColor" role="img"
                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <title>Twitter</title>
                                     <path
@@ -25,7 +25,7 @@ const Share = () => {
 
                         <li className="mx-2">
                             <a href="https://www.linkedin.com/sharing/share-offsite/?url={link}" target="_blank" aria-label="Share on LinkedIn">
-                                <svg className="h-8 text-indigo-700 hover:text-indigo-300" fill="currentColor" role="img"
+                                <svg className="h-8 text-white hover:text-indigo-300" fill="currentColor" role="img"
                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <title>LinkedIn</title>
                                     <path
@@ -37,7 +37,7 @@ const Share = () => {
 
                         <li className="mx-2">
                             <a href="https://api.whatsapp.com/send?text={message}%20{link}" target="_blank" aria-label="Share on Mastodon">
-                                <svg className="h-8 text-indigo-700 hover:text-indigo-300" fill="currentColor" role="img"
+                                <svg className="h-8 text-white hover:text-indigo-300" fill="currentColor" role="img"
                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <title>whatsapp</title>
                                     <path
@@ -49,7 +49,7 @@ const Share = () => {
 
                         <li className="mx-2">
                             <a href="https://t.me/share/url?url={link}&text={message}" target="_blank" aria-label="Share on Facebook">
-                                <svg className="h-8 text-indigo-700 hover:text-indigo-300" fill="currentColor" role="img"
+                                <svg className="h-12 text-white hover:text-indigo-300" fill="currentColor" role="img"
                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <title>Telegram</title>
                                     <path d="M22.9866 10.2088C23.1112 9.40332 22.3454 8.76755 21.6292 9.082L7.36482 15.3448C6.85123 15.5703 6.8888 16.3483 7.42147 16.5179L10.3631 17.4547C10.9246 17.6335 11.5325 17.541 12.0228 17.2023L18.655 12.6203C18.855 12.4821 19.073 12.7665 18.9021 12.9426L14.1281 17.8646C13.665 18.3421 13.7569 19.1512 14.314 19.5005L19.659 22.8523C20.2585 23.2282 21.0297 22.8506 21.1418 22.1261L22.9866 10.2088Z" fill="white" />                                </svg>
