@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Image from 'next/image';
 
 interface Props {
     onClose: () => void;
@@ -10,7 +10,7 @@ const PopUp: React.FC<Props> = ({ onClose }) => {
         onClose();
     };
     return (
-        <div className="fixed  z-[999] inset-0 ">
+        <div className="fixed  z-[999] inset-0 max-h-[95vh] overflow-y-scroll ">
             <div className="flex items-center justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
                 <div className="fixed z-[999]  inset-0 transition-opacity">
                     <div className="absolute inset-0 bg-black opacity-85"></div>
@@ -26,9 +26,9 @@ const PopUp: React.FC<Props> = ({ onClose }) => {
                             <div >
                                 <div className="py-2">
                                     <p className="text-lg mb-4">
-                                     {  " Welcome to BharatStartupSankalan! Each pixel here is a piece of India's vibrant business tapestry. Click gently to reveal the unique story of every business. Join us and advertise your brand here."}
+                                        {  " Welcome to BharatStartupSankalan! Click on an ad to check out the brand. Got a brand? Don’t wait—advertise here today!"}
                                       </p>
-                                   
+                                    <Image src="title1.jpg" alt="image" width="700" height="700" className="mx-auto" />
                                     
                                 </div>
 
