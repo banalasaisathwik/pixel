@@ -22,6 +22,16 @@ const MobileimageMap: React.FC = () => {
         image.onload = () => {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
             setMapLoaded(true);
+
+            // Draw grid overlay of 10x10 blocks in blue
+            const blockSize = 10; // Size of each block
+            const gridColor = 'rgba(169, 169, 169, 0.07)'; // Semi-transparent blue
+            for (let x = 0; x < canvas.width; x += blockSize) {
+                for (let y = 0; y < canvas.height; y += blockSize) {
+                    ctx.fillStyle = gridColor;
+                    ctx.fillRect(x, y, blockSize - 3, blockSize - 3); // Draw blue blocks
+                }
+            }
         };
     }, []);
 

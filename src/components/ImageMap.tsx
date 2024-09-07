@@ -22,6 +22,16 @@ const ImageMap: React.FC = () => {
         image.onload = () => {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
             setMapLoaded(true);
+
+            // Draw grid overlay of 10x10 blocks in blue
+            const blockSize = 10; // Size of each block
+            const gridColor = 'rgba(169, 169, 169, 0.07)'; // Semi-transparent blue
+            for (let x = 0; x < canvas.width; x += blockSize) {
+                for (let y = 0; y < canvas.height; y += blockSize) {
+                    ctx.fillStyle = gridColor;
+                    ctx.fillRect(x, y, blockSize-2, blockSize-2); // Draw blue blocks
+                }
+            }
         };
     }, []);
 
@@ -55,22 +65,19 @@ const ImageMap: React.FC = () => {
     const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
         if (isExpanded && mapLoaded) {
             const rect = e.currentTarget.getBoundingClientRect();
-            const scaleX = e.currentTarget.width / rect.width;   // Determine the scale factor for X
-            const scaleY = e.currentTarget.height / rect.height; // Determine the scale factor for Y
+            const scaleX = e.currentTarget.width / rect.width;
+            const scaleY = e.currentTarget.height / rect.height;
 
-            // Adjust mouse position by the canvas position and scale
             const x = (e.clientX - rect.left) * scaleX;
             const y = (e.clientY - rect.top) * scaleY;
 
             const row = Math.floor(y / 10);
             const col = Math.floor(x / 10);
 
-            // Update tooltip position to follow the mouse. Adjust as needed for offset.
-            // Here, we're using the unscaled mouse positions for simplicity.
             setTooltip({
                 visible: true,
                 content: `Pixel: (${row}, ${col})`,
-                x: e.clientX - rect.left, // Position tooltip relative to canvas, not viewport
+                x: e.clientX - rect.left,
                 y: e.clientY - rect.top
             });
         }
