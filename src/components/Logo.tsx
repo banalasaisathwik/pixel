@@ -24,8 +24,8 @@ const Logo = (props: LogoProps) => {
 
 
 				<span className='sr-only'> Logo </span>
-				<h1 className=' text-white leading-tight text-2xl md:text-3xl font-bold z-50 '>
-					Bharat Startup <br /> Sankalan
+				<h1 className=' text-white leading-tight text-8xl md:text-3xl font-bold z-50 '>
+					Pixel-Preneur
 				</h1>
 			</Link>
 

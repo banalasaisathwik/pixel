@@ -46,12 +46,12 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <Context>
         <ClerkProvider {...pageProps}>
           <Head>
-            <title>bharat startup sankalan</title>
+            <title>pixelpreneur</title>
             <meta name="description" content="We are selling tiny ad spaces on a map of India, with each space as small as 10x10 pixels. When you click on an ad on the map(feature only available on desktop), it will show you details about the company behind it." />
-            <meta property="og:title" content="bharat-startup-sankalan" />
+            <meta property="og:title" content="pixelpreneur" />
             <meta property="og:description" content="We are selling tiny ad spaces on a map of India, with each space as small as 10x10 pixels. When you click on an ad on the map(feature only available on desktop), it will show you details about the company behind it." />
             <meta property="og:image" content="/logo.png" />
-            <meta property="og:url" content="http://bharatstartupsankalan.com" />
+            <meta property="og:url" content="http://pixelpreneur.in" />
             <link rel="icon" href="/logo.png" />
           </Head>
 

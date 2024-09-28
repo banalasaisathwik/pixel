@@ -13,11 +13,11 @@ const Footer = () => {
       <div className="flex flex-col justify-center w-full text-center lg:flex-row gap-4">
         <Link href="/terms" className="text-gray-500 text-lg hover:text-gray-400">Terms & Conditions</Link>
         <Link href="/privacy" className="text-gray-500 text-lg hover:text-gray-400">Privacy Policy</Link>
-        <Link href="mailto:bharatstartupsankalan@gmail.com" className="text-gray-500 text-lg hover:text-gray-400">Contact Us</Link>
+          <Link href="mailto:pixelpreneur.in@gmail.com" className="text-gray-500 text-lg hover:text-gray-400">Contact Us</Link>
       </div>
       <div className="flex justify-center items-center gap-4 mt-4">
         {/* Instagram icon with link */}
-        <a href="https://www.instagram.com/bharat_startup_sankalan/" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/pixelpreneur_bss/" target="_blank" rel="noopener noreferrer">
           <FiInstagram size={24} className="text-gray-500 text-base hover:text-gray-400" />
         </a>
         {/* Twitter icon with link */}
@@ -26,7 +26,7 @@ const Footer = () => {
         </a>
       </div>
       </div>
-      <div className="text-lg text-gray-500 text-center mt-4">Copyright © 2024 Bharat startup sankalan</div>
+      <div className="text-lg text-gray-500 text-center mt-4">Copyright © 2024 pixelpreneur</div>
 
     </footer>
   );

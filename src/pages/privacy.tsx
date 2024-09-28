@@ -6,7 +6,7 @@ export const Privacy = () => {
             <div className="text-white">
                 <p>Privacy Policy</p>
 
-                <p>This Privacy Policy describes how bharatstartupsankalan.com collects, uses, and protects the personal information you provide on this website.</p>
+                <p>This Privacy Policy describes how pixelpreneur.in collects, uses, and protects the personal information you provide on this website.</p>
 
                 <ol>
                     <li>Information Collection: We may collect personal information, such as your name, email address, and contact information, when you voluntarily submit it to us through forms on this website.</li>
@@ -21,7 +21,7 @@ export const Privacy = () => {
                 <p>All sales are final. We do not offer refunds or exchanges on any products or services purchased through this website.</p>
 
                 <p>Contact Us:</p>
-                <p>If you have any questions or concerns about this Privacy Policy, please contact us at bharatstartupsankalan@gmail.com</p>
+                <p>If you have any questions or concerns about this Privacy Policy, please contact us at pixelpreneur.in@gmail.com</p>
 
                 <p>Last Updated: 27 Mar 2024</p>
             </div>

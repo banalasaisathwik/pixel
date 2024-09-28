@@ -2,7 +2,7 @@ import React from 'react';
 
 const Share = () => {
     const message = "checkout the website to know it works.we sell tiny ad spaces on map of India.When you click on an ad on the map (feature only available on desktop), it will show you details about the company behind it.give your suggestions, it help us grow.";
-    const link = "http://bharatstartupsankalan.com";
+    const link = "http://pixelpreneur.in";
 
     return (
         <>

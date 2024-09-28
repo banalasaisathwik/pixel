@@ -47,10 +47,10 @@ const Navbar = () => {
                 <span className='md:flex hidden md:flex-row items-center gap-x-4 gap-y-2 md:gap-y-0'>
                     <p className='text-gray-500 font-medium text-lg'>Follow us on</p>
                     <span className='flex items-center gap-x-4'>
-                        <a href="https://www.instagram.com/bharat_startup_sankalan/" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.instagram.com/pixelpreneur_bss/" target="_blank" rel="noopener noreferrer">
                             <FiInstagram size={24} className="text-gray-500 text-base hover:text-gray-400" />
                         </a>
-                        <a href="http://linkedin.com/company/bharat-startup-sankalan" target="_blank" rel="noopener noreferrer">
+                        <a href="http://linkedin.com/company/pixelpreneur_bss" target="_blank" rel="noopener noreferrer">
                             <FaLinkedin size={24} className="text-gray-500 text-base hover:text-gray-400" />
                         </a>
                     </span>
@@ -62,7 +62,7 @@ const Navbar = () => {
                     <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/feedback'}>Feedback/suggestions</Link>
                     <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/share'}>Share It</Link>
                     <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href={'/about'}>About Us</Link>
-                    <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href="mailto:bharatstartupsankalan@gmail.com">Contact Us</Link>
+                    <Link className='text-gray-500 font-medium text-lg cursor-pointer hover:underline' href="mailto:pixelpreneur.in@gmail.com">Contact Us</Link>
                    
                 </span>
             </div>
