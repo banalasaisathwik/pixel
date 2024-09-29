@@ -3,6 +3,7 @@ import ImageMap from '../components/ImageMap';
 import MobileimageMap from '~/components/mobileImageMap';
 import Loading from '~/components/Loading';
 import isMobile from 'is-mobile';
+import Cursor from '~/components/Cursor';
 
 
 const Home: React.FC = () => {
@@ -31,7 +32,7 @@ const Home: React.FC = () => {
 
   return (
     <div className='bg-center min-h-screen w-full flex flex-col justify-center items-center'>
-
+      <Cursor/>
       <ImageMap />
     </div>
   );

@@ -42,3 +42,14 @@
     grid-template-rows: repeat(100, 1fr);
     /* Define 100 rows */
 }
+.circle {
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    /* Circular shape */
+    position: fixed;
+    pointer-events: none;
+    /* Prevent mouse events on circles */
+    z-index: 99999999;
+    /* Stay on top of all elements */
+}

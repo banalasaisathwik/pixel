@@ -21,26 +21,27 @@ const Info = () => {
 
                         <div className="mx-auto flex-col lg:flex-row   gap-8  lg:mx-0 lg:max-w-6xl flex">
                             <div>
-                                <div className="flex items-center text-lg font-semibold leading-6 text-blue-400">
+                                <div className="flex items-center  text-lg font-semibold leading-6 text-blue-400">
                                     <svg viewBox="0 0 4 4" className="mr-4 h-1 w-1 flex-none" aria-hidden="true">
                                         <circle cx="2" cy="2" r="2" fill="currentColor"></circle>
                                     </svg>
                                     Step 1
                                     <div className="absolute -ml-2 h-px w-screen -translate-x-full bg-gray-500/80 sm:-ml-4 lg:static lg:-mr-6 lg:ml-8 lg:w-auto lg:flex-auto lg:translate-x-0" aria-hidden="true"></div>
                                 </div>
-                                <p className="mt-6 text-lg font-semibold leading-8 tracking-wide text-white">Make payment </p>
-                                <p className="mt-1 text-base leading-7 text-gray-300 dark:text-gray-400">Please select the desired quantity on the payment page (number of blocks you wish to purchase) and proceed with the payment.</p>
+                                <p className="mt-6 text-lg font-semibold leading-8 tracking-wide text-white">Select the blocks/location for your Ad:</p>
+                                <p className="mt-1 text-base leading-7 text-gray-300 dark:text-gray-400">Please ensure that you select the location only on the map. Your Logo/image will only be reflected if the location is selected within the designated area.</p>
                             </div>
+
                             <div>
-                                <div className="flex items-center  text-lg font-semibold leading-6 text-blue-400">
+                                <div className="flex items-center text-lg font-semibold leading-6 text-blue-400">
                                     <svg viewBox="0 0 4 4" className="mr-4 h-1 w-1 flex-none" aria-hidden="true">
                                         <circle cx="2" cy="2" r="2" fill="currentColor"></circle>
                                     </svg>
                                     Step 2
                                     <div className="absolute -ml-2 h-px w-screen -translate-x-full bg-gray-500/80 sm:-ml-4 lg:static lg:-mr-6 lg:ml-8 lg:w-auto lg:flex-auto lg:translate-x-0" aria-hidden="true"></div>
                                 </div>
-                                <p className="mt-6 text-lg font-semibold leading-8 tracking-wide text-white">select the location for your blocks:</p>
-                                <p className="mt-1 text-base leading-7 text-gray-300 dark:text-gray-400">Please ensure that you select the location only on the map. Your Logo/image will only be reflected if the location is selected within the designated area.</p>
+                                <p className="mt-6 text-lg font-semibold leading-8 tracking-wide text-white">Make payment </p>
+                                <p className="mt-1 text-base leading-7 text-gray-300 dark:text-gray-400">Please select the desired quantity on the payment page (number of blocks you selected on step 1) and proceed with the payment.</p>
                             </div>
                             <div>
                                 <div className="flex items-center  text-lg font-semibold leading-6 text-blue-400">
@@ -51,7 +52,7 @@ const Info = () => {
                                     <div className="absolute -ml-2 h-px w-screen -translate-x-full bg-gray-500/80 sm:-ml-4 lg:static lg:-mr-6 lg:ml-8 lg:w-auto lg:flex-auto lg:translate-x-0" aria-hidden="true"></div>
                                 </div>
                                 <p className="mt-6 text-lg font-semibold leading-8 tracking-wide text-white">Please provide your website details:</p>
-                                <p className="mt-1 text-base leading-7 text-gray-300 dark:text-gray-400"> After completing steps 1 and 3, you can submit the details of your website, which will be displayed when someone clicks on your Space.</p>
+                                <p className="mt-1 text-base leading-7 text-gray-300 dark:text-gray-400"> After completing steps 1 and 2, you can submit the details of your website, which will be displayed when someone clicks on your Space.</p>
                             </div>
                             <div>
                                 <div className="flex items-center  text-lg font-semibold leading-6 text-blue-400">

@@ -44,8 +44,9 @@ export default function Page() {
 
                 <p className="lg:text-3xl text-lg mb-2 mt-20 lg:mt-32 text-center text-white font-style: italic">
 
-                    Congratulations on deciding your space to proudly showcase your company logo in this sankalan (compilation).
-                </p>
+                    Congratulations on showcasing your company logo in this sankalan (compilation).
+
+                    To avoid overlapping and complexity, the payment is the first step.                </p>
 
 
             </div>

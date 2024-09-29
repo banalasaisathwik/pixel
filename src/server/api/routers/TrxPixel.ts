@@ -27,6 +27,21 @@ buyPixel: protectedProcedure
                         message: "User has already made a purchase"
                     };
                 }
+                const existingCoordinates = await ctx.db.coordinate.findMany({
+                    where: {
+                        OR: coords.map(({ x, y }) => ({
+                            x: x,
+                            y: y
+                        }))
+                    }
+                });
+
+                if (existingCoordinates.length > 0) {
+                    return {
+                        success: false,
+                        message: "Some coordinates have already been purchased"
+                    };
+                }
 
                 let pixel = await ctx.db.pixel.findFirst({
                     where: { User: { some: { clerkId: userId } } }
