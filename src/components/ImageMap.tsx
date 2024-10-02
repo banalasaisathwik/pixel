@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from "framer-motion";
+import Loading from './Loading';
 
 const ImageMap: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [mapLoaded, setMapLoaded] = useState<boolean>(false);
     const [isExpanded, setIsExpanded] = useState<boolean | null>(null);
     const [tooltip, setTooltip] = useState<{ visible: boolean; content: string; x: number; y: number; }>({ visible: false, content: '', x: 0, y: 0 });
+    const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
 
@@ -40,9 +42,10 @@ const ImageMap: React.FC = () => {
         setIsExpanded(sessionIsExpanded === 'true' ? true : false);
     }, []);
 
-    const handlePixelClick = (row: number, col: number): void => {
-    void router.push(`/pixel/${row}/${col}`);
-    };
+const handlePixelClick = (row: number, col: number): void => {
+    setIsLoading(true);
+    void router.push(`/pixel/${row}/${col}`, undefined, { shallow: true }).then(() => setIsLoading(false));
+};
 
     const toggleExpand = (): void => {
         sessionStorage.setItem('isExpanded', 'true')
@@ -97,7 +100,17 @@ const ImageMap: React.FC = () => {
         },
     };
 
+        if(isLoading){
+            return(
+                 <>
+                    <Loading />
+
+                </>
+            )
+        }
     return (
+
+        
         <motion.div
             initial={false}
             animate={isExpanded !== null ? (isExpanded ? 'expanded' : 'normal') : undefined}
@@ -105,6 +118,7 @@ const ImageMap: React.FC = () => {
             className='cursor-pointer  w-full min-h-screen overflow-y-auto'
             onClick={toggleExpand}
         >
+           
 
             <canvas
                 className={`cursor-pointer ${isExpanded ? 'mt-[200px]' : 'absolute top-1/2 translate-y-[-40%] left-1/2 translate-x-[-50%] w-[60%] lg:w-[20%] '}  transition-all duration-300`}
