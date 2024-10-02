@@ -38,8 +38,8 @@ export default function Cursor() {
 
             circles.current.forEach((circle, index) => {
                 // Calculate the index of the next circle
-                const nextIndex = (index + 1) % numCircles; // This will wrap around to the start
-                const nextCircle = circles.current[nextIndex];
+                // const nextIndex = (index + 1) % numCircles; // This will wrap around to the start
+                // const nextCircle = circles.current[nextIndex];
 
                 // Easing effect for smoother movement
                 circle.x += (x - circle.x) * 0.3; // Move towards mouse position

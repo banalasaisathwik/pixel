@@ -1,20 +1,76 @@
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { api } from '~/utils/api';
 import Image from 'next/image';
 import Loading from '~/components/Loading';
 import Link from 'next/link';
+import { api } from '~/utils/api';
+import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from 'next';
+import { createServerSideHelpers } from '@trpc/react-query/server';
+import superjson from 'superjson';
+import { appRouter } from '~/server/api/root';
+import { db } from '~/server/db';
+import { createContext } from '~/server/api/context';
 
-const Hello = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
+    // Fetch the row and col combinations from your database to create paths
+    const coordinates = await db.coordinate.findMany({
+        select: {
+            x: true,
+            y: true,
+        },
+    });
+
+    const paths = coordinates.map((coordinate) => ({
+        params: {
+            slug: [String(coordinate.x), String(coordinate.y)], // Pass as array
+        },
+    }));
+
+    return {
+        paths,
+        fallback: 'blocking', // Will show the loading state if the path is not generated yet
+    };
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+    const { slug } = context.params ?? {};
+
+    if (!slug || slug.length !== 2) {
+        return { notFound: true };
+    }
+
+    const [row, col] = slug;
+
+    const helpers = createServerSideHelpers({
+        router: appRouter,
+        ctx: await createContext(),
+        transformer: superjson,
+    });
+
+    // Prefetch the website details based on row and col
+    await helpers.details.retrive.prefetch({
+        row: parseInt(row ?? "0", 10),
+        col: parseInt(col ?? "0", 10),
+    });
+
+    return {
+        props: {
+            trpcState: helpers.dehydrate(),
+            row,
+            col,
+        },
+        revalidate: 1, // Revalidate at most once every second
+    };
+};
+
+const Hello = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
+    const { row, col } = props;
+    const rowNumber = parseInt(row as string, 10); // Assert row as string
+    const colNumber = parseInt(col as string, 10); // Assert col as string
     const [visitorsCount, setVisitorsCount] = useState(0);
-    const router = useRouter();
-    const { row, col } = router.query;
-
-    const rowNumber = typeof row === 'string' ? parseInt(row, 10) : undefined;
 
     const { data: websiteDetails, isLoading, isError } = api.details.retrive.useQuery({
-        row: rowNumber ?? 0,
-        col: parseInt(col as string, 10)
+        row: rowNumber,
+        col: colNumber,
     });
 
     const { mutate: updateVisitorsCount, data } = api.details.visitors.useMutation({
@@ -31,14 +87,12 @@ const Hello = () => {
         }
     }, [websiteDetails, visitorsCount, updateVisitorsCount]);
 
-    if (row === "0" && col === "0") {
+    if (rowNumber === 0 && colNumber === 0) {
         return (
             <div className="mx-auto p-4 cursor-pointer bg-cover bg-center w-full min-h-screen">
                 <div className="p-8 mt-20 text-center">
-                    <p className="text-xl mt-20 text-gray-100">To use this feature, switch to the  <span className='text-red-400'>desktop site 👇</span>
-                        . After switching, go to the <Link className='text-blue-300 underline' href='/'>home</Link>  page and give it a try.                    </p>
-                    <Image src="mobile.jpg" alt="image" width="300" height="300" className="mx-auto" />
-
+                    <p className="text-xl mt-20 text-gray-100">To use this feature, switch to the  <span className='text-red-400'>desktop site 👇</span>.</p>
+                    <Image src="mobile.jpg" alt="image" width={300} height={300} className="mx-auto" />
                 </div>
             </div>
         );
@@ -47,7 +101,6 @@ const Hello = () => {
     if (isLoading) {
         return (
             <div className='bg-center min-h-screen w-full flex flex-col justify-center items-center'>
-
                 <Loading />
             </div>
         );
@@ -69,7 +122,7 @@ const Hello = () => {
 
     return (
         <div className="mx-auto p-4 cursor-pointer bg-cover bg-center w-full min-h-screen">
-            <div className="max-w-7xl mx-auto lg:p-6 mt-44 lg:mt-44 w-full">
+            <div className="max-w-7xl mx-auto lg:p-6 mt-44 w-full">
                 <div className='w-full justify-between flex flex-col lg:flex-row items-center'>
                     <div className='flex flex-col lg:flex-row gap-6 w-full justify-between'>
                         <div className='flex gap-4 lg:gap-10 h-full'>
@@ -100,6 +153,6 @@ const Hello = () => {
             </div>
         </div>
     );
-}
+};
 
 export default Hello;

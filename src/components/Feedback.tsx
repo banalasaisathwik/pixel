@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
 import { api } from "~/utils/api";
 
 // Define types for form data

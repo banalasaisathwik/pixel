@@ -41,7 +41,7 @@ const ImageMap: React.FC = () => {
     }, []);
 
     const handlePixelClick = (row: number, col: number): void => {
-        void router.push(`/pixel?row=${row}&col=${col}`);
+    void router.push(`/pixel/${row}/${col}`);
     };
 
     const toggleExpand = (): void => {
