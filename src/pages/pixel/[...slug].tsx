@@ -126,7 +126,8 @@ const Hello = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
                 <div className='w-full justify-between flex flex-col lg:flex-row items-center'>
                     <div className='flex flex-col lg:flex-row gap-6 w-full justify-between'>
                         <div className='flex gap-4 lg:gap-10 h-full'>
-                            <Image width={100} height={100} className='lg:w-32 lg:h-32 w-20 h-20 object-cover object-center rounded-2xl' src={websiteDetails?.imageUrl ?? "/"} alt='' />
+                            <Image width={100} height={100} className='lg:w-32 lg:h-32 w-20 h-20 object-contain object-center rounded-2xl'
+                                src={websiteDetails?.imageUrl ?? "/"} alt='' />
                             <div className='flex flex-col items-center'>
                                 <h1 className='text-3xl lg:text-6xl font-sai my-2 text-white'>
                                     <span className='font-kumar text-yellow-600'>#</span> {websiteDetails?.websiteName}

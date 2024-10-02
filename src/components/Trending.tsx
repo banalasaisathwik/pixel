@@ -31,7 +31,7 @@ const Trending = () => {
                         {topTrending.map((user, index) => (
                             <li key={user.id} className="flex items-center py-4 px-6">
                                 <span className="text-gray-700 text-lg font-medium mr-4">{index + 1}.</span>
-                                <Image height={30} width={30} className="w-12 h-12 rounded-full object-cover mr-4" src={user.imageUrl} alt="User avatar" />
+                                <Image height={30} width={30} className="w-12 h-12 rounded-full object-contain object-center mr-4" src={user.imageUrl} alt="User avatar" />
                                 <div className="flex-1">
                                     <h3 className="text-lg font-medium text-gray-800">{user.websiteName}</h3>
                                     <p className="text-gray-600 text-base">{user.visitors} Visitors</p>
