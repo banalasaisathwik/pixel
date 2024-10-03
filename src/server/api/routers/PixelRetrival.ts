@@ -41,6 +41,34 @@ export const pixelRetRouter = createTRPCRouter({
                 return "An error occurred while processing the request";
             }
         }),
+    getPixelId: publicProcedure
+        .input(z.object({ coords: z.object({ x: z.number(), y: z.number() }) }))
+        .query(async ({ input: { coords }, ctx }) => {
+            try {
+                // Find the coordinate based on the provided x and y values
+                const result = await ctx.db.coordinate.findFirst({
+                    where: {
+                        x: coords.x,
+                        y: coords.y
+                    }
+                });
+
+                // If no coordinate is found, return an error message
+                if (!result) {
+                    return "No results found";
+                }
+
+                // Extract the pixelId from the found coordinate
+                const pixelId = result.pixelId;
+
+                if(!pixelId) { return("pixelId not found"); }
+                return pixelId;
+            } catch (error) {
+                console.error("Error while processing clickPixel:", error);
+                return "An error occurred while processing the request";
+            }
+        }),
+
 
         soldoutPixel:publicProcedure
         .query(async ({ctx})=>{

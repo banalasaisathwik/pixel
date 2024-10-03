@@ -58,7 +58,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
             row,
             col,
         },
-        revalidate: 1, // Revalidate at most once every second
     };
 };
 

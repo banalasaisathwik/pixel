@@ -42,14 +42,13 @@ const ImageMap: React.FC = () => {
         setIsExpanded(sessionIsExpanded === 'true' ? true : false);
     }, []);
 
-const handlePixelClick = (row: number, col: number): void => {
-       void router.prefetch(`/pixel/${row}/${col}`);
+    const handlePixelClick = (row: number, col: number): void => {
+        setIsLoading(true);
+        void router.prefetch(`/pixel/${row}/${col}`).then(() => {
+            void router.push(`/pixel/${row}/${col}`, undefined, { shallow: true });
+        }).finally(() => setIsLoading(false));
+    };
 
-
-    setIsLoading(true);
-    
-    void router.push(`/pixel/${row}/${col}`, undefined, { shallow: true }).then(() => setIsLoading(false));
-};
 
     const toggleExpand = (): void => {
         sessionStorage.setItem('isExpanded', 'true')
