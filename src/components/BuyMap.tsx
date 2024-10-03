@@ -114,8 +114,17 @@ const BuyPage: React.FC = () => {
             ctx.fillStyle = 'blue';
             selectedPixels.forEach(pixel => {
                 ctx.fillRect(pixel.col * 10, pixel.row * 10, 10, 10);
-            });
-
+                
+            }
+        );
+            const blockSize = 10; // Size of each block
+            const gridColor = 'rgba(169, 169, 169, 0.07)'; // Semi-transparent blue
+            for (let x = 0; x < canvas.width; x += blockSize) {
+                for (let y = 0; y < canvas.height; y += blockSize) {
+                    ctx.fillStyle = gridColor;
+                    ctx.fillRect(x, y, blockSize - 2, blockSize - 2); // Draw blue blocks
+                }
+            }
             setMapLoaded(true); // Moved mapLoaded state update here
         };
     }, [selectedPixels, soldOutPixels]);

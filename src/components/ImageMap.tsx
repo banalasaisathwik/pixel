@@ -43,7 +43,11 @@ const ImageMap: React.FC = () => {
     }, []);
 
 const handlePixelClick = (row: number, col: number): void => {
+       void router.prefetch(`/pixel/${row}/${col}`);
+
+
     setIsLoading(true);
+    
     void router.push(`/pixel/${row}/${col}`, undefined, { shallow: true }).then(() => setIsLoading(false));
 };
 

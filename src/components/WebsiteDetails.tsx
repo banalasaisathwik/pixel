@@ -114,7 +114,7 @@ const StandardDropzone: React.FC<StandardDropzoneProps> = ({ success, existingDe
     }, [acceptedFiles, presignedUrl, websiteName, description, tagline, websiteURL, details, existingDetails?.imageUrl]);
 
     return (
-        <section className="w-full max-w-2xl mt-44 mx-auto p-10 border rounded-lg shadow-lg">
+        <section className="w-full max-w-2xl mt-12 mx-auto p-10 border rounded-lg shadow-lg">
             <ToastContainer />
 
             {/* Input for website name */}
