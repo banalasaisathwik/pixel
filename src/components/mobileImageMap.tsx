@@ -88,7 +88,7 @@ const MobileimageMap: React.FC = () => {
                 width={2000}
                 height={2000}
                 onClick={() => {
-                    void router.push(`/pixel?row=0&col=0`);
+                    void router.push(`/pixel`);
                 }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}

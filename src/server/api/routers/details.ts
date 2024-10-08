@@ -106,6 +106,27 @@ export const websiteDetailsRouter = createTRPCRouter({
         }
 
     }),
+    retriveUsingPixelId: publicProcedure
+        .input(z.object({ pixelId: z.string() }))
+        .query(async ({ input: { pixelId }, ctx }) => {
+           
+                const result = await ctx.db.website.findFirst({
+                    where: { pixelId: pixelId },
+                    select: {
+                        id: true,
+                        imageUrl: true,
+                        websiteUrl: true,
+                        websiteName: true,
+                        tagline: true,
+                        description: true,
+                    }
+                })
+                return result;
+            
+
+        }),
+
+    
 
     detailsStatus:protectedProcedure
     .query(async ({ctx})=>{

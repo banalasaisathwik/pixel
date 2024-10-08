@@ -2,15 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import { motion } from "framer-motion";
 import Loading from './Loading';
+import { api } from '~/utils/api';
 
 const ImageMap: React.FC = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [mapLoaded, setMapLoaded] = useState<boolean>(false);
     const [isExpanded, setIsExpanded] = useState<boolean | null>(null);
     const [tooltip, setTooltip] = useState<{ visible: boolean; content: string; x: number; y: number; }>({ visible: false, content: '', x: 0, y: 0 });
+    const [clicked, setClicked] = useState<{  x: number; y: number; }>({ x: 0, y: 0 });
+
     const [isLoading, setIsLoading] = useState(false);
 
     const router = useRouter();
+    const { data: pixelId } = api.pxlR.getPixelId.useQuery({ coords: { x: clicked.y, y: clicked.x } }, { enabled: clicked.x !== 0 && clicked.y !== 0 });
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -43,11 +47,17 @@ const ImageMap: React.FC = () => {
     }, []);
 
     const handlePixelClick = (row: number, col: number): void => {
+        setClicked({ x: row, y: col });
         setIsLoading(true);
-        void router.prefetch(`/pixel/${row}/${col}`).then(() => {
-            void router.push(`/pixel/${row}/${col}`, undefined, { shallow: true });
-        }).finally(() => setIsLoading(false));
     };
+
+    useEffect(() => {
+        if (pixelId && isLoading) {
+            void router.push(`/pixel/${pixelId}`, undefined, { shallow: true }).then(() => {
+                setIsLoading(false);
+            });
+        }
+    }, [pixelId, isLoading, router]);
 
 
     const toggleExpand = (): void => {
