@@ -26,7 +26,9 @@ const PopUp: React.FC<Props> = ({ onClose }) => {
                             <div >
                                 <div className="py-2">
                                     <p className="text-lg mb-4">
-                                        {  " Welcome to pixelpreneur! Click on an ad to check out the brand. Got a brand? Don’t wait—advertise here today!"}
+                                        {  " Welcome to pixelpreneur! Click on an ad to check out the brand. "}
+                                        <br/>
+                                        {"Got a brand? Don’t wait—advertise here today!"}
                                       </p>
                                     <Image src="title1.jpg" alt="image" width="700" height="700" className="mx-auto" />
                                     

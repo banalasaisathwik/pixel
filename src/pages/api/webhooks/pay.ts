@@ -1,3 +1,4 @@
+import { Status } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { validateWebhookSignature } from 'razorpay/dist/utils/razorpay-utils';
 import { db } from '~/server/db';
@@ -26,56 +27,44 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(405).end();
     }
 
-    // Get the webhook secret from the dashboard
     const RAZORPAY_WEBHOOK_SECRET = "sai";
-
-    if (!RAZORPAY_WEBHOOK_SECRET) {
-        throw new Error('Please add secret');
-    }
-
-    // Extract signature from X-Razorpay-Signature header
     const signature = req.headers["x-razorpay-signature"] as string;
-
-    // Extract request body
     const requestBody: RazorpayPayload = req.body as RazorpayPayload;
 
     try {
-        // Validate webhook signature
-        const isValid: boolean = validateWebhookSignature(
-            JSON.stringify(requestBody),
-            signature,
-            RAZORPAY_WEBHOOK_SECRET
-        );
-
-        if (isValid) {
-            const { event, payload } = requestBody ;
-
-            switch (event) {
-                case "payment.captured":
-                    console.log(payload);
-                    await handleCapturedLogic(payload);
-                    break;
-
-                default:
-                    console.log(`Unhandled event: ${event}`);
-                    break;
-            }
+        if (!validateWebhookSignature(JSON.stringify(requestBody), signature, RAZORPAY_WEBHOOK_SECRET)) {
+            console.error('Invalid Razorpay signature');
+            return res.status(400).json({ error: 'Invalid signature' });
         }
-    }  catch (error) {
-        if (error instanceof Error) {
-            console.error('Error handling captured logic:', error);
+
+        const { event, payload } = requestBody;
+
+        if (event === "payment.captured") {
+            console.log("Payment captured event received");
+            await handleCapturedLogic(payload);
         } else {
-            console.error('Unknown error occurred:', error);
+            console.log(`Unhandled event: ${event}`);
         }
-        throw error;
-    }
 
-    return res.status(200).json({ response: 'Success' });
+        return res.status(200).json({ response: 'Success' });
+
+    } catch (error) {
+        console.error('Error processing webhook:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
 }
 
 async function handleCapturedLogic(payload: RazorpayPayload['payload']) {
     try {
-        // Update user record based on email
+        const user = await db.user.findFirst({
+            where: { email: payload.payment.entity.email },
+            select: { pixelId: true }
+        });
+
+        if (!user || !user.pixelId) {
+            throw new Error("User not found or no associated pixel ID");
+        }
+
         await db.user.update({
             where: { email: payload.payment.entity.email },
             data: {
@@ -84,6 +73,12 @@ async function handleCapturedLogic(payload: RazorpayPayload['payload']) {
                 TransactionId: payload.payment.entity.id,
             }
         });
+
+        await db.coordinate.updateMany({
+            where: { pixelId: user.pixelId.toString() },
+            data: { status: Status.Sold }
+        });
+
     } catch (error) {
         console.error('Error handling captured logic:', error);
         throw error;

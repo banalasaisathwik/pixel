@@ -8,10 +8,17 @@ const App = () => {
     const router = useRouter();
 
     const { data: paymentStatus, isLoading } = api.trx.payment.useQuery();
+    const { data: q } = api.trx.quantity.useQuery();
+
+
+    const quantity = q?.quantity ?? 0
+
+
 
     useEffect(() => {
+
         if (paymentStatus) {
-            void router.replace('selection');
+            void router.replace('details');
         }
     }, [paymentStatus, router]);
 
@@ -24,6 +31,7 @@ const App = () => {
         script.src = "https://checkout.razorpay.com/v1/payment-button.js";
         script.async = true;
         script.dataset.payment_button_id = "pl_NrchsC4I6ZyqpD";
+        script.setAttribute('data-prefill.amount.10_by_10_size_pixels_tsest', quantity.toString());
 
         const form = document.getElementById("razorpayForm");
         if (form) {
@@ -49,6 +57,7 @@ const App = () => {
 
     return (
         <div className="w-full  min-h-screen flex flex-col justify-center items-center  bg-cover bg-center">
+        
             <RazorpayButton />
         </div>
     );

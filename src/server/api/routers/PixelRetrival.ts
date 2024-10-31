@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const pixelRetRouter = createTRPCRouter({
      clickPixel: publicProcedure
@@ -79,25 +79,5 @@ export const pixelRetRouter = createTRPCRouter({
             return result;
         }),
 
-    quantity: protectedProcedure
-        .query(async ({ ctx }) => {
-            try {
-                const userId = ctx.auth.userId;
-                const result = await ctx.db.user.findFirst({
-                    where: { clerkId: userId },
-                    select: { price: true }
-                });
-                if (result?.price){
-                    return (result.price)/15000;
-                }
-                
-            } catch (error) {
-                console.error("Error while retrieving quantity:", error);
-                return {
-                    success: false,
-                    message: "An error occurred while retrieving quantity"
-                };
-            }
-        })
 
 });

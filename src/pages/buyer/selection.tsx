@@ -10,7 +10,7 @@ const Buy: React.FC = () => {
     const { data: purchasesStatus,isLoading } = api.trx.purchased.useQuery();
     useEffect(() => {
         if (purchasesStatus) {
-            void router.replace('details');
+            void router.replace('payment');
         }
     }, [purchasesStatus, router]);
     

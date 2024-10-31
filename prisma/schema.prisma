@@ -3,41 +3,41 @@ generator client {
 }
 
 datasource db {
-    provider     = "mongodb"
-    url          = env("DATABASE_URL")
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-    id          String   @id @default(auto()) @map("_id") @db.ObjectId
-    clerkId String @unique
+    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    clerkId        String   @unique
     email          String   @unique
     password       String?
     pixels         Pixel?   @relation(fields: [pixelId], references: [id])
     TransactionId  String?
     noOfPixels     Int?
     paymentSuccess Boolean?
-    price Int?
+    price          Int?
     uploaded       Boolean?
     website        Website? @relation(fields: [websiteId], references: [id])
-    purchase Boolean?
-    pixelId   String? @db.ObjectId
-    websiteId String? @db.ObjectId
+    purchase       Boolean?
+    pixelId        String?  @db.ObjectId
+    websiteId      String?  @db.ObjectId
 }
 
 model Website {
     id          String   @id @default(auto()) @map("_id") @db.ObjectId
     imageUrl    String
     websiteUrl  String
-    websiteName       String
-    tagline   String
+    websiteName String
+    tagline     String
     description String
     uploaded    Boolean?
-    visitors Int?
+    visitors    Int?
 
-    Pixel       Pixel    @relation(fields: [pixelId], references: [id])
-    createdAt   DateTime @default(now())
-    User        User[]
-    pixelId     String   @db.ObjectId @unique
+    Pixel     Pixel    @relation(fields: [pixelId], references: [id])
+    createdAt DateTime @default(now())
+    User      User[]
+    pixelId   String   @unique @db.ObjectId
 }
 
 model Pixel {
@@ -49,27 +49,33 @@ model Pixel {
 }
 
 model Coordinate {
-    id      String @id @default(auto()) @map("_id") @db.ObjectId
-    x       Int
-    y       Int
-    pixel   Pixel  @relation(fields: [pixelId], references: [id])
-    pixelId String @db.ObjectId
+    id                String    @id @default(auto()) @map("_id") @db.ObjectId
+    x                 Int
+    y                 Int
+    pixel             Pixel     @relation(fields: [pixelId], references: [id])
+    pixelId           String    @db.ObjectId
+    status            Status   @default(Available) 
+    reservationExpiry DateTime?
+
+    @@unique([x, y])
 }
 
-model Ticket{
-     
-         id      String @id @default(auto()) @map("_id") @db.ObjectId
-        clerkId String 
-        description String
+model Ticket {
+    id          String @id @default(auto()) @map("_id") @db.ObjectId
+    clerkId     String
+    description String
 }
 
-model Feedback{
-     
-        id     String @id @default(auto()) @map("_id") @db.ObjectId
-        name   String 
-        email  String 
-        interest String
-        message String
+model Feedback {
+    id       String @id @default(auto()) @map("_id") @db.ObjectId
+    name     String
+    email    String
+    interest String
+    message  String
 }
 
-
+enum Status{
+    Reserved
+    Sold
+    Available
+}

@@ -7,11 +7,16 @@ import NavMobileMenu from './NavMobileMenu'
 import Logo from './Logo'
 import { FaCircle, FaLinkedin } from "react-icons/fa";
 import { FiInstagram } from 'react-icons/fi'
+import { useRouter } from 'next/router'
 
 const Navbar = () => {
     const { navOpen, changeNavMenu, toggleNavMenu } = useNavbarMenuToggle()
     const { textWhite, values } = useNavbarVisibility()
     const isFillWhite = textWhite && values!.isTextWhite && !navOpen;
+    const router = useRouter();
+    
+
+    const linkDestination = router.pathname === '/buyer/info' ? '/buyer/home' : '/buyer/info';
 
     return (
         <nav className={`block w-full h-auto md:h-16 sm:h-auto z-[100] ${navOpen ? 'fixed top-0 left-0 bottom-0 z-[200] bg-orange-500' : 'absolute'} md:bottom-auto font-heading-narrow`}>
@@ -32,7 +37,7 @@ const Navbar = () => {
                         <p>1 Pixel @ ₹150</p>
                     </li>
                     <li className="text-2xl text-white md:text-2xl mx-auto font-semibold border-2 p-2 hover:bg-orange-700 hover:text-black align-top uppercase">
-                        <Link href="/buyer/info">Buy space</Link>
+                        <Link href={linkDestination} > Buy space </Link>
                     </li>
                 </motion.ul>
 

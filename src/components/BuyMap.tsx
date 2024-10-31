@@ -31,6 +31,7 @@ const ConfirmDialog: React.FC<{
     };
 
     return (
+
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-start">
             <div className="bg-white p-10 rounded-lg">
                 <h2 className="font-bold text-2xl">Confirm Purchase</h2>
@@ -68,25 +69,31 @@ const BuyPage: React.FC = () => {
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
-    const { data: quantity, isLoading: quantityLoading } = api.pxlR.quantity.useQuery();
     const { data: soldOutPixelsQuery, isLoading: soldoutLoading } = api.pxlR.soldoutPixel.useQuery();
-    const isDataLoading = quantityLoading || soldoutLoading;
+    const reservePixel = api.trx.reservingPixel.useMutation({
 
-    const purchaseMutation = api.trx.buyPixel.useMutation({
-
-        onSuccess: () => {
-            setBtnDisabled(false);
-            toast.success("successful")
-            setTimeout(() => {
-                void router.push('/buyer/home');
-            }, 2000);
-        },
         onError: (error) => {
             console.error('Error while purchasing:', error);
             setBtnDisabled(false);
             toast.error("failed");
-        }
+        },
+        onSettled(data) {
+            setBtnDisabled(false);
+            data?.success ? toast.success("successful") : toast.error(data?.message)
+            if (data?.success) {
+                setTimeout(() => {
+                    void router.replace('/buyer/payment');
+                }, 3000);
+            }
+            else {
+                handleClearPixels();
+            }
+
+        },
     });
+    const isDataLoading = soldoutLoading;
+
+
 
     useEffect(() => {
         if (soldOutPixelsQuery) {
@@ -114,9 +121,9 @@ const BuyPage: React.FC = () => {
             ctx.fillStyle = 'blue';
             selectedPixels.forEach(pixel => {
                 ctx.fillRect(pixel.col * 10, pixel.row * 10, 10, 10);
-                
+
             }
-        );
+            );
             const blockSize = 10; // Size of each block
             const gridColor = 'rgba(169, 169, 169, 0.07)'; // Semi-transparent blue
             for (let x = 0; x < canvas.width; x += blockSize) {
@@ -172,13 +179,9 @@ const BuyPage: React.FC = () => {
         }
     };
     const handleBuyNowClick = () => {
-        if (typeof quantity === 'number') {
-            if (selectedPixels.length !== quantity) {
-                toast.error(`Please select exactly ${quantity} pixels to buy.`);
-                return;
-            }
-        }
+
         setIsConfirmOpen(true);
+
     };
 
     const handleClearPixels = () => {
@@ -193,7 +196,7 @@ const BuyPage: React.FC = () => {
             x: pixel.col,
             y: pixel.row,
         }));
-        purchaseMutation.mutate({ coords: formattedSelectedPixels });
+        reservePixel.mutate({ coords: formattedSelectedPixels });
     };
 
     const handleDownloadPNG = () => {
@@ -224,67 +227,95 @@ const BuyPage: React.FC = () => {
         );
     }
     return (
-        <div className=' bg-cover bg-center w-full min-h-screen overflow-y-auto expanded pt-10'>
-            <div className="px-10 py-4 flex justify-between items-center">
-                <div className="flex">
-                    <button
-                        className="p-4 text-lg rounded text-black bg-white mr-2"
-                        disabled={btnDisabled || selectedPixels.length === 0}
-                        onClick={handleBuyNowClick}
-                    >
-                        Buy Now
-                    </button>
-                    <button
-                        className="p-4 text-lg rounded text-black bg-white "
-                        onClick={handleClearPixels}
-                    >
-                        Clear Selected Pixels
-                    </button>
-                </div>
-                <p className="text-xl text-center text-white">
-                    Make sure your Selected shape matches your image shape,<br />
-                    for a good outcome.
-                </p>
-
-
-                <div className="flex justify-end">
-                    <div className="flex items-center mr-8">
-                        <div className="w-3 h-3 bg-red-700 mr-2 "></div>
-                        <p className='text-white' >Sold-out pixels</p>
+        <>
+            <nav className="w-full h-32 z-[100] fixed top-0 left-0 bg-black block items-center font-heading-narrow">
+                <div className="px-10 py-4 flex justify-between items-center w-full">
+                    <div className="flex">
+                        <button
+                            className="p-4 text-lg rounded text-black bg-white mr-2"
+                            disabled={btnDisabled || selectedPixels.length === 0}
+                            onClick={handleBuyNowClick}
+                        >
+                            Proceed to checkout
+                        </button>
+                        <button
+                            className="p-4 text-lg rounded text-black bg-white"
+                            onClick={handleClearPixels}
+                        >
+                            Clear Selected Pixels
+                        </button>
                     </div>
-                    <div className="flex items-center">
-                        <div className="w-3 h-3 bg-blue-800 mr-2 "></div>
-                        <p className='text-white'>Selected pixels</p>
+                    <p className="text-xl text-center text-white">
+                        Make sure your Selected shape matches your image shape,<br />
+                        for a good outcome.
+                    </p>
+                    <div className="flex flex-col gap-4 justify-end">
+                    <p className="text-xl  text-white">
+                        Click on the map to select Pixels
+                    </p>
+                       <div className='flex gap-10'>
+                       <div className="flex items-center mr-8">
+                            <div className="w-3 h-3 bg-red-700 mr-2"></div>
+                            <p className="text-white">Sold-out pixels</p>
+                        </div>
+                        <div className="flex items-center">
+                            <div className="w-3 h-3 bg-blue-800 mr-2"></div>
+                            <p className="text-white">Selected pixels</p>
+                        </div>
+                       </div>
+                      
+                    </div>
+
+                    <ToastContainer />
+
+                    <ConfirmDialog
+                        isOpen={isConfirmOpen}
+                        onClose={() => setIsConfirmOpen(false)}
+                        onConfirm={confirmPurchase}
+                        pixelCount={selectedPixels.length}
+                    />
+                </div>
+                
+
+            </nav>
+
+            <div className="bg-cover bg-center w-full min-h-screen overflow-y-auto pt-10">
+
+                <div className='absolute top-20 right-0'>
+                    <div className="relative m-16">
+                        <span className="absolute -z-10  w-full h-full inset-1 bg-red-500 rounded-xl"></span>
+                        <button className="absolute py-1 z-10 px-3 -left-8 -top-2 -rotate-[10deg] black_border bg-red-500 text-white font-bold">
+                            Tip
+                        </button>
+
+                        <div className="p-8 border border-black purple_border bg-white rounded-xl z-20">
+
+                            If you cannot see the map, please refresh the page!!
+
+                        </div>
                     </div>
                 </div>
 
-            </div>
-            <p className="text-xl text-center text-black">If you cannot see the map, please refresh the page!!</p>
-            <canvas
-                ref={canvasRef}
-                width={2000}
-                height={2000}
-                onClick={handleCanvasClick}
-                style={{ border: '1px solid black', cursor: mapLoaded ? 'pointer' : 'default' }}
-            />
 
-            <button
-                className="px-4 py-2 rounded bg-blue-500 text-white"
-                onClick={handleDownloadPNG}
-            >
-                Download PNG
-            </button>
+                <canvas
+                    ref={canvasRef}
+                    width={2000}
+                    height={2000}
+                    onClick={handleCanvasClick}
+                    style={{ border: '1px solid black', cursor: mapLoaded ? 'pointer' : 'default' }}
+                />
 
-            <ConfirmDialog
-                isOpen={isConfirmOpen}
-                onClose={() => setIsConfirmOpen(false)}
-                onConfirm={confirmPurchase}
-                pixelCount={selectedPixels.length}
-            />
+                <button
+                    className="px-4 py-2 rounded bg-blue-500 text-white"
+                    onClick={handleDownloadPNG}
+                >
+                    Download PNG
+                </button>
 
-            <ToastContainer />
-        </div>
 
+
+            </div >
+        </>
     );
 };
 
