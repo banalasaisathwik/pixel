@@ -61,7 +61,7 @@ async function handleCapturedLogic(payload: RazorpayPayload['payload']) {
             select: { pixelId: true }
         });
 
-        if (!user || !user.pixelId) {
+        if (!user?.pixelId) {
             throw new Error("User not found or no associated pixel ID");
         }
 

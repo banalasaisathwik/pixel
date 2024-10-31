@@ -69,7 +69,7 @@ const Info = () => {
                         </div>
                     </div>
                 </div>
-                <link className='text-black my-10 font-bold text-2xl w-40 text-center p-2 rounded-lg bg-white ' href={"/buyer/home"} >Get Started</link>
+                <Link className='text-black my-10 font-bold text-2xl w-40 text-center p-2 rounded-lg bg-white ' href={"/buyer/home"} >Get Started</Link>
             </div>
         </section>
     )
