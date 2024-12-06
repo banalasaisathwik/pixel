@@ -24,7 +24,7 @@ const ImageMap: React.FC = () => {
         if (!ctx) return;
 
         const image = new Image();
-        image.src = '/map.svg';
+        image.src = '/map.png';
         image.onload = () => {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
             setMapLoaded(true);
@@ -53,7 +53,7 @@ const ImageMap: React.FC = () => {
 
     useEffect(() => {
         if (pixelId && isLoading) {
-            void router.push(`/pixel/${pixelId}`, undefined, { shallow: true }).then(() => {
+            void router.push(`/pixel/${pixelId ?? "67528bf4ea5519c14c715bb8"}`, undefined, { shallow: true }).then(() => {
                 setIsLoading(false);
             });
         }

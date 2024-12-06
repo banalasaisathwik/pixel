@@ -55,7 +55,7 @@ export const pixelRetRouter = createTRPCRouter({
 
                 // If no coordinate is found, return an error message
                 if (!result) {
-                    return "No results found";
+                    return "67528bf4ea5519c14c715bb8";
                 }
 
                 // Extract the pixelId from the found coordinate

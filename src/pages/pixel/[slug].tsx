@@ -83,7 +83,7 @@ const Hello = () => {
                 </div>
                 <hr className='w-full mt-10' />
                 <div className='my-10'>
-                    <h1 className='text-white font-sai text-3xl'>What is {websiteDetails?.websiteName}?</h1>
+                    <h1 className='text-white font-sai text-3xl'>{websiteDetails?.websiteName} Details?</h1>
                     <p className='py-4 text-white text-xl whitespace-pre-line'>
                         {websiteDetails?.description}
                     </p>
